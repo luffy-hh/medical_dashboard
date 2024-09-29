@@ -1,0 +1,29 @@
+@import "./assets/fonts/fonts.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Linn-2", sans-serif !important;
+}
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 75%;
+}
+
+.btn {
+  @apply hover:!bg-[#4096ff] hover:!text-white hover:!border-white;
+}
+
+// body {
+//   font-size: 2.8rem;
+//   line-height: 1.1;
+//   min-height: 100vh;
+// }
