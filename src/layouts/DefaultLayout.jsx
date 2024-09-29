@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 // import Sidebar from "./components/sidebar/Sidebar";
 const Sidebar = lazy(() => import("./components/sidebar/Sidebar"));
 import { Layout } from "antd";
-cont TopBar = lazy(()=>import("./components/topbar/Topbar"));
+const TopBar = lazy(() => import("./components/topbar/Topbar"));
 
 const Loader = lazy(() => import("../components/common/Loader"));
 
