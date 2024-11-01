@@ -1,10 +1,11 @@
-import { lazy } from "react";
+import {forwardRef, lazy} from "react";
 import PropTypes from "prop-types";
-const Select = lazy(() => import("antd/lib/select"));
+import { Select } from "antd";
 // const handleChange = (value) => {
 //   console.log(`selected ${value}`);
 // };
-const CustomSelect = ({
+// eslint-disable-next-line react/display-name
+const CustomSelect = forwardRef(({
   options = [],
   onChange,
   className,
@@ -12,8 +13,9 @@ const CustomSelect = ({
   clearable = false,
   value,
   defaultValue = "",
-}) => {
+},ref) => {
   const { Option } = Select;
+  // console.log(options)
   return (
     <Select
       allowClear={clearable}
@@ -26,6 +28,7 @@ const CustomSelect = ({
       filterOption={(input, option) =>
         option.children.toLowerCase().includes(input.toLowerCase())
       }
+      ref={ref}
     >
       {options.map((option, i) => (
         <Option key={i} value={option.value}>
@@ -34,10 +37,10 @@ const CustomSelect = ({
       ))}
     </Select>
   );
-};
+});
 
 CustomSelect.propTypes = {
-  options: PropTypes.array,
+  options: PropTypes.arrayOf(PropTypes.object),
   onChange: PropTypes.func,
   className: PropTypes.string,
   searchable: PropTypes.bool,

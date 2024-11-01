@@ -83,7 +83,9 @@ const CustomForm = ({
           return (
             <div
               key={i}
-              className={`mb-2 w-[90%] ${data.length > 4 ? "sm:w-[50%" : ""}`}
+              className={`mb-2 w-[90%] mx-auto ${
+                data.length > 4 ? "sm:w-[50%" : ""
+              }`}
             >
               <Form.Item
                 label={item?.label}

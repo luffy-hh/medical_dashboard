@@ -2,6 +2,7 @@ import React from "react";
 import PageTitleWithRouter from "../../components/common/PageTitle";
 import InnerContainer from "../../components/common/InnerContainer";
 import CustomFormWithRouter from "../../components/common/CustomForm";
+import { patientInputs } from "../../constants/FormInputs";
 
 const CreatePatient = () => {
   return (
@@ -13,7 +14,7 @@ const CreatePatient = () => {
           buttonLink={-1}
           hasButton={false}
         />
-        <CustomFormWithRouter inputs={[]} initialValues={{}} />
+        <CustomFormWithRouter data={patientInputs()} initialValues={{}} />
       </InnerContainer>
     </>
   );

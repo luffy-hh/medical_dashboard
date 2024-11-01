@@ -13,6 +13,7 @@ const pageTitleProps = {
   hasButton: false,
 };
 const buttonProps = {
+  hasButton: true,
   text: "Add Patient",
   link: "/patients/create",
 };
@@ -24,7 +25,7 @@ const PatientsWithTableAndTitle = withTableAndTitle(
   Patients,
   pageTitleProps,
   buttonProps,
-  tableProps
+  tableProps,
 );
 
 export default PatientsWithTableAndTitle;

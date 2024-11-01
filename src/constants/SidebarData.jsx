@@ -37,7 +37,7 @@ export const sideBarData = [
     key: "/daily",
   },
   {
-    label: "Monthly Medical Check Records",
+    label: "Medical Checkup Records",
     icon: <TbReportAnalytics />,
     key: "/monthly",
   },

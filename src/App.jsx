@@ -9,8 +9,6 @@ function App() {
   // console.log(Routes);
   const routing = useRoutes(Routes);
   const isDark = useSelector((state) => state.themeConfig.isDark);
-  // console.log(isDark);
-  const [count, setCount] = useState(0);
 
   return (
     <Suspense fallback={<Loader />}>

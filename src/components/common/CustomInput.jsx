@@ -1,8 +1,10 @@
 import { DatePicker, Input } from "antd";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
+import {forwardRef} from "react";
 
-const CustomInput = ({
+// eslint-disable-next-line react/display-name
+const CustomInput = forwardRef(({
   placeholder,
   className,
   type = "text",
@@ -14,10 +16,11 @@ const CustomInput = ({
   id = "",
   required = false,
   onKeyPress,
-}) => {
+},ref) => {
   if (type === "date") {
     return (
       <DatePicker
+        ref={ref}
         defaultValue={defaultValue ? dayjs(defaultValue) : null}
         allowClear={clearable}
         placeholder={placeholder}
@@ -31,6 +34,7 @@ const CustomInput = ({
   if (type === "file") {
     return (
       <Input
+        ref={ref}
         allowClear={clearable}
         placeholder={placeholder}
         className={className}
@@ -43,6 +47,7 @@ const CustomInput = ({
   }
   return (
     <Input
+      ref={ref}
       allowClear={clearable}
       placeholder={placeholder}
       className={className}
@@ -53,7 +58,7 @@ const CustomInput = ({
       onKeyDown={onKeyPress}
     />
   );
-};
+});
 CustomInput.propTypes = {
   placeholder: PropTypes.string,
   className: PropTypes.string,

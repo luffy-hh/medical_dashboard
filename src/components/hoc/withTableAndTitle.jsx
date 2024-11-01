@@ -16,27 +16,28 @@ const withTableAndTitle = (
   WrappedComponent,
   pageTitleProps,
   buttonProps,
-  tableProps
+  tableProps,
 ) => {
   const HOC = (props) => {
     return (
       <Suspense fallback={<Loader />}>
         <InnerContainer>
           <PageTitleWithRouter {...pageTitleProps} />
-          <div className="flex">
+          <WrappedComponent {...props} />
+          {buttonProps?.hasButton && <div className="flex">
             <Button
-              className="btn ml-auto"
-              onClick={() => props.router.nav(buttonProps.link)}
+                className="btn ml-auto"
+                onClick={() => props.router.nav(buttonProps.link)}
             >
-              <FaPlusCircle />
+              <FaPlusCircle/>
               <span>{buttonProps.text}</span>
             </Button>
-          </div>
+          </div>}
           <CustomTable
             columns={tableProps.columns(props.router.nav)}
             data={[]}
           />
-          <WrappedComponent {...props} />
+
         </InnerContainer>
       </Suspense>
     );

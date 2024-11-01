@@ -23,15 +23,21 @@ export const patientsTableColumns = (nav) => {
       key: "gender",
     },
     {
-      title: "Blood Group",
-      dataIndex: "blood_type",
-      key: "blood_type",
+      title:"Blood Group",
+      dataIndex: "blood_group",
+      key: "blood_group",
     },
     {
       title: "Weight",
       dataIndex: "weight",
       key: "weight",
     },
+    {
+      title: "Height",
+      dataIndex: "height",
+      key: "height",
+    },
+
     {
       title: "Age",
       dataIndex: "age",
@@ -115,11 +121,11 @@ export const dailyRecordsTableColumns = (nav) => {
       dataIndex: "date",
       key: "date",
     },
-    {
-      title: "Time",
-      dataIndex: "time",
-      key: "time",
-    },
+    // {
+    //   title: "Time",
+    //   dataIndex: "time",
+    //   key: "time",
+    // },
     {
       title: "Diabetes",
       align: "center",

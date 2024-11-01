@@ -8,12 +8,21 @@ const { Sider, Content } = Layout;
 const Sidebar = () => {
   const nav = useNavigate();
   const location = useLocation();
+  // console.log(location)
   const activeBg = useSelector((state) => state.themeConfig.sidebarBg);
   const isFixed = useSelector((state) => state.themeConfig.isSidebarFixed);
   const currentURL = location.pathname.split("/").slice(0, -1).join("/");
   const handleMenuClick = (e) => {
-    console.log(e);
-    nav(e.key);
+    // console.log(e);
+    const { key } = e; // Get the clicked menu item's key
+    const url = `${window.location.origin}${key}`; // Construct the URL based on the key
+    if (e.domEvent.ctrlKey || e.domEvent.metaKey) {
+      // Open in a new tab if Control or Command key is pressed
+      window.open(url, "_blank");
+    } else {
+      // Normal navigation
+      nav(e.key);
+    }
   };
   return (
     <Sider
