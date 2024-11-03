@@ -1,30 +1,29 @@
-import {
-  AiFillCar,
-  AiOutlineDashboard,
-  AiOutlineHistory,
-} from "react-icons/ai";
-import { BsFuelPump } from "react-icons/bs";
-import {
-  Fa42Group,
-  FaHandHoldingMedical,
-  FaPeopleGroup,
-  FaUserGroup,
-} from "react-icons/fa6";
-import { GrGroup } from "react-icons/gr";
+import { AiOutlineHistory } from "react-icons/ai";
+import { GrDashboard, GrGroup } from "react-icons/gr";
 import { MdManageAccounts } from "react-icons/md";
 import {
-  TbReport,
+  TbCarouselHorizontal,
+  TbCategory,
   TbReportAnalytics,
   TbReportMedical,
-  TbReportMoney,
-  TbTool,
 } from "react-icons/tb";
+import { GiMedicinePills } from "react-icons/gi";
 
 export const sideBarData = [
   {
     label: "Dashboard",
-    icon: <AiOutlineDashboard />,
+    icon: <GrDashboard />,
     key: "/",
+  },
+  {
+    label: "Banners",
+    icon: <TbCarouselHorizontal />,
+    key: "/banner",
+  },
+  {
+    label: "Categories",
+    icon: <TbCategory />,
+    key: "/category",
   },
   {
     label: "Patients",
@@ -32,14 +31,34 @@ export const sideBarData = [
     key: "/patients",
   },
   {
-    label: "Daily Medical Records",
+    label: "Medicines",
+    icon: <GiMedicinePills />,
+    key: "/medicine",
+  },
+  {
+    label: "Appointments",
+    icon: <TbReportMedical />,
+    key: "/appointment",
+  },
+  {
+    label: "Create Daily Checkup",
     icon: <TbReportMedical />,
     key: "/daily",
+  },
+  {
+    label: "Daily Checkup Records",
+    icon: <AiOutlineHistory />,
+    key: "/daily-records",
   },
   {
     label: "Medical Checkup Records",
     icon: <TbReportAnalytics />,
     key: "/monthly",
+  },
+  {
+    label: "Users",
+    icon: <MdManageAccounts />,
+    key: "/user",
   },
 
   //   {

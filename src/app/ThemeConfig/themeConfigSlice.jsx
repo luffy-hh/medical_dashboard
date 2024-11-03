@@ -12,9 +12,10 @@ const initialState = {
   isSidebarFixed: true,
   isLayoutHorizontal: false,
   isInnerRightPart: false, // this is for the three column layout right part show hide in table & mobile
+  pageTitle: "",
 };
 
-export const ThemeConfigSlice = createSlice({
+const ThemeConfigSlice = createSlice({
   name: "themeConfig",
   initialState,
   reducers: {

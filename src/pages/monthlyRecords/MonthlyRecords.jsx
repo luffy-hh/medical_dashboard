@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { monthlyRecordsTableColumns } from "../../constants/TableColumns";
 import withCommonLayout from "../../components/hoc/withTableAndTitle";
+import { labRecords } from "../../app/labRecords/labRecordSlice.jsx";
 
 const MonthlyRecords = (props) => {
   return <></>;
@@ -15,18 +16,19 @@ const pageTitleProps = {
   hasButton: false,
 };
 const buttonProps = {
+  hasButton: true,
   text: "Add Monthly Record",
   link: "/monthly/create",
 };
 const tableProps = {
   columns: monthlyRecordsTableColumns,
-  data: [],
+  data: labRecords,
 };
 const MonthlyRecordsWithCommonLayout = withCommonLayout(
   MonthlyRecords,
   pageTitleProps,
   buttonProps,
-  tableProps
+  tableProps,
 );
 
 // const MonthlyRecordsWithRouter = withRouter(MonthlyRecords);

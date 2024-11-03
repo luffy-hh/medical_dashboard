@@ -18,3 +18,36 @@ export const dummyPatients = [
     image: "/img/favatar.png",
   },
 ];
+
+export const dummyBloodPressure = [
+  {
+    id: 1,
+    systolic: 120,
+    diastolic: 80,
+  },
+  {
+    id: 2,
+    systolic: 140,
+    diastolic: 90,
+  },
+  {
+    id: 3,
+    systolic: 150,
+    diastolic: 100,
+  },
+  {
+    id: 4,
+    systolic: 110,
+    diastolic: 60,
+  },
+  {
+    id: 5,
+    systolic: 120,
+    diastolic: 70,
+  },
+  {
+    id: 6,
+    systolic: 110,
+    diastolic: 50,
+  },
+];

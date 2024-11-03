@@ -2,8 +2,7 @@ import React from "react";
 import PageTitleWithRouter from "../../components/common/PageTitle";
 import InnerContainer from "../../components/common/InnerContainer";
 import CustomFormWithRouter from "../../components/common/CustomForm";
-import withFormHandling from "../../components/hoc/withFormHandling";
-import {dailyInputs} from "../../constants/FormInputs.jsx";
+import { dailyInputs } from "../../constants/FormInputs.jsx";
 
 const CreateDailyRecord = () => {
   return (

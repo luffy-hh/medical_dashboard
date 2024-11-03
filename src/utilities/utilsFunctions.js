@@ -4,9 +4,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 const expireToken = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-  window.location.href = "/login";
+  localStorage.clear();
+  window.location.href = "/auth";
 };
 
 const parseDate = (value) => {
@@ -32,4 +31,23 @@ const parseDate = (value) => {
 
   return null;
 };
-export { classNames, expireToken, parseDate };
+
+const daysOfWeek = [];
+const today = new Date();
+const firstDayOfWeek = new Date(
+  today.getFullYear(),
+  today.getMonth(),
+  today.getDate() - ((today.getDay() + 7) % 7),
+);
+
+for (let i = 0; i < 7; i++) {
+  const day = new Date(firstDayOfWeek.getTime() + i * 86400000);
+  const dayOfWeek = day.toLocaleString("en-US", { weekday: "long" });
+  const dayOfMonth = day.toLocaleString("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "numeric",
+  });
+  daysOfWeek.push(`${dayOfWeek} ${dayOfMonth}`);
+}
+export { classNames, expireToken, parseDate, daysOfWeek };
