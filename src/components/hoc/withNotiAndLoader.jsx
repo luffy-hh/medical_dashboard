@@ -10,25 +10,43 @@ import withRouter from "./withRouter.jsx";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 
-const withNotiAndLoader = (
-  WrappedComponent,
-  formProps,
-  formInputs,
-  createStatusSelector,
-  createMsgSelector,
-  createAction,
-) => {
+const withNotiAndLoader = (WrappedComponent, formProps) => {
   const HOC = (props) => {
-    const { form } = Form.useForm();
+    const [form] = Form.useForm();
     const dispatch = useDispatch();
-    // const createStatus = useSelector(createStatusSelector);
-    // const createMsg = useSelector(createMsgSelector);
+    const status = useSelector(formProps?.status ? formProps.status : () => {});
+    const message = useSelector(
+      formProps?.message ? formProps?.message : () => {},
+    );
 
-    const onFinish = async (values) => {
+    // console.log(props.router?.location?.state?.id);
+
+    const onFinish = (values) => {
+      console.log(values, formProps.extraData);
+
       // values.fill_date = dateFormatChange(values.fill_date);
-      // dispatch(createAction({ api: "createFuel", pData: values }));
+      dispatch(
+        formProps?.method({
+          api:
+            formProps?.api +
+            (props.router?.location?.state[formProps?.apiHasExtra]
+              ? `/${props.router?.location?.state[formProps?.apiHasExtra]}`
+              : ""),
+          postData: { ...values },
+          header: { ...formProps?.extraData },
+        }),
+      );
     };
-
+    useEffect(() => {
+      if (status === "succeeded") {
+        setTimeout(() => {
+          props.router.nav(-1);
+        }, 3000);
+        clearTimeout();
+      }
+      // if (status === "succeeded" || status === "failed")
+      //   dispatch(formProps.statusResetMethod());
+    }, [dispatch, props.router, status]);
     // useEffect(() => {
     //   if (createStatus === "success") {
     //     toast.success(createMsg, {
@@ -52,23 +70,16 @@ const withNotiAndLoader = (
 
     return (
       <InnerContainer>
-        {/*{createStatus === "fail" && (*/}
-        {/*  <Notification title={"Error"} text={createMsg} icon={"error"} />*/}
-        {/*)}*/}
-        {/*{createStatus === "success" && (*/}
-        {/*  <Notification title={"Success"} text={createMsg} icon={"success"} />*/}
-        {/*)}*/}
-        {/*{createStatus === "loading" && (*/}
-        {/*  <Loader spin={createStatus === "loading"} />*/}
-        {/*)}*/}
+        {status === "failed" && (
+          <Notification title={"Error"} text={message} icon={"error"} />
+        )}
+        {status === "succeeded" && (
+          <Notification title={"Success"} text={message} icon={"success"} />
+        )}
+        {status === "loading" && <Loader />}
         {/*<PageTitle title={formProps.title} />*/}
         <div className="p-4">
-          <WrappedComponent
-            {...props}
-            form={form}
-            onFinish={onFinish}
-            inputs={formInputs}
-          />
+          <WrappedComponent {...props} form={form} onFinish={onFinish} />
         </div>
       </InnerContainer>
     );

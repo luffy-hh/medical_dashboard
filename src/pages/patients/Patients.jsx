@@ -1,9 +1,38 @@
 import { patientsTableColumns } from "../../constants/TableColumns";
 import withTableAndTitle from "../../components/hoc/withTableAndTitle";
-import { deletePatient, patients } from "../../app/Patients/patientSlice.jsx";
-import { useDispatch } from "react-redux";
-const Patients = () => {
+import {
+  createPatientStatus,
+  deletePatient,
+  deletePatientMessage,
+  deletePatientStatus,
+  getPatients,
+  patients,
+  resetCreatePatientStatus,
+  resetDeletePatientStatus,
+  resetUpdatePatientStatus,
+  updatePatientStatus,
+} from "../../app/Patients/patientSlice.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import PropTypes from "prop-types";
+const Patients = ({ router }) => {
   const dispatch = useDispatch();
+  const deleteStatus = useSelector(deletePatientStatus);
+  const createStatus = useSelector(createPatientStatus);
+  const updateStatus = useSelector(updatePatientStatus);
+  useEffect(() => {
+    (deleteStatus === "succeeded" ||
+      createStatus === "succeeded" ||
+      updateStatus === "succeeded") &&
+      dispatch(getPatients({ api: "/family_member_list" }));
+    (deleteStatus === "succeeded" || deleteStatus === "failed") &&
+      dispatch(resetDeletePatientStatus());
+    (createStatus === "succeeded" || createStatus === "failed") &&
+      dispatch(resetCreatePatientStatus());
+    (updateStatus === "succeeded" || updateStatus === "failed") &&
+      dispatch(resetUpdatePatientStatus());
+  }, [dispatch, deleteStatus, createStatus, router.location]);
+
   // const columns = patientsTableColumns(props.router.nav);
   return <></>;
 };
@@ -22,15 +51,16 @@ const buttonProps = {
 const tableProps = {
   columns: patientsTableColumns,
   data: patients,
+  dateChange: "dob",
 };
 const modalProps = {
   title: "Delete Patient",
   text: "Are you sure you want to delete this patient?",
   method: deletePatient,
   api: "/family_member_delete",
-  postData: {
-    uby: JSON.parse(localStorage.getItem("user")).name,
-  },
+  status: deletePatientStatus,
+  message: deletePatientMessage,
+  extraData: { uby: JSON.parse(localStorage.getItem("user")).name },
 };
 const PatientsWithTableAndTitle = withTableAndTitle(
   Patients,
@@ -39,5 +69,9 @@ const PatientsWithTableAndTitle = withTableAndTitle(
   tableProps,
   modalProps,
 );
+
+Patients.propTypes = {
+  router: PropTypes.object,
+};
 
 export default PatientsWithTableAndTitle;

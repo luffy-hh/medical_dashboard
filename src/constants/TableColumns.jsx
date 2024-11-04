@@ -51,7 +51,7 @@ export const patientsTableColumns = (nav, setId, setOpen) => {
       key: "dob",
       align: "right",
       render: (text) => {
-        return dayjs().diff(dayjs(text), "years");
+        return dayjs().diff(dayjs(text, "DD-MM-YYYY"), "years");
       },
     },
     {
@@ -598,11 +598,6 @@ export const userTableColumns = (nav) => {
       title: "Login ID",
       dataIndex: "loginId",
       key: "loginId",
-    },
-    {
-      title: "Created By",
-      dataIndex: "cby",
-      key: "cby",
     },
     {
       title: "Actions",

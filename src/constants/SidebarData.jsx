@@ -28,7 +28,7 @@ export const sideBarData = [
   {
     label: "Patients",
     icon: <GrGroup />,
-    key: "/patients",
+    key: "/patient",
   },
   {
     label: "Medicines",

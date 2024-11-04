@@ -74,7 +74,7 @@ export const patientInputs = () => {
     },
     {
       label: "Phone Number",
-      name: "phone_number",
+      name: "phone_no",
       type: "text",
       placeholder: "Enter Phone Number",
       className: "w-full",
@@ -89,7 +89,6 @@ export const patientInputs = () => {
       },
       rules: [
         {
-          required: true,
           pattern: /[0-9]+/g, // This will allow only numbers
           message: "Please enter valid Phone Number",
         },
@@ -102,7 +101,7 @@ export const patientInputs = () => {
     },
     {
       label: "Blood Group",
-      name: "blood_group",
+      name: "blood_type",
       type: "select",
       options: bloodGroupData,
       placeholder: "Choose Blood Group",
@@ -193,7 +192,7 @@ export const patientInputs = () => {
     },
     {
       label: "Date of Birth",
-      name: "date_of_birth",
+      name: "dob",
       type: "date",
       placeholder: "Choose Date of Birth",
       className: "w-full",
@@ -210,6 +209,66 @@ export const patientInputs = () => {
         {
           required: true,
           message: "Please enter Date of Birth",
+        },
+      ],
+    },
+    {
+      label: "Photo",
+      name: "member_photo",
+      type: "file",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+      rules: [
+        {
+          required: true,
+          message: "Please enter Photo",
+        },
+      ],
+    },
+    {
+      label: "Selected Photo",
+      name: "selected_photo",
+      type: "file",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+      rules: [
+        {
+          required: true,
+          message: "Please enter Photo",
+        },
+      ],
+    },
+    {
+      label: "Unselected Photo",
+      name: "unselected_photo",
+      type: "file",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+      rules: [
+        {
+          required: true,
+          message: "Please enter Photo",
         },
       ],
     },

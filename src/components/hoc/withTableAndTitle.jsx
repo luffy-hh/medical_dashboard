@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState } from "react";
+import React, { lazy, Suspense, useMemo, useState } from "react";
 const InnerContainer = lazy(
   () => import("../../components/common/InnerContainer"),
 );
@@ -13,6 +13,8 @@ import PropTypes from "prop-types";
 import Loader from "../common/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "antd";
+import Notification from "../common/Notification.jsx";
+import dayjs from "dayjs";
 
 const withTableAndTitle = (
   WrappedComponent,
@@ -25,11 +27,46 @@ const withTableAndTitle = (
     const dispatch = useDispatch();
     const [id, setId] = useState(null);
     const [open, setOpen] = useState(false);
-    const data = useSelector(tableProps.data);
-    console.log(data);
+    let data = useSelector(tableProps?.data ? tableProps.data : () => {});
+    let finalData = useMemo(() => {
+      if (tableProps?.dateChange) {
+        return data.map((item) => ({
+          ...item,
+          [tableProps.dateChange]: dayjs(item[tableProps.dateChange]).format(
+            "DD-MM-YYYY",
+          ),
+        }));
+      }
+      return data;
+    }, [data]);
+    const deleteStatus = useSelector(
+      modalProps?.status ? modalProps.status : () => {},
+    );
+    const deleteMessage = useSelector(
+      modalProps?.message ? modalProps?.message : () => {},
+    );
 
     return (
       <Suspense fallback={<Loader />}>
+        {deleteStatus === "loading" && <Loader />}
+        {deleteStatus === "succeeded" && (
+          <Notification
+            position="top-end"
+            type="mixin"
+            title={"Success"}
+            text={deleteMessage}
+            icon={"success"}
+          />
+        )}
+        {deleteStatus === "failed" && (
+          <Notification
+            position="top-end"
+            type="mixin"
+            title={"Error"}
+            text={deleteMessage}
+            icon={"error"}
+          />
+        )}
         <Modal
           title={modalProps?.title}
           open={open}
@@ -43,7 +80,8 @@ const withTableAndTitle = (
             dispatch(
               modalProps?.method({
                 api: modalProps?.api + "/" + id,
-                postData: modalProps?.postData,
+                postData: modalProps?.postData ? modalProps?.postData : {},
+                header: { ...modalProps?.extraData },
               }),
             );
           }}
@@ -66,7 +104,7 @@ const withTableAndTitle = (
           )}
           <CustomTable
             columns={tableProps.columns(props.router.nav, setId, setOpen)}
-            data={data ? data : []}
+            data={finalData ? finalData : []}
           />
         </InnerContainer>
       </Suspense>

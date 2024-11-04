@@ -62,6 +62,12 @@ const AppointmentList = Loadable(
 const CreateAppointment = Loadable(
   lazy(() => import("../pages/appointments/CreateAppointment")),
 );
+const PatientDetails = Loadable(
+  lazy(() => import("../pages/patients/PatientDetails")),
+);
+const EditPatient = Loadable(
+  lazy(() => import("../pages/patients/EditPatient")),
+);
 const CreateUser = Loadable(lazy(() => import("../pages/users/CreateUser")));
 const NotFound = Loadable(lazy(() => import("../pages/errors/NotFound")));
 const Routes = [
@@ -74,9 +80,19 @@ const Routes = [
         element: <Home />,
       },
       {
-        path: "/patients",
+        path: "/patient",
         name: "Patients",
         element: <Patients />,
+      },
+      {
+        path: "/patient/:id",
+        name: "Patient Details",
+        element: <PatientDetails />,
+      },
+      {
+        path: "/patient/:id/edit",
+        name: "Edit Patient",
+        element: <EditPatient />,
       },
       { path: "category", name: "Categories", element: <CategoryList /> },
       {

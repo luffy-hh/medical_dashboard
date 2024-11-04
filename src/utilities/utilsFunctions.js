@@ -50,4 +50,56 @@ for (let i = 0; i < 7; i++) {
   });
   daysOfWeek.push(`${dayOfWeek} ${dayOfMonth}`);
 }
-export { classNames, expireToken, parseDate, daysOfWeek };
+
+const photoUrlFix = (data, folderAttributes) => {
+  const processItem = (item) => {
+    let updatedItem = { ...item };
+
+    folderAttributes.forEach(({ folder, attributes }) => {
+      attributes.forEach((attribute) => {
+        const attributeParts = attribute.split(".");
+        if (
+          attributeParts.length === 2 &&
+          Array.isArray(item[attributeParts[0]])
+        ) {
+          // Handle the case where the attribute is nested within an array
+          const arrayName = attributeParts[0];
+          const nestedAttribute = attributeParts[1];
+
+          updatedItem[arrayName] = item[arrayName].map((nestedItem) => {
+            let updatedNestedItem = { ...nestedItem };
+            if (
+              Object.prototype.hasOwnProperty.call(nestedItem, nestedAttribute)
+            ) {
+              if (nestedItem[nestedAttribute] === null) {
+                updatedNestedItem[nestedAttribute] = null;
+              } else {
+                updatedNestedItem[nestedAttribute] =
+                  BASE_URL + folder + nestedItem[nestedAttribute];
+              }
+            }
+            return updatedNestedItem;
+          });
+        } else if (Object.prototype.hasOwnProperty.call(item, attribute)) {
+          // Handle the case where the is not nested
+          if (item[attribute] === null) {
+            updatedItem[attribute] = null;
+          } else {
+            updatedItem[attribute] = BASE_URL + folder + item[attribute];
+          }
+        }
+      });
+    });
+
+    return updatedItem;
+  };
+
+  if (Array.isArray(data)) {
+    return data.map(processItem);
+  } else if (typeof data === "object" && data !== null) {
+    return processItem(data);
+  } else {
+    throw new Error("Invalid data type. Expected an array or an object.");
+  }
+};
+export { classNames, expireToken, parseDate, daysOfWeek, photoUrlFix };

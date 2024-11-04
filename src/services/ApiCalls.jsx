@@ -57,7 +57,7 @@ export const postData = async (api, postData) => {
   }
 };
 
-export const postDataWithToken = async (api, postData) => {
+export const postDataWithToken = async (api, postData, header = {}) => {
   console.log(api, postData);
   try {
     const response = await fetch(baseUrl + api, {
@@ -65,8 +65,38 @@ export const postDataWithToken = async (api, postData) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        ...header,
       },
       body: JSON.stringify(postData),
+    });
+    if (response.status === 500 || response.status === 401) {
+      expireToken();
+    }
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error in post request");
+  }
+};
+
+export const postMultipartDataWithToken = async (
+  api,
+  postData,
+  header = {},
+) => {
+  console.log(api, postData);
+  let formData = new FormData();
+  Object.keys(postData).forEach((key) => {
+    formData.append(key, postData[key]);
+  });
+  try {
+    const response = await fetch(baseUrl + api, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        ...header,
+      },
+      body: formData,
     });
     if (response.status === 500 || response.status === 401) {
       expireToken();

@@ -18,7 +18,7 @@ const DefaultLayout = ({ router }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  console.log(isAuthenticated && Object.keys(user).length > 0);
+  // console.log(isAuthenticated && Object.keys(user).length > 0);
 
   useEffect(() => {
     if (!isAuthenticated || Object.keys(user).length === 0) {
