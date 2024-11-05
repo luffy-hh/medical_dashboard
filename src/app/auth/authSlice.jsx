@@ -22,8 +22,8 @@ export const login = createAsyncThunk(
     }
     if (response.status === 200) {
       localStorage.setItem("isAuthenticated", JSON.stringify(true));
-      localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("token", JSON.stringify(data.token));
+      localStorage.setItem("user", JSON.stringify(data.data));
+      localStorage.setItem("token", JSON.stringify(data.data.token));
     }
     return data;
   },
@@ -46,13 +46,13 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loginStatus = "succeeded";
         state.isAuthenticated = true;
-        state.token = action.payload.token;
-        state.loginMessage = action.payload.message;
-        state.user = action.payload.user;
+        state.token = action.payload.data.token;
+        state.loginMessage = action.payload.responseMessage;
+        state.user = action.payload.data;
       })
       .addCase(login.rejected, (state, action) => {
         state.loginStatus = "failed";
-        state.loginMessage = action.payload.message;
+        state.loginMessage = action.payload.responseMessage;
       });
   },
 });

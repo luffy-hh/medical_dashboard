@@ -7,6 +7,8 @@ import {
   deletePatientStatus,
   getPatients,
   patients,
+  patientsMessage,
+  patientsStatus,
   resetCreatePatientStatus,
   resetDeletePatientStatus,
   resetUpdatePatientStatus,
@@ -52,6 +54,8 @@ const tableProps = {
   columns: patientsTableColumns,
   data: patients,
   dateChange: "dob",
+  status: patientsStatus,
+  message: patientsMessage,
 };
 const modalProps = {
   title: "Delete Patient",

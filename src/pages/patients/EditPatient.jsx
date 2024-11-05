@@ -44,7 +44,10 @@ const formProps = {
   apiHasExtra: "id",
   status: updatePatientStatus,
   message: updatePatientStatus,
-  extraData: { uby: JSON.parse(localStorage.getItem("user")).name },
+  extraData: {
+    uby: JSON.parse(localStorage.getItem("user")).name,
+    "Device-Type": "web",
+  },
 };
 const EditPatientWithRouter = withNotiAndLoader(EditPatient, formProps);
 export default EditPatientWithRouter;

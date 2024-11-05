@@ -29,7 +29,8 @@ const withNotiAndLoader = (WrappedComponent, formProps) => {
         formProps?.method({
           api:
             formProps?.api +
-            (props.router?.location?.state[formProps?.apiHasExtra]
+            (formProps?.apiHasExtra &&
+            props.router?.location?.state[formProps?.apiHasExtra]
               ? `/${props.router?.location?.state[formProps?.apiHasExtra]}`
               : ""),
           postData: { ...values },

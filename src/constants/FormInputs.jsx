@@ -3,10 +3,10 @@ import { bloodGroupData, genderData } from "./SelectData.jsx";
 export const loginInputs = () => {
   return [
     {
-      label: "Email (Or) LoginId",
+      label: "LoginId",
       name: "loginId",
       type: "text",
-      placeholder: "Enter Email (Or) LoginId",
+      placeholder: "Enter LoginId",
       className: "w-full",
       layout: {
         layout: "vertical",
@@ -20,7 +20,7 @@ export const loginInputs = () => {
       rules: [
         {
           required: true,
-          message: "Please enter your Email (Or) LoginId",
+          message: "Please enter your LoginId",
         },
       ],
     },
@@ -184,7 +184,7 @@ export const patientInputs = () => {
       },
       rules: [
         {
-          pattern: /^(?!\s*$).+$/,
+          // pattern: /^(?!\s*$).+$/,
           required: true,
           message: "Please choose Gender",
         },
@@ -858,7 +858,7 @@ export const userCreateInputs = () => {
     },
     {
       label: "Login ID",
-      name: "login_id",
+      name: "loginId",
       type: "text",
       placeholder: "Enter Login ID",
       className: "w-full",
@@ -903,6 +903,71 @@ export const userCreateInputs = () => {
   ];
 };
 
+export const userUpdateInputs = () => {
+  return [
+    {
+      label: "Name",
+      name: "name",
+      type: "text",
+      placeholder: "Enter Name",
+      className: "w-full",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+      rules: [
+        {
+          required: true,
+          message: "Enter Name",
+        },
+      ],
+    },
+    {
+      label: "Login ID",
+      name: "loginId",
+      type: "text",
+      placeholder: "Enter Login ID",
+      className: "w-full",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+      rules: [
+        {
+          required: true,
+          message: "Enter Login ID",
+        },
+      ],
+    },
+    {
+      label: "Password",
+      name: "password",
+      type: "password",
+      placeholder: "Enter Password",
+      className: "w-full",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+    },
+  ];
+};
+
 export const categoryCreateInputs = () => {
   return [
     {
@@ -926,6 +991,44 @@ export const categoryCreateInputs = () => {
           message: "Enter Name",
         },
       ],
+    },
+    {
+      label: "Warning Point",
+      name: "threshold",
+      type: "number",
+      placeholder: "Enter warning point",
+      className: "w-full",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+      rules: [
+        {
+          required: true,
+          max: 3,
+          message: "Please Enter a Valid value.",
+        },
+      ],
+    },
+    {
+      label: "Icon Image",
+      name: "icon",
+      type: "file",
+      className: "w-full",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
     },
   ];
 };
@@ -956,7 +1059,7 @@ export const bannerCreateInputs = () => {
     },
     {
       label: "Image",
-      name: "description",
+      name: "banner_img",
       type: "file",
       // placeholder: "Enter Description",
       className: "w-full",

@@ -35,7 +35,10 @@ const formProps = {
   api: "/family_member_store",
   status: createPatientStatus,
   message: createPatientMessage,
-  extraData: { cby: JSON.parse(localStorage.getItem("user")).name },
+  extraData: {
+    cby: JSON.parse(localStorage.getItem("user")).name,
+    "Device-Type": "web",
+  },
 };
 const CreatePatientWithNotiAndLoader = withNotiAndLoader(
   CreatePatient,

@@ -28,6 +28,8 @@ const Login = ({ router }) => {
   };
   useEffect(() => {
     if (isAuthenticated && Object.keys(user).length > 0) {
+      console.log("work");
+
       router.nav("/");
     }
   }, [isAuthenticated, user, router]);

@@ -139,6 +139,8 @@ const patientSlice = createSlice({
 export const patients = (state) => {
   return state.patients.patients;
 };
+export const patientsStatus = (state) => state.patients.patientsStatus;
+export const patientsMessage = (state) => state.patients.patientsMessage;
 export const deletePatientStatus = (state) =>
   state.patients.deletePatientStatus;
 export const deletePatientMessage = (state) =>

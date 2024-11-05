@@ -1,10 +1,17 @@
 import React, { useEffect } from "react";
 import {
+  createUserStatus,
   deleteUser,
   deleteUserMessage,
   deleteUserStatus,
   getUsers,
+  resetCreateUserStatus,
+  resetDeleteUserStatus,
+  resetUpdateUserStatus,
+  updateUserStatus,
   users,
+  usersMessage,
+  usersStatus,
 } from "../../app/User/userSlice.jsx";
 import withTableAndTitle from "../../components/hoc/withTableAndTitle.jsx";
 import { userTableColumns } from "../../constants/TableColumns.jsx";
@@ -13,13 +20,27 @@ import { useDispatch, useSelector } from "react-redux";
 const UserList = () => {
   const dispatch = useDispatch();
   const userList = useSelector(users);
-  console.log(userList);
-
+  const deleteStatus = useSelector(deleteUserStatus);
+  const createStatus = useSelector(createUserStatus);
+  const updateStatus = useSelector(updateUserStatus);
   useEffect(() => {
-    if (userList.length === 0) {
+    dispatch(getUsers({ api: "/user_list" }));
+  }, []);
+  useEffect(() => {
+    if (
+      deleteStatus === "succeeded" ||
+      createStatus === "succeeded" ||
+      updateStatus === "succeeded"
+    ) {
       dispatch(getUsers({ api: "/user_list" }));
     }
-  }, [dispatch, userList.length]);
+    (deleteStatus === "succeeded" || deleteStatus === "failed") &&
+      dispatch(resetDeleteUserStatus());
+    (createStatus === "succeeded" || createStatus === "failed") &&
+      dispatch(resetCreateUserStatus());
+    (updateStatus === "succeeded" || updateStatus === "failed") &&
+      dispatch(resetUpdateUserStatus());
+  }, [createStatus, deleteStatus, dispatch, updateStatus]);
   return <></>;
 };
 const pageTitleProps = {
@@ -34,6 +55,8 @@ const buttonProps = {
 const tableProps = {
   columns: userTableColumns,
   data: users,
+  status: usersStatus,
+  message: usersMessage,
 };
 const modalProps = {
   title: "Delete User",
@@ -42,12 +65,13 @@ const modalProps = {
   api: "/user_delete",
   status: deleteUserStatus,
   message: deleteUserMessage,
+  extraData: { uby: JSON.parse(localStorage.getItem("user")).name },
 };
-const UserListWithTable = withTableAndTitle(
+const UserListWithTableAndTitle = withTableAndTitle(
   UserList,
   pageTitleProps,
   buttonProps,
   tableProps,
   modalProps,
 );
-export default UserListWithTable;
+export default UserListWithTableAndTitle;

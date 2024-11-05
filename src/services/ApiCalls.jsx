@@ -22,7 +22,7 @@ export const getDataWithToken = async (api) => {
 
     const response = await fetch(`${baseUrl}${api}`, {
       headers: {
-        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        Authorization: `${JSON.parse(localStorage.getItem("token"))}`,
       },
     });
     if (response.status === 500 || response.status === 401) {
@@ -64,7 +64,7 @@ export const postDataWithToken = async (api, postData, header = {}) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        Authorization: `${JSON.parse(localStorage.getItem("token"))}`,
         ...header,
       },
       body: JSON.stringify(postData),
@@ -93,7 +93,7 @@ export const postMultipartDataWithToken = async (
     const response = await fetch(baseUrl + api, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        Authorization: `${JSON.parse(localStorage.getItem("token"))}`,
         ...header,
       },
       body: formData,

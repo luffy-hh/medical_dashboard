@@ -4,7 +4,14 @@ const BannerList = Loadable(lazy(() => import("../pages/banner/BannerList")));
 const CreateBanner = Loadable(
   lazy(() => import("../pages/banner/CreateBanner")),
 );
+const BannerDetails = Loadable(
+  lazy(() => import("../pages/banner/BannerDetails")),
+);
+const UpdateBanner = Loadable(
+  lazy(() => import("../pages/banner/UpdateBanner")),
+);
 const UserList = Loadable(lazy(() => import("../pages/users/UserList")));
+const UserDetails = Loadable(lazy(() => import("../pages/users/UserDetails")));
 const CategoryList = Loadable(
   lazy(() => import("../pages/category/CategoryList")),
 );
@@ -52,6 +59,9 @@ const DailyRecordsByCategory = Loadable(
 const CreateCategory = Loadable(
   lazy(() => import("../pages/category/CreateCategory")),
 );
+const UpdateCategory = Loadable(
+  lazy(() => import("../pages/category/UpdateCategory")),
+);
 const Medicine = Loadable(lazy(() => import("../pages/medicines/Medicine")));
 const CreateMedicine = Loadable(
   lazy(() => import("../pages/medicines/CreateMedicine")),
@@ -69,6 +79,7 @@ const EditPatient = Loadable(
   lazy(() => import("../pages/patients/EditPatient")),
 );
 const CreateUser = Loadable(lazy(() => import("../pages/users/CreateUser")));
+const UpdateUser = Loadable(lazy(() => import("../pages/users/UpdateUser")));
 const NotFound = Loadable(lazy(() => import("../pages/errors/NotFound")));
 const Routes = [
   {
@@ -100,7 +111,14 @@ const Routes = [
         name: "Create Category",
         element: <CreateCategory />,
       },
+      {
+        path: "/category/:id/edit",
+        name: "Edit Category",
+        element: <UpdateCategory />,
+      },
       { path: "user", name: "Users", element: <UserList /> },
+      { path: "user/:id", name: "User Details", element: <UserDetails /> },
+      { path: "user/:id/edit", name: "Edit User", element: <UpdateUser /> },
       {
         path: "/user/create",
         name: "Create User",
@@ -115,6 +133,16 @@ const Routes = [
         path: "/banner/create",
         name: "Create Banner",
         element: <CreateBanner />,
+      },
+      {
+        path: "/banner/:id",
+        name: "Banner Details",
+        element: <BannerDetails />,
+      },
+      {
+        path: "/banner/:id/edit",
+        name: "Edit Banner",
+        element: <UpdateBanner />,
       },
       {
         path: "/patients/create",

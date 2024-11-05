@@ -358,7 +358,7 @@ export const monthlyRecordsTableColumns = (nav) => {
   ];
 };
 
-export const bannerTableColumns = (nav) => {
+export const bannerTableColumns = (nav, setId, setOpen) => {
   return [
     {
       title: "No",
@@ -371,18 +371,18 @@ export const bannerTableColumns = (nav) => {
       dataIndex: "title",
       key: "title",
     },
-    {
-      title: "Active/Inactive",
-      dataIndex: "is_active",
-      key: "is_active",
-      render: (text, record, index) => {
-        if (record.is_active == 1) {
-          return <span className="text-green-500">Active</span>;
-        } else {
-          return <span className="text-red-500">Inactive</span>;
-        }
-      },
-    },
+    // {
+    //   title: "Active/Inactive",
+    //   dataIndex: "is_active",
+    //   key: "is_active",
+    //   render: (text, record, index) => {
+    //     if (record.is_active == 1) {
+    //       return <span className="text-green-500">Active</span>;
+    //     } else {
+    //       return <span className="text-red-500">Inactive</span>;
+    //     }
+    //   },
+    // },
     {
       title: "Created By",
       dataIndex: "cby",
@@ -423,8 +423,8 @@ export const bannerTableColumns = (nav) => {
               <div
                 className=" flex gap-2 items-center"
                 onClick={() => {
-                  //   setOpen(true);
-                  //   setMeterId(record.id);
+                  setOpen(true);
+                  setId(record.id);
                 }}
               >
                 <FaTrashCan /> <span className=" inline-block">Delete</span>
@@ -498,7 +498,7 @@ export const bloodPressureTableColumns = () => {
   ];
 };
 
-export const categoryTableColumns = (nav) => {
+export const categoryTableColumns = (nav, setId, setOpen) => {
   return [
     {
       title: "No",
@@ -512,6 +512,11 @@ export const categoryTableColumns = (nav) => {
       key: "cat_name",
     },
     {
+      title: "Warning Point",
+      dataIndex: "threshold",
+      key: "threshold",
+    },
+    {
       title: "Created By",
       dataIndex: "cby",
       key: "cby",
@@ -521,17 +526,17 @@ export const categoryTableColumns = (nav) => {
       key: "action",
       render: (text, record) => {
         const menuItems = [
-          {
-            key: "view",
-            label: (
-              <div
-                onClick={() => nav(`${record.id}`, { state: { ...record } })}
-                className=" flex gap-2 items-center"
-              >
-                <FaEye /> <span className=" inline-block">View</span>
-              </div>
-            ),
-          },
+          // {
+          //   key: "view",
+          //   label: (
+          //     <div
+          //       onClick={() => nav(`${record.id}`, { state: { ...record } })}
+          //       className=" flex gap-2 items-center"
+          //     >
+          //       <FaEye /> <span className=" inline-block">View</span>
+          //     </div>
+          //   ),
+          // },
           {
             key: "edit",
             label: (
@@ -551,8 +556,8 @@ export const categoryTableColumns = (nav) => {
               <div
                 className=" flex gap-2 items-center"
                 onClick={() => {
-                  //   setOpen(true);
-                  //   setMeterId(record.id);
+                  setOpen(true);
+                  setId(record.id);
                 }}
               >
                 <FaTrashCan /> <span className=" inline-block">Delete</span>
@@ -581,7 +586,7 @@ export const categoryTableColumns = (nav) => {
   ];
 };
 
-export const userTableColumns = (nav) => {
+export const userTableColumns = (nav, setId, setOpen) => {
   return [
     {
       title: "No",
@@ -634,8 +639,8 @@ export const userTableColumns = (nav) => {
               <div
                 className=" flex gap-2 items-center"
                 onClick={() => {
-                  //   setOpen(true);
-                  //   setMeterId(record.id);
+                  setOpen(true);
+                  setId(record.id);
                 }}
               >
                 <FaTrashCan /> <span className=" inline-block">Delete</span>

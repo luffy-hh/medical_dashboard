@@ -25,6 +25,8 @@ const withTableAndTitle = (
 ) => {
   const HOC = (props) => {
     const dispatch = useDispatch();
+    console.log(modalProps);
+
     const [id, setId] = useState(null);
     const [open, setOpen] = useState(false);
     let data = useSelector(tableProps?.data ? tableProps.data : () => {});
@@ -45,10 +47,18 @@ const withTableAndTitle = (
     const deleteMessage = useSelector(
       modalProps?.message ? modalProps?.message : () => {},
     );
-
+    const tableStatus = useSelector(
+      tableProps?.status ? tableProps.status : () => {},
+    );
+    const tableMessage = useSelector(
+      tableProps?.message ? tableProps?.message : () => {},
+    );
     return (
       <Suspense fallback={<Loader />}>
-        {deleteStatus === "loading" && <Loader />}
+        {(deleteStatus === "loading" || tableStatus === "loading") && (
+          <Loader />
+        )}
+
         {deleteStatus === "succeeded" && (
           <Notification
             position="top-end"
@@ -64,6 +74,15 @@ const withTableAndTitle = (
             type="mixin"
             title={"Error"}
             text={deleteMessage}
+            icon={"error"}
+          />
+        )}
+        {tableStatus === "failed" && (
+          <Notification
+            position="top-end"
+            type="mixin"
+            title={"Error"}
+            text={tableMessage}
             icon={"error"}
           />
         )}
