@@ -992,6 +992,51 @@ export const categoryCreateInputs = () => {
       ],
     },
     {
+      label: "Slug",
+      name: "slug",
+      type: "text",
+      placeholder: "Enter Slug",
+      className: "w-full",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+      rules: [
+        {
+          required: true,
+          message: "Enter Slug",
+        },
+      ],
+    },
+    {
+      label: "Unit",
+      name: "unit",
+      type: "text",
+      placeholder: "Enter Unit",
+      className: "w-full",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+      rules: [
+        {
+          required: true,
+          message: "Please Enter Unit",
+        },
+      ],
+    },
+
+    {
       label: "Warning Point",
       name: "threshold",
       type: "number",
@@ -1015,6 +1060,22 @@ export const categoryCreateInputs = () => {
       ],
     },
     {
+      label: "Warning Pont 2",
+      name: "threshold2",
+      type: "number",
+      placeholder: "Enter warning point",
+      className: "w-full",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+    },
+    {
       label: "Icon Image",
       name: "icon",
       type: "file",
@@ -1028,6 +1089,12 @@ export const categoryCreateInputs = () => {
           span: 24,
         },
       },
+      rules: [
+        {
+          required: true,
+          message: "Please Enter a Valid value.",
+        },
+      ],
     },
   ];
 };
@@ -1085,7 +1152,7 @@ export const medicineCreateInputs = (
   dayTypeValues,
   setDayTypeValues,
   mealTypeValues,
-  setMealTypeValues
+  setMealTypeValues,
 ) => {
   const handleDayTypeChange = (values) => {
     console.log(values);
@@ -1314,7 +1381,7 @@ export const medicineCreateInputs = (
             value: "After",
           },
         ],
-      }
+      },
     );
   }
   if (dayTypeValues.includes("afternoon")) {
@@ -1373,7 +1440,7 @@ export const medicineCreateInputs = (
             value: "After",
           },
         ],
-      }
+      },
     );
   }
   if (dayTypeValues.includes("night")) {
@@ -1432,7 +1499,7 @@ export const medicineCreateInputs = (
             value: "After",
           },
         ],
-      }
+      },
     );
   }
 

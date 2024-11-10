@@ -25,15 +25,15 @@ const CreateDailyRecord = ({ router, onFinish }) => {
   const { location } = router;
   let inputs = () => {
     switch (name) {
-      case "Blood Pressure":
+      case "blood_pressure":
         return dailyBloodPressureInputs();
-      case "Blood Sugar":
+      case "blood_sugar":
         return dailyBloodSugarInputs();
-      case "Blood Oxygen":
+      case "blood_oxygen":
         return dailyBloodOxygenInputs();
-      case "Pulse Rate":
+      case "pulse_rate":
         return dailyPulseRateInputs();
-      case "Temperature":
+      case "temperature":
         return dailyTemperatureInputs();
       default:
         return [];

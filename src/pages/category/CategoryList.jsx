@@ -28,6 +28,8 @@ const CategoryList = () => {
   const deleteStatus = useSelector(deleteCategoryStatus);
   const createStatus = useSelector(createCategoryStatus);
   const updateStatus = useSelector(updateCategoryStatus);
+  const categoryList = useSelector(categories);
+  console.log(categoryList);
 
   // useEffect(() => {
   //   dispatch(getCategories({ api: "/check_category_list" }));

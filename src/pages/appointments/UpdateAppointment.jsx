@@ -20,7 +20,6 @@ const UpdateAppointment = ({ router, onFinish }) => {
       "YYYY-MM-DD",
     ).format("DD-MM-YYYY"),
   };
-  console.log(initialValues);
 
   const [patient, setPatient] = useState(initialValues.family_member_id);
   return (

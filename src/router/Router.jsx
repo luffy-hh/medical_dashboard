@@ -27,6 +27,9 @@ const MonthlyRecords = Loadable(
 const MonthlyRecordDetails = Loadable(
   lazy(() => import("../pages/monthlyRecords/MonthlyRecordDetails.jsx")),
 );
+const UpdateMonthlyRecord = Loadable(
+  lazy(() => import("../pages/monthlyRecords/UpdateMonthlyRecord")),
+);
 const CreateMonthlyRecord = Loadable(
   lazy(() => import("../pages/monthlyRecords/CreateMonthlyRecord")),
 );
@@ -173,6 +176,11 @@ const Routes = [
         path: "/lab-records/:id",
         name: "Lab Record Details",
         element: <MonthlyRecordDetails />,
+      },
+      {
+        path: "/lab-records/:id/edit",
+        name: "Edit Monthly",
+        element: <UpdateMonthlyRecord />,
       },
       {
         path: "/lab-records/create",

@@ -119,7 +119,7 @@ export const patientsTableColumns = (nav, setId, setOpen) => {
   ];
 };
 
-export const dailyRecordsTableColumns = (nav) => {
+export const dailyRecordsTableColumns = () => {
   return [
     {
       title: "No",
@@ -143,13 +143,21 @@ export const dailyRecordsTableColumns = (nav) => {
       children: [
         {
           title: "Before Eating",
-          dataIndex: "before_eating",
-          key: "before_eating",
+          dataIndex: "Before Meal",
+          key: "Before Meal",
+          align: "right",
+          render: (text) => {
+            return text ? text + " mg/dl" : "-";
+          },
         },
         {
           title: "After Eating",
-          dataIndex: "after_eating",
-          key: "after_eating",
+          dataIndex: "After Meal",
+          key: "Before Meal",
+          align: "right",
+          render: (text) => {
+            return text ? text + " mg/dl" : "-";
+          },
         },
       ],
     },
@@ -159,103 +167,118 @@ export const dailyRecordsTableColumns = (nav) => {
       children: [
         {
           title: "Systolic",
-          dataIndex: "systolic",
-          key: "systolic",
+          dataIndex: "Systolic",
+          key: "Systolic",
+          align: "right",
+          render: (text) => {
+            return text ? text + " mmHg" : "-";
+          },
         },
         {
           title: "Diastolic",
-          dataIndex: "diastolic",
-          key: "diastolic",
+          dataIndex: "Diastolic",
+          key: "Diastolic",
+          align: "right",
+          render: (text) => {
+            return text ? text + " mmHg" : "-";
+          },
         },
       ],
     },
     {
       title: "Temperature",
-      dataIndex: "temperature",
-      key: "temperature",
+      dataIndex: "Temperature",
+      key: "Temperature",
+      align: "right",
+      render: (text) => {
+        return text ? text + " °F" : "-";
+      },
     },
     {
       title: "SPO2",
-      dataIndex: "spo2",
-      key: "spo2",
-    },
-    {
-      title: "Pulse",
-      dataIndex: "pulse",
-      key: "pulse",
-    },
-    {
-      title: "Night Injection",
-      dataIndex: "night_injection",
-      key: "night_injection",
-    },
-    {
-      title: "Remarks",
-      dataIndex: "remarks",
-      key: "remarks",
-    },
-    {
-      title: "Actions",
-      key: "action",
-      render: (text, record) => {
-        const menuItems = [
-          {
-            key: "view",
-            label: (
-              <div
-                onClick={() => nav(`${record.id}`, { state: { ...record } })}
-                className=" flex gap-2 items-center"
-              >
-                <FaEye /> <span className=" inline-block">View</span>
-              </div>
-            ),
-          },
-          {
-            key: "edit",
-            label: (
-              <div
-                className=" flex gap-2 items-center"
-                onClick={() =>
-                  nav(`${record.id}/edit`, { state: { ...record } })
-                }
-              >
-                <FaEdit /> <span className=" inline-block">Edit</span>
-              </div>
-            ),
-          },
-          {
-            key: "delete",
-            label: (
-              <div
-                className=" flex gap-2 items-center"
-                onClick={() => {
-                  //   setOpen(true);
-                  //   setMeterId(record.id);
-                }}
-              >
-                <FaTrashCan /> <span className=" inline-block">Delete</span>
-              </div>
-            ),
-          },
-        ];
-        // console.log(record);
-        return (
-          <Suspense fallback={<Loader />}>
-            <Dropdown menu={{ items: menuItems }} trigger={["click"]}>
-              <a
-                className="ant-dropdown-link flex items-center"
-                onClick={(e) => e.preventDefault()}
-              >
-                Actions{" "}
-                <span>
-                  <FaAngleDown />
-                </span>
-              </a>
-            </Dropdown>
-          </Suspense>
-        );
+      dataIndex: "Blood Oxygen",
+      key: "Blood Oxygen",
+      align: "right",
+      render: (text) => {
+        return text ? text + " mg/dl" : "-";
       },
     },
+    {
+      title: "Pulse Rate",
+      dataIndex: "Pulse Rate",
+      key: "Pulse Rate",
+      align: "right",
+      render: (text) => {
+        return text ? text + " bpm" : "-";
+      },
+    },
+    // {
+    //   title: "Night Injection",
+    //   dataIndex: "night_injection",
+    //   key: "night_injection",
+    // },
+    // {
+    //   title: "Actions",
+    //   key: "action",
+    //   render: (text, record) => {
+    //     const menuItems = [
+    //       {
+    //         key: "view",
+    //         label: (
+    //           <div
+    //             onClick={() => nav(`${record.id}`, { state: { ...record } })}
+    //             className=" flex gap-2 items-center"
+    //           >
+    //             <FaEye /> <span className=" inline-block">View</span>
+    //           </div>
+    //         ),
+    //       },
+    //       {
+    //         key: "edit",
+    //         label: (
+    //           <div
+    //             className=" flex gap-2 items-center"
+    //             onClick={() =>
+    //               nav(`${record.id}/edit`, { state: { ...record } })
+    //             }
+    //           >
+    //             <FaEdit /> <span className=" inline-block">Edit</span>
+    //           </div>
+    //         ),
+    //       },
+    //       {
+    //         key: "delete",
+    //         label: (
+    //           <div
+    //             className=" flex gap-2 items-center"
+    //             onClick={() => {
+    //               //   setOpen(true);
+    //               //   setMeterId(record.id);
+    //             }}
+    //           >
+    //             <FaTrashCan /> <span className=" inline-block">Delete</span>
+    //           </div>
+    //         ),
+    //       },
+    //     ];
+    //     // console.log(record);
+    //     return (
+    //       <Suspense fallback={<Loader />}>
+    //         <Dropdown menu={{ items: menuItems }} trigger={["click"]}>
+    //           <a
+    //             className="ant-dropdown-link flex items-center"
+    //             onClick={(e) => e.preventDefault()}
+    //           >
+    //             Actions{" "}
+    //             <span>
+    //               <FaAngleDown />
+    //             </span>
+    //           </a>
+    //         </Dropdown>
+    //       </Suspense>
+    //     );
+    //   },
+    // },
   ];
 };
 

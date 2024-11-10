@@ -38,7 +38,7 @@ const DailyRecordByCategory = ({ router }) => {
   const dailyChecksMonthlyStatus = useSelector(
     dailyChecksMonthlyStatusSelector,
   );
-  // console.log(dailyChecksMonthlyChartValues);
+  console.log(location);
 
   const months = useSelector(monthsSelector);
   const [month, setMonth] = React.useState(null);
@@ -139,7 +139,7 @@ const DailyRecordByCategory = ({ router }) => {
       key: "chart",
       label: "Chart",
       children:
-        router.location.state.category.cat_name === "Blood Pressure" ? (
+        router.location.state.category.slug === "blood_pressure" ? (
           <MonthlyBloodPressureChart
             systolicData={systolic}
             diastolicData={diastolic}
