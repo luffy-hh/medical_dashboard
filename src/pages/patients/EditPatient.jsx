@@ -9,9 +9,12 @@ import {
   updatePatient,
   updatePatientStatus,
 } from "../../app/Patients/patientSlice.jsx";
+import dayjs from "dayjs";
+import { useParams } from "react-router-dom";
 
-const EditPatient = ({ router, form, onFinish }) => {
-  console.log(router.location.state);
+const EditPatient = ({ router, onFinish }) => {
+  const { id } = useParams();
+  // console.log(router.location.state);
   const initialValues = {
     ...router.location.state,
     phone_no:
@@ -27,7 +30,13 @@ const EditPatient = ({ router, form, onFinish }) => {
       <CustomFormWithRouter
         data={patientInputs()}
         initialValues={initialValues}
-        onFinish={onFinish}
+        onFinish={(values) => {
+          const finalValues = {
+            ...values,
+            dob: dayjs(values.dob).format("DD-MM-YYYY"),
+          };
+          onFinish(finalValues, { id: id });
+        }}
       />
     </>
   );
@@ -41,7 +50,7 @@ EditPatient.propTypes = {
 const formProps = {
   method: updatePatient,
   api: "/family_member_update",
-  apiHasExtra: "id",
+  // apiHasExtra: "id",
   status: updatePatientStatus,
   message: updatePatientStatus,
   extraData: {

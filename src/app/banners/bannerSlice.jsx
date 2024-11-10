@@ -26,6 +26,8 @@ export const getBanners = createAsyncThunk(
     const response = await getDataWithToken(api);
 
     const data = await response.json();
+    console.log(data);
+
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue(data);
     }
@@ -35,7 +37,7 @@ export const getBanners = createAsyncThunk(
 
 export const createBanner = createAsyncThunk(
   "banners/createBanner",
-  async ({ api, postData, header }, thunkAPI) => {
+  async ({ api, postData = {}, header = {} }, thunkAPI) => {
     const response = await postMultipartDataWithToken(api, postData, header);
     const data = await response.json();
     if (response.status !== 200) {
@@ -47,8 +49,8 @@ export const createBanner = createAsyncThunk(
 
 export const updateBanner = createAsyncThunk(
   "banners/updateBanner",
-  async ({ api, postData }, thunkAPI) => {
-    const response = await postMultipartDataWithToken(api, postData);
+  async ({ api, postData = {}, header = {} }, thunkAPI) => {
+    const response = await postMultipartDataWithToken(api, postData, header);
     const data = await response.json();
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue(data);
@@ -59,7 +61,7 @@ export const updateBanner = createAsyncThunk(
 
 export const deleteBanner = createAsyncThunk(
   "banners/deleteBanner",
-  async ({ api, postData, header }, thunkAPI) => {
+  async ({ api, postData = {}, header = {} }, thunkAPI) => {
     const response = await postDataWithToken(api, postData, header);
     const data = await response.json();
     if (response.status !== 200) {

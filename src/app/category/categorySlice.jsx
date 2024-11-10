@@ -58,7 +58,7 @@ export const createCategory = createAsyncThunk(
 export const updateCategory = createAsyncThunk(
   "categories/updateCategory",
   async ({ api, postData = {}, header }, thunkAPI) => {
-    const response = await postDataWithToken(api, postData, header);
+    const response = await postMultipartDataWithToken(api, postData, header);
     const data = await response.json();
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue(data);

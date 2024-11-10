@@ -51,9 +51,9 @@ export const sideBarData = [
     key: "/daily-records",
   },
   {
-    label: "Medical Checkup Records",
+    label: "Lab Checkup Records",
     icon: <TbReportAnalytics />,
-    key: "/monthly",
+    key: "/lab-records",
   },
   {
     label: "Users",

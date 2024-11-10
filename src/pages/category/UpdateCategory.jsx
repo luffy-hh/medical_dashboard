@@ -9,10 +9,11 @@ import {
   updateCategoryStatus,
 } from "../../app/category/categorySlice.jsx";
 import { categoryCreateInputs } from "../../constants/FormInputs.jsx";
+import { useParams } from "react-router-dom";
 
 const UpdateCategory = ({ router, onFinish }) => {
   console.log(router.location.state);
-
+  const { id } = useParams();
   const initialValues = {
     ...router.location.state,
   };
@@ -24,7 +25,9 @@ const UpdateCategory = ({ router, onFinish }) => {
       <CustomForm
         data={categoryCreateInputs()}
         initialValues={initialValues}
-        onFinish={onFinish}
+        onFinish={(values) => {
+          onFinish(values, { id: id });
+        }}
       />
     </>
   );
@@ -36,7 +39,7 @@ UpdateCategory.propTypes = {
 const formProps = {
   method: updateCategory,
   api: "/check_category_update",
-  apiHasExtra: "id",
+  // apiHasExtra: "id",
   status: updateCategoryStatus,
   message: updateCategoryMessage,
   extraData: {

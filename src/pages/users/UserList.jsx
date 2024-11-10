@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const UserList = () => {
   const dispatch = useDispatch();
-  const userList = useSelector(users);
+  // const userList = useSelector(users);
   const deleteStatus = useSelector(deleteUserStatus);
   const createStatus = useSelector(createUserStatus);
   const updateStatus = useSelector(updateUserStatus);

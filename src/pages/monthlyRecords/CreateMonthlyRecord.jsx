@@ -1,43 +1,66 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InnerContainer from "../../components/common/InnerContainer";
 import PageTitleWithRouter from "../../components/common/PageTitle";
 import CustomFormWithRouter from "../../components/common/CustomForm";
 import withNotiAndLoader from "../../components/hoc/withNotiAndLoader.jsx";
-import { dummyPatients } from "../../constants/DummyData.jsx";
-import { Avatar, Segmented } from "antd";
 import { medicalCheckupCreateInputs } from "../../constants/FormInputs.jsx";
+import { useSelector } from "react-redux";
+import { patients } from "../../app/Patients/patientSlice.jsx";
+import PatientsSegmented from "../../components/common/PatientsSegmented.jsx";
+import PropTypes from "prop-types";
+import {
+  createLabRecord,
+  createLabRecordMessageSelector,
+  createLabRecordStatusSelector,
+} from "../../app/labRecords/labRecordSlice.jsx";
+import dayjs from "dayjs";
 
-const CreateMonthlyRecord = () => {
-  const [patient, setPatient] = useState(dummyPatients[0].id);
+const CreateMonthlyRecord = ({ onFinish }) => {
+  const patientList = useSelector(patients);
+  const [patient, setPatient] = useState(null);
   console.log(patient);
-  const selectedPatient = dummyPatients.find((p) => p.id === patient);
+  useEffect(() => {
+    if (patientList.length > 0) {
+      setPatient(patientList[0]?.id);
+    }
+  }, [patientList]);
 
   return (
     <>
       <PageTitleWithRouter title="Create Monthly Record" />
-      <Segmented
-        className={" shadow-md gap my-4"}
-        onChange={(val) => setPatient(val)}
-        defaultValue={dummyPatients[0].id}
-        value={patient}
-        options={dummyPatients.map((p) => ({
-          label: (
-            <>
-              <Avatar src={p.image} alt={`${p.name}'s avatar`} size={"large"} />
-              <div>{p.name}</div>
-            </>
-          ),
-          value: p.id,
-        }))}
-      />
+      <PatientsSegmented setPatient={setPatient} patient={patient} />
       <CustomFormWithRouter
         data={medicalCheckupCreateInputs()}
         initialValues={{}}
+        onFinish={(values) => {
+          const finalValues = {
+            ...values,
+            lab_date: dayjs(values.lab_date).format("DD-MM-YYYY"),
+            family_member_id: patient,
+          };
+          onFinish(finalValues);
+        }}
       />
     </>
   );
 };
 
-const CreateMonthlyRecordWithNotiAndLoader =
-  withNotiAndLoader(CreateMonthlyRecord);
+CreateMonthlyRecord.propTypes = {
+  onFinish: PropTypes.func,
+};
+
+const formProps = {
+  method: createLabRecord,
+  api: "/lab_record_create",
+  status: createLabRecordStatusSelector,
+  message: createLabRecordMessageSelector,
+  extraData: {
+    cby: JSON.parse(localStorage.getItem("user")).name,
+  },
+};
+
+const CreateMonthlyRecordWithNotiAndLoader = withNotiAndLoader(
+  CreateMonthlyRecord,
+  formProps,
+);
 export default CreateMonthlyRecordWithNotiAndLoader;

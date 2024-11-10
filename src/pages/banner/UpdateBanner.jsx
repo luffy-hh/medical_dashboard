@@ -11,13 +11,16 @@ import CustomForm from "../../components/common/CustomForm.jsx";
 import { bannerCreateInputs } from "../../constants/FormInputs.jsx";
 
 const UpdateBanner = ({ router, onFinish }) => {
+  const { id } = router.params;
   return (
     <>
       <PageTitleWithRouter title={"Update Banner"} />
       <CustomForm
         data={bannerCreateInputs()}
         initialValues={router.location.state}
-        onFinish={onFinish}
+        onFinish={(values) => {
+          onFinish(values, { id: id });
+        }}
       />
     </>
   );
@@ -30,10 +33,12 @@ UpdateBanner.propTypes = {
 const formProps = {
   method: updateBanner,
   api: "/banner_update",
-  apiHasExtra: "id",
+  // apiHasExtra: "id",
   status: updateBannerStatus,
   message: updateBannerMessage,
-  extraData: { uby: JSON.parse(localStorage.getItem("user")).name },
+  extraData: {
+    uby: JSON.parse(localStorage.getItem("user")).name,
+  },
 };
 
 const UpdateBannerWithNotiAndLoader = withNotiAndLoader(

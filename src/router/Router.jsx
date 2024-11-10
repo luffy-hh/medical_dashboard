@@ -24,6 +24,9 @@ const DailyRecords = Loadable(
 const MonthlyRecords = Loadable(
   lazy(() => import("../pages/monthlyRecords/MonthlyRecords")),
 );
+const MonthlyRecordDetails = Loadable(
+  lazy(() => import("../pages/monthlyRecords/MonthlyRecordDetails.jsx")),
+);
 const CreateMonthlyRecord = Loadable(
   lazy(() => import("../pages/monthlyRecords/CreateMonthlyRecord")),
 );
@@ -35,21 +38,7 @@ const BlankLayout = Loadable(lazy(() => import("../layouts/BlankLayout")));
 const CreateDailyRecord = Loadable(
   lazy(() => import("../pages/dailyRecords/CreateDailyRecord")),
 );
-const CreateDailyBloodSugar = Loadable(
-  lazy(() => import("../pages/dailyRecords/CreateDailyBloodSugar")),
-);
-const CreateDailyBloodPressure = Loadable(
-  lazy(() => import("../pages/dailyRecords/CreateDailyBloodPressure")),
-);
-const CreateDailyTemperature = Loadable(
-  lazy(() => import("../pages/dailyRecords/CreateDailyTemperature")),
-);
-const CreateDailyPulseRate = Loadable(
-  lazy(() => import("../pages/dailyRecords/CreateDailyPulseRate")),
-);
-const CreateDailyBloodOxygen = Loadable(
-  lazy(() => import("../pages/dailyRecords/CreateDailyBloodOxygen")),
-);
+
 const ViewDailyRecords = Loadable(
   lazy(() => import("../pages/dailyRecords/ViewDailyRecords")),
 );
@@ -68,6 +57,12 @@ const CreateMedicine = Loadable(
 );
 const AppointmentList = Loadable(
   lazy(() => import("../pages/appointments/AppointmentList")),
+);
+const AppointmentDetails = Loadable(
+  lazy(() => import("../pages/appointments/AppointmentDetails")),
+);
+const UpdateAppointment = Loadable(
+  lazy(() => import("../pages/appointments/UpdateAppointment")),
 );
 const CreateAppointment = Loadable(
   lazy(() => import("../pages/appointments/CreateAppointment")),
@@ -155,6 +150,11 @@ const Routes = [
         element: <DailyRecords />,
       },
       {
+        path: "/daily/:name/create",
+        name: "Create Records",
+        element: <CreateDailyRecord />,
+      },
+      {
         path: "/daily-records",
         name: "Daily Record",
         element: <ViewDailyRecords />,
@@ -165,42 +165,17 @@ const Routes = [
         element: <DailyRecordsByCategory />,
       },
       {
-        path: "/daily/create",
-        name: "Create Daily",
-        element: <CreateDailyRecord />,
-      },
-      {
-        path: "/daily/blood-sugar/create",
-        name: "Create Daily Blood Sugar",
-        element: <CreateDailyBloodSugar />,
-      },
-      {
-        path: "/daily/blood-pressure/create",
-        name: "Create Daily Blood Pressure",
-        element: <CreateDailyBloodPressure />,
-      },
-      {
-        path: "/daily/temperature/create",
-        name: "Create Daily Temperature",
-        element: <CreateDailyTemperature />,
-      },
-      {
-        path: "/daily/pulse-rate/create",
-        name: "Create Daily Pulse Rate",
-        element: <CreateDailyPulseRate />,
-      },
-      {
-        path: "/daily/blood-oxygen/create",
-        name: "Create Daily Blood Oxygen",
-        element: <CreateDailyBloodOxygen />,
-      },
-      {
-        path: "/monthly",
+        path: "/lab-records",
         name: "Monthly",
         element: <MonthlyRecords />,
       },
       {
-        path: "/monthly/create",
+        path: "/lab-records/:id",
+        name: "Lab Record Details",
+        element: <MonthlyRecordDetails />,
+      },
+      {
+        path: "/lab-records/create",
         name: "Create Monthly",
         element: <CreateMonthlyRecord />,
       },
@@ -223,6 +198,16 @@ const Routes = [
         path: "/appointment/create",
         name: "Create Appointment",
         element: <CreateAppointment />,
+      },
+      {
+        path: "/appointment/:id",
+        name: "Appointment Details",
+        element: <AppointmentDetails />,
+      },
+      {
+        path: "/appointment/:id/edit",
+        name: "Edit Appointment",
+        element: <UpdateAppointment />,
       },
     ],
   },

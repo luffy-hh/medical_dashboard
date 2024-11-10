@@ -456,9 +456,9 @@ export const bannerTableColumns = (nav, setId, setOpen) => {
 export const bloodPressureTableColumns = () => {
   return [
     {
-      title: "Date",
-      dataIndex: "date",
-      key: "date",
+      title: "Day",
+      dataIndex: "record_date",
+      key: "record_date",
     },
     {
       title: "Blood Pressure",
@@ -466,30 +466,52 @@ export const bloodPressureTableColumns = () => {
       children: [
         {
           title: "Systolic",
-          dataIndex: "systolic",
-          key: "systolic",
+          dataIndex: "value",
+          key: "value",
+          render: (text) => {
+            return text === ""
+              ? "-"
+              : text.split("/")[0].replace("Systolic", "");
+          },
         },
         {
           title: "Diastolic",
-          dataIndex: "diastolic",
-          key: "diastolic",
+          dataIndex: "value",
+          key: "value",
+          render: (text) => {
+            return text === ""
+              ? "-"
+              : text.split("/")[1].replace("Diastolic", "");
+          },
         },
       ],
     },
     {
       title: "Remarks",
-      key: "remarks",
-      render: (_, record, rowIndex) => {
-        console.log(record);
-        if (record.systolic < 90 || record.diastolic < 60) {
+      dataIndex: "value",
+      key: "value",
+      render: (_, record) => {
+        // console.log(record);
+        const systolic =
+          record.value !== "" &&
+          Number(record.value.split("/")[0].replace("Systolic", ""));
+        console.log(systolic);
+
+        const diastolic =
+          record.value !== "" &&
+          Number(record.value.split("/")[1].replace("Diastolic", ""));
+        if (record.value !== "" && (systolic < 90 || diastolic < 60)) {
           return "Low Blood Pressure";
         } else if (
-          (record.systolic > 120 && record.systolic <= 140) ||
-          (record.diastolic > 80 && record.diastolic <= 90)
+          record.value !== "" &&
+          ((systolic > 120 && systolic < 130) ||
+            (diastolic > 80 && diastolic < 90))
         ) {
           return "Elevated Blood Pressure";
-        } else if (record.systolic > 140 || record.diastolic > 90) {
+        } else if (record.value !== "" && (systolic > 130 || diastolic > 80)) {
           return "High Blood Pressure";
+        } else if (record.value === "") {
+          return "-";
         } else {
           return "Normal Blood Pressure";
         }
@@ -684,28 +706,18 @@ export const medicineTableColumns = (nav) => {
     },
     {
       title: "Patient Name",
-      dataIndex: "patientName",
-      key: "patientName",
+      dataIndex: "family_member_name",
+      key: "family_member_name",
     },
     {
-      title: "Take Period",
-      dataIndex: "day_type",
-      key: "day_type",
+      title: "Start Taking Date",
+      dataIndex: "from_date",
+      key: "from_date",
     },
     {
-      title: "Before/After Meal",
-      dataIndex: "meal_type",
-      key: "meal_type",
-    },
-    {
-      title: "Take Time",
-      dataIndex: "reminder_time",
-      key: "reminder_time",
-    },
-    {
-      title: "Created By",
-      dataIndex: "cby",
-      key: "cby",
+      title: "Last Taking Date",
+      dataIndex: "to_date",
+      key: "to_date",
     },
     {
       title: "Actions",
@@ -772,7 +784,7 @@ export const medicineTableColumns = (nav) => {
   ];
 };
 
-export const appointmentTableColumns = (nav) => {
+export const appointmentTableColumns = (nav, setId, setOpen) => {
   return [
     {
       title: "No",
@@ -794,21 +806,24 @@ export const appointmentTableColumns = (nav) => {
       title: "Appointment Date",
       dataIndex: "appointment_date",
       key: "appointment_date",
+      render: (text) => dayjs(text).format("DD-MM-YYYY"),
     },
     {
       title: "Appointment Time",
       dataIndex: "appointment_time",
       key: "appointment_time",
+      render: (text) => dayjs(text, "HH:mm:ss").format("hh:mm A"),
     },
     {
       title: "Patient Name",
-      dataIndex: "patient_name",
-      key: "patient_name",
+      dataIndex: "family_member_name",
+      key: "family_member_name",
     },
     {
       title: "Reminder Time",
       dataIndex: "reminder_time",
       key: "reminder_time",
+      render: (text) => dayjs(text, "HH:mm:ss").format("hh:mm A"),
     },
     {
       title: "Created By",
@@ -820,17 +835,17 @@ export const appointmentTableColumns = (nav) => {
       key: "action",
       render: (text, record) => {
         const menuItems = [
-          {
-            key: "view",
-            label: (
-              <div
-                onClick={() => nav(`${record.id}`, { state: { ...record } })}
-                className=" flex gap-2 items-center"
-              >
-                <FaEye /> <span className=" inline-block">View</span>
-              </div>
-            ),
-          },
+          // {
+          //   key: "view",
+          //   label: (
+          //     <div
+          //       onClick={() => nav(`${record.id}`, { state: { ...record } })}
+          //       className=" flex gap-2 items-center"
+          //     >
+          //       <FaEye /> <span className=" inline-block">View</span>
+          //     </div>
+          //   ),
+          // },
           {
             key: "edit",
             label: (
@@ -850,8 +865,10 @@ export const appointmentTableColumns = (nav) => {
               <div
                 className=" flex gap-2 items-center"
                 onClick={() => {
-                  //   setOpen(true);
-                  //   setMeterId(record.id);
+                  console.log(record);
+
+                  setOpen(true);
+                  setId(record.id);
                 }}
               >
                 <FaTrashCan /> <span className=" inline-block">Delete</span>

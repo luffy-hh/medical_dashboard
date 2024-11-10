@@ -8,6 +8,8 @@ import withRouter from "../components/hoc/withRouter.jsx";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { getPatients } from "../app/Patients/patientSlice.jsx";
+import { getCategories } from "../app/category/categorySlice.jsx";
+import { getMasterData } from "../app/masterData/masterDataSlice.jsx";
 const TopBar = lazy(() => import("./components/topbar/TopBar"));
 
 const Loader = lazy(() => import("../components/common/Loader"));
@@ -26,10 +28,13 @@ const DefaultLayout = ({ router }) => {
     }
   }, [isAuthenticated, user, router]);
   useEffect(() => {
-    isAuthenticated &&
-      Object.keys(user).length > 0 &&
+    if (isAuthenticated && Object.keys(user).length > 0) {
       dispatch(getPatients({ api: "/family_member_list" }));
+      dispatch(getCategories({ api: "/check_category_list" }));
+      dispatch(getMasterData({ api: "/master_data" }));
+    }
   }, [isAuthenticated, user, dispatch]);
+
   return (
     <Layout hasSider>
       <Suspense fallback={<Loader />}>

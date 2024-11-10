@@ -102,4 +102,33 @@ const photoUrlFix = (data, folderAttributes) => {
     throw new Error("Invalid data type. Expected an array or an object.");
   }
 };
-export { classNames, expireToken, parseDate, daysOfWeek, photoUrlFix };
+
+const transformObject = (obj) => {
+  // Initialize the result object with properties that should remain unchanged
+  const result = {
+    param: [],
+    note: obj.note || "",
+    attaches: obj.attaches || "",
+    record_date: obj.record_date || "",
+  };
+
+  // Loop through each property in the input object
+  for (const key in obj) {
+    // Skip 'note', 'photo', and 'record_date'
+    if (key !== "note" && key !== "attaches" && key !== "record_date") {
+      // Add the key-value pair to the param array in the desired format
+      result.param.push({ key: key, value: obj[key] });
+    }
+  }
+
+  return result;
+};
+
+export {
+  transformObject,
+  classNames,
+  expireToken,
+  parseDate,
+  daysOfWeek,
+  photoUrlFix,
+};

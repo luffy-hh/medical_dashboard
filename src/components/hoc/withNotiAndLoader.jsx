@@ -21,7 +21,7 @@ const withNotiAndLoader = (WrappedComponent, formProps) => {
 
     // console.log(props.router?.location?.state?.id);
 
-    const onFinish = (values) => {
+    const onFinish = (values, extra = {}) => {
       console.log(values, formProps.extraData);
 
       // values.fill_date = dateFormatChange(values.fill_date);
@@ -33,7 +33,7 @@ const withNotiAndLoader = (WrappedComponent, formProps) => {
             props.router?.location?.state[formProps?.apiHasExtra]
               ? `/${props.router?.location?.state[formProps?.apiHasExtra]}`
               : ""),
-          postData: { ...values },
+          postData: { ...values, ...extra },
           header: { ...formProps?.extraData },
         }),
       );

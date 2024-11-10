@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Button, DatePicker, Form, TimePicker } from "antd";
+import { Button, Checkbox, DatePicker, Form, TimePicker } from "antd";
 const CustomInput = lazy(() => import("../common/CustomInput"));
 const CustomSelect = lazy(() => import("../common/CustomSelect"));
 const ImgViewer = lazy(() => import("../common/ImgViewer"));
@@ -98,6 +98,7 @@ const CustomForm = ({
                     ? (e) => normFile(e, item.multiple)
                     : undefined
                 }
+                hidden={item?.hidden}
                 className="justify-center items-center"
                 // labelAlign={``}
                 // validateStatus=""
@@ -112,6 +113,7 @@ const CustomForm = ({
                   />
                 ) : item.type === "date" ? (
                   <DatePicker
+                    showTime={item?.showTime || false}
                     placeholder={item.placeholder}
                     className={item?.className}
                     format="DD/MM/YYYY"
@@ -119,8 +121,15 @@ const CustomForm = ({
                   />
                 ) : item.type === "time" ? (
                   <TimePicker format={"HH:mm"} className={item.className} />
+                ) : item.type === "checkboxgroup" ? (
+                  <Checkbox.Group
+                    options={item.options}
+                    onChange={item.onChange}
+                    className={item.className}
+                  />
                 ) : (
                   <CustomInput
+                    options={item?.options}
                     placeholder={item.placeholder}
                     className={item?.className}
                     type={item?.type}

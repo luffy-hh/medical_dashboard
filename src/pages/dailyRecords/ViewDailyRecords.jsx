@@ -1,12 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InnerContainer from "../../components/common/InnerContainer.jsx";
 import PageTitleWithRouter from "../../components/common/PageTitle.jsx";
-import Chart from "react-apexcharts";
-import {
-  dummyBloodPressure,
-  dummyPatients,
-} from "../../constants/DummyData.jsx";
-import { Avatar, Button, Flex, Row, Segmented } from "antd";
+import { Button, Flex } from "antd";
 import WeeklyBloodPressureChart from "../../components/weeklyCharts/WeeklyBloodPressureChart.jsx";
 import WeeklyBloodSugarChart from "../../components/weeklyCharts/WeeklyBloodSugarChart.jsx";
 import WeeklyBloodOxygenChart from "../../components/weeklyCharts/WeeklyBloodOxygenChart.jsx";
@@ -15,82 +10,192 @@ import WeeklyTemperatureChart from "../../components/weeklyCharts/WeeklyTemperat
 import { FaAngleDoubleRight } from "react-icons/fa";
 import withRouter from "../../components/hoc/withRouter.jsx";
 import PropTypes from "prop-types";
-import { bloodPressureTableColumns } from "../../constants/TableColumns.jsx";
+import PatientsSegmented from "../../components/common/PatientsSegmented.jsx";
+// import { bloodPressureTableColumns } from "../../constants/TableColumns.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { patients } from "../../app/Patients/patientSlice.jsx";
+import {
+  dailyChecksChartSelector,
+  getDailyChecksChart,
+  getDailyChecksChartStatus,
+} from "../../app/dailyCheck/dailyCheckSlice.jsx";
+import Loader from "../../components/common/Loader.jsx";
 
 const ViewDailyRecords = ({ router }) => {
-  const [patient, setPatient] = useState(dummyPatients[0].id);
-  const selectedPatient = dummyPatients.find((p) => p.id === patient);
-  // const bloodPressureColumns = bloodPressureTableColumns();
-  // console.log(bloodPressureColumns);
+  const dispatch = useDispatch();
+  const patientList = useSelector(patients);
+  const dailyChecksChart = useSelector(dailyChecksChartSelector);
+  const dailyChecksChartStatus = useSelector(getDailyChecksChartStatus);
+  console.log(dailyChecksChart);
+
+  const [patient, setPatient] = useState(null);
+  const selectedPatient = patientList.find((p) => p.id === patient);
+  useEffect(() => {
+    if (patientList.length > 0) {
+      setPatient(patientList[0]?.id);
+    }
+  }, [patientList]);
+  useEffect(() => {
+    if (selectedPatient) {
+      dispatch(getDailyChecksChart({ api: "/daily_record_chart" }));
+    }
+  }, [dispatch, selectedPatient]);
 
   return (
     <InnerContainer>
-      <PageTitleWithRouter title="Daily Checkup Records" />
-      <Segmented
-        className={" shadow-md gap"}
-        onChange={(val) => setPatient(val)}
-        defaultValue={dummyPatients[0].id}
-        value={patient}
-        options={dummyPatients.map((p) => ({
-          label: (
-            <>
-              <Avatar src={p.image} alt={`${p.name}'s avatar`} size={"large"} />
-              <div>{p.name}</div>
-            </>
-          ),
-          value: p.id,
-        }))}
-      />
-      <div className={"my-4"}>
-        <Flex justify={"space-between"} align={"center"}>
-          <p className={"text-2xl font-semibold"}>
-            Blood Pressure For {selectedPatient.name}
-          </p>
-          <Button
-            color={"primary"}
-            type={"link"}
-            onClick={() =>
-              router.nav("blood-pressure", {
-                state: {
-                  patient: { ...selectedPatient },
-                  table: {
-                    columns: "pressure",
-                    data: dummyBloodPressure,
-                  },
-                },
-              })
-            }
-          >
-            See All
-            <FaAngleDoubleRight />
-          </Button>
-        </Flex>
-        <WeeklyBloodPressureChart />
-      </div>
-      <div className={"my-4"}>
-        <p className={"text-2xl font-semibold"}>
-          Blood Sugar Level For {selectedPatient.name}
-        </p>
-        <WeeklyBloodSugarChart />
-      </div>
-      <div className={"my-4"}>
-        <p className={"text-2xl font-semibold"}>
-          Blood Oxygen For {selectedPatient.name}
-        </p>
-        <WeeklyBloodOxygenChart />
-      </div>
-      <div className={"my-4"}>
-        <p className={"text-2xl font-semibold"}>
-          Pulse Rate For {selectedPatient.name}
-        </p>
-        <WeeklyPulseRateChart />
-      </div>
-      <div className={"my-4"}>
-        <p className={"text-2xl font-semibold"}>
-          Temperature For {selectedPatient.name}
-        </p>
-        <WeeklyTemperatureChart />
-      </div>
+      {dailyChecksChartStatus === "loading" ? (
+        <Loader />
+      ) : (
+        <>
+          <PageTitleWithRouter title="Daily Checkup Records" />
+          <PatientsSegmented patient={patient} setPatient={setPatient} />
+          {dailyChecksChart.some((d) => {
+            return d.cat_name === "Blood Pressure";
+          }) && (
+            <div className={"my-4"}>
+              <Flex justify={"space-between"} align={"center"}>
+                <p className={"text-2xl font-semibold"}>
+                  Blood Pressure For {selectedPatient?.name}
+                </p>
+                <Button
+                  color={"primary"}
+                  type={"link"}
+                  onClick={() =>
+                    router.nav("blood-pressure", {
+                      state: {
+                        patient: { ...selectedPatient },
+                        category: dailyChecksChart.find(
+                          (d) => d.cat_name === "Blood Pressure",
+                        ),
+                      },
+                    })
+                  }
+                >
+                  See All
+                  <FaAngleDoubleRight />
+                </Button>
+              </Flex>
+              <WeeklyBloodPressureChart />
+            </div>
+          )}
+          {dailyChecksChart.some((d) => {
+            return d.cat_name === "Blood Sugar";
+          }) && (
+            <div className={"my-4"}>
+              <Flex justify={"space-between"} align={"center"}>
+                <p className={"text-2xl font-semibold"}>
+                  Blood Sugar For {selectedPatient?.name}
+                </p>
+                <Button
+                  color={"primary"}
+                  type={"link"}
+                  onClick={() =>
+                    router.nav("blood-sugar", {
+                      state: {
+                        patient: { ...selectedPatient },
+                        category: dailyChecksChart.find(
+                          (d) => d.cat_name === "Blood Sugar",
+                        ),
+                      },
+                    })
+                  }
+                >
+                  See All
+                  <FaAngleDoubleRight />
+                </Button>
+              </Flex>
+              <WeeklyBloodSugarChart />
+            </div>
+          )}
+          {dailyChecksChart.some((d) => {
+            return d.cat_name === "Blood Oxygen";
+          }) && (
+            <div className={"my-4"}>
+              <Flex justify={"space-between"} align={"center"}>
+                <p className={"text-2xl font-semibold"}>
+                  Blood Oxygen For {selectedPatient?.name}
+                </p>
+                <Button
+                  color={"primary"}
+                  type={"link"}
+                  onClick={() =>
+                    router.nav("blood-oxygen", {
+                      state: {
+                        patient: { ...selectedPatient },
+                        category: dailyChecksChart.find(
+                          (d) => d.cat_name === "Blood Oxygen",
+                        ),
+                      },
+                    })
+                  }
+                >
+                  See All
+                  <FaAngleDoubleRight />
+                </Button>
+              </Flex>
+              <WeeklyBloodOxygenChart />
+            </div>
+          )}
+          {dailyChecksChart.some((d) => {
+            return d.cat_name === "Pulse Rate";
+          }) && (
+            <div className={"my-4"}>
+              <Flex justify={"space-between"} align={"center"}>
+                <p className={"text-2xl font-semibold"}>
+                  Pulse Rate For {selectedPatient?.name}
+                </p>
+                <Button
+                  color={"primary"}
+                  type={"link"}
+                  onClick={() =>
+                    router.nav("pulse-rate", {
+                      state: {
+                        patient: { ...selectedPatient },
+                        category: dailyChecksChart.find(
+                          (d) => d.cat_name === "Pulse Rate",
+                        ),
+                      },
+                    })
+                  }
+                >
+                  See All
+                  <FaAngleDoubleRight />
+                </Button>
+              </Flex>
+              <WeeklyPulseRateChart />
+            </div>
+          )}
+          {dailyChecksChart.some((d) => {
+            return d.cat_name === "Temperature";
+          }) && (
+            <div className={"my-4"}>
+              <Flex justify={"space-between"} align={"center"}>
+                <p className={"text-2xl font-semibold"}>
+                  Temperature For {selectedPatient?.name}
+                </p>
+                <Button
+                  color={"primary"}
+                  type={"link"}
+                  onClick={() =>
+                    router.nav("temperature", {
+                      state: {
+                        patient: { ...selectedPatient },
+                        category: dailyChecksChart.find(
+                          (d) => d.cat_name === "Temperature",
+                        ),
+                      },
+                    })
+                  }
+                >
+                  See All
+                  <FaAngleDoubleRight />
+                </Button>
+              </Flex>
+              <WeeklyTemperatureChart />
+            </div>
+          )}
+        </>
+      )}
     </InnerContainer>
   );
 };

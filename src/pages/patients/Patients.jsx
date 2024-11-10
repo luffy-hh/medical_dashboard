@@ -33,7 +33,7 @@ const Patients = ({ router }) => {
       dispatch(resetCreatePatientStatus());
     (updateStatus === "succeeded" || updateStatus === "failed") &&
       dispatch(resetUpdatePatientStatus());
-  }, [dispatch, deleteStatus, createStatus, router.location]);
+  }, [dispatch, deleteStatus, createStatus, router.location, updateStatus]);
 
   // const columns = patientsTableColumns(props.router.nav);
   return <></>;

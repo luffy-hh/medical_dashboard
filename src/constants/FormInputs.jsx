@@ -225,12 +225,6 @@ export const patientInputs = () => {
           span: 24,
         },
       },
-      rules: [
-        {
-          required: true,
-          message: "Please enter Photo",
-        },
-      ],
     },
     {
       label: "Selected Photo",
@@ -416,7 +410,7 @@ export const dailyBloodSugarInputs = () => {
   return [
     {
       label: "Blood Sugar Level (Before Meal)",
-      name: "before_meal",
+      name: "Before Meal",
       type: "number",
       placeholder: "Enter Blood Sugar Level (Before Meal)",
       className: "w-full",
@@ -438,7 +432,7 @@ export const dailyBloodSugarInputs = () => {
     },
     {
       label: "Blood Sugar Level (After Meal)",
-      name: "after_meal",
+      name: "After Meal",
       type: "number",
       placeholder: "Enter Blood Sugar Level (After Meal)",
       className: "w-full",
@@ -463,6 +457,7 @@ export const dailyBloodSugarInputs = () => {
       label: "Record Date",
       name: "record_date",
       type: "date",
+      showTime: true,
       placeholder: "Enter Record Date",
       className: "w-full",
       layout: {
@@ -477,9 +472,9 @@ export const dailyBloodSugarInputs = () => {
     },
     {
       label: "Record Photo",
-      name: "photo",
+      name: "attaches",
       type: "file",
-      multiple: false,
+      multiple: true,
       className: "w-full",
       layout: {
         layout: "vertical",
@@ -514,7 +509,7 @@ export const dailyBloodPressureInputs = () => {
   return [
     {
       label: "Systolic Blood Pressure",
-      name: "systolic_blood_pressure",
+      name: "Systolic",
       type: "number",
       placeholder: "Enter Systolic Blood Pressure",
       className: "w-full",
@@ -536,7 +531,7 @@ export const dailyBloodPressureInputs = () => {
     },
     {
       label: "Diastolic Blood Pressure",
-      name: "diastolic_blood_pressure",
+      name: "Diastolic",
       type: "number",
       placeholder: "Enter Diastolic Blood Pressure",
       className: "w-full",
@@ -560,6 +555,7 @@ export const dailyBloodPressureInputs = () => {
       label: "Record Date",
       name: "record_date",
       type: "date",
+      showTime: true,
       placeholder: "Enter Record Date",
       className: "w-full",
       layout: {
@@ -574,9 +570,9 @@ export const dailyBloodPressureInputs = () => {
     },
     {
       label: "Record Photo",
-      name: "photo",
+      name: "attaches",
       type: "file",
-      multiple: false,
+      multiple: true,
       className: "w-full",
       layout: {
         layout: "vertical",
@@ -611,7 +607,7 @@ export const dailyTemperatureInputs = () => {
   return [
     {
       label: "Temperature",
-      name: "temperature",
+      name: "Temperature",
       type: "number",
       placeholder: "Enter Temperature",
       className: "w-full",
@@ -635,6 +631,7 @@ export const dailyTemperatureInputs = () => {
       label: "Record Date",
       name: "record_date",
       type: "date",
+      showTime: true,
       placeholder: "Enter Record Date",
       className: "w-full",
       layout: {
@@ -649,9 +646,9 @@ export const dailyTemperatureInputs = () => {
     },
     {
       label: "Record Photo",
-      name: "photo",
+      name: "attaches",
       type: "file",
-      multiple: false,
+      multiple: true,
       className: "w-full",
       layout: {
         layout: "vertical",
@@ -686,7 +683,7 @@ export const dailyPulseRateInputs = () => {
   return [
     {
       label: "Pulse Rate",
-      name: "pulse_rate",
+      name: "Pulse Rate",
       type: "number",
       placeholder: "Enter Pulse Rate",
       className: "w-full",
@@ -710,6 +707,7 @@ export const dailyPulseRateInputs = () => {
       label: "Record Date",
       name: "record_date",
       type: "date",
+      showTime: true,
       placeholder: "Enter Record Date",
       className: "w-full",
       layout: {
@@ -724,9 +722,9 @@ export const dailyPulseRateInputs = () => {
     },
     {
       label: "Record Photo",
-      name: "photo",
+      name: "attaches",
       type: "file",
-      multiple: false,
+      multiple: true,
       className: "w-full",
       layout: {
         layout: "vertical",
@@ -761,7 +759,7 @@ export const dailyBloodOxygenInputs = () => {
   return [
     {
       label: "Blood Oxygen Level",
-      name: "blood_oxygen_level",
+      name: "Blood Oxygen",
       type: "number",
       placeholder: "Enter Blood Oxygen Level",
       className: "w-full",
@@ -785,6 +783,7 @@ export const dailyBloodOxygenInputs = () => {
       label: "Record Date",
       name: "record_date",
       type: "date",
+      showTime: true,
       placeholder: "Enter Record Date",
       className: "w-full",
       layout: {
@@ -799,9 +798,9 @@ export const dailyBloodOxygenInputs = () => {
     },
     {
       label: "Record Photo",
-      name: "photo",
+      name: "attaches",
       type: "file",
-      multiple: false,
+      multiple: true,
       className: "w-full",
       layout: {
         layout: "vertical",
@@ -1082,11 +1081,20 @@ export const bannerCreateInputs = () => {
   ];
 };
 
-export const medicineCreateInputs = () => {
-  return [
+export const medicineCreateInputs = (
+  dayTypeValues,
+  setDayTypeValues,
+  mealTypeValues,
+  setMealTypeValues
+) => {
+  const handleDayTypeChange = (values) => {
+    console.log(values);
+    setDayTypeValues(values);
+  };
+  let inputs = [
     {
       label: "Start Taking Date",
-      name: "startDate",
+      name: "start_date",
       type: "date",
       placeholder: "Enter Start Taking Date",
       className: "w-full",
@@ -1129,7 +1137,7 @@ export const medicineCreateInputs = () => {
       ],
     },
     {
-      label: "Name",
+      label: "Title",
       name: "title",
       type: "text",
       placeholder: "Enter Medicine Name",
@@ -1151,47 +1159,16 @@ export const medicineCreateInputs = () => {
       ],
     },
     {
-      label: "Medicine Take Period",
+      label: "Check Take Period",
       name: "day_type",
-      type: "select",
-      placeholder: "Select Medicine Take Period",
-      className: "w-full",
-      layout: {
-        layout: "vertical",
-        labelCol: {
-          span: 24,
-        },
-        wrapperCol: {
-          span: 24,
-        },
-      },
-      rules: [
-        {
-          required: true,
-          message: "Select Medicine Take Period",
-        },
-      ],
+      type: "checkboxgroup",
+      onChange: handleDayTypeChange,
       options: [
-        { label: "Select Medicine Take Period", value: "" },
-        {
-          label: "Morning",
-          value: "Morning",
-        },
-        {
-          label: "Afternoon",
-          value: "Afternoon",
-        },
-        {
-          label: "Evening",
-          value: "Evening",
-        },
+        { label: "Morning", value: "morning" },
+        { label: "Afternoon", value: "afternoon" },
+        { label: "Night", value: "night" },
       ],
-    },
-    {
-      label: "Medicine Take Time",
-      name: "reminder_time",
-      type: "time",
-      className: "w-full",
+      className: "w-auto",
       layout: {
         layout: "vertical",
         labelCol: {
@@ -1201,89 +1178,265 @@ export const medicineCreateInputs = () => {
           span: 24,
         },
       },
-      rules: [
-        {
-          required: true,
-          message: "Enter Medicine Take Time",
-        },
-      ],
     },
-    {
-      label: "Before or After Meal",
-      name: "meal_type",
-      type: "select",
-      className: "w-full",
-      layout: {
-        layout: "vertical",
-        labelCol: {
-          span: 24,
-        },
-        wrapperCol: {
-          span: 24,
-        },
-      },
-      rules: [
-        {
-          required: true,
-          message: "Select Before or After Meal",
-        },
-      ],
-      options: [
-        { label: "Select Before or After Meal", value: "" },
-        {
-          label: "Before Meal",
-          value: "Before",
-        },
-        {
-          label: "After Meal",
-          value: "After",
-        },
-      ],
-    },
-    {
-      label: "Description",
-      name: "description",
-      type: "text",
-      placeholder: "Enter Description",
-      className: "w-full",
-      layout: {
-        layout: "vertical",
-        labelCol: {
-          span: 24,
-        },
-        wrapperCol: {
-          span: 24,
-        },
-      },
-      rules: [
-        {
-          required: true,
-          message: "Enter Description",
-        },
-      ],
-    },
-    {
-      label: "Image",
-      name: "medicine_attach",
-      type: "file",
-      className: "w-full",
-      layout: {
-        layout: "vertical",
-        labelCol: {
-          span: 24,
-        },
-        wrapperCol: {
-          span: 24,
-        },
-      },
-      rules: [
-        {
-          required: true,
-          message: "Enter Image",
-        },
-      ],
-    },
+
+    // {
+    //   label: "Before or After Meal",
+    //   name: "meal_type",
+    //   type: "select",
+    //   className: "w-full",
+    //   hidden: true,
+    //   layout: {
+    //     layout: "vertical",
+    //     labelCol: {
+    //       span: 24,
+    //     },
+    //     wrapperCol: {
+    //       span: 24,
+    //     },
+    //   },
+    //   rules: [
+    //     {
+    //       required: true,
+    //       message: "Select Before or After Meal",
+    //     },
+    //   ],
+    //   options: [
+    //     { label: "Select Before or After Meal", value: "" },
+    //     {
+    //       label: "Before Meal",
+    //       value: "Before",
+    //     },
+    //     {
+    //       label: "After Meal",
+    //       value: "After",
+    //     },
+    //   ],
+    // },
+    // {
+    //   label: "Morning Medicine Take Time",
+    //   name: "reminder_time",
+    //   type: "time",
+    //   className: "w-full",
+    //   hidden: !dayTypeValues.includes("morning"),
+    //   layout: {
+    //     layout: "vertical",
+    //     labelCol: {
+    //       span: 24,
+    //     },
+    //     wrapperCol: {
+    //       span: 24,
+    //     },
+    //   },
+    //   rules: [
+    //     {
+    //       required: true,
+    //       message: "Enter Medicine Take Time",
+    //     },
+    //   ],
+    // },
+    // {
+    //   label: "Image",
+    //   name: "medicine_attach",
+    //   type: "file",
+    //   className: "w-full",
+    //   hidden: true,
+    //   layout: {
+    //     layout: "vertical",
+    //     labelCol: {
+    //       span: 24,
+    //     },
+    //     wrapperCol: {
+    //       span: 24,
+    //     },
+    //   },
+    //   rules: [
+    //     {
+    //       required: true,
+    //       message: "Enter Image",
+    //     },
+    //   ],
+    // },
   ];
+  if (dayTypeValues.includes("morning")) {
+    inputs.push(
+      {
+        label: "Morning Medicine Name",
+        name: "description",
+        type: "text",
+        placeholder: "Enter Description",
+        className: "w-full",
+        // hidden: !dayTypeValues.includes("morning"),
+        layout: {
+          layout: "vertical",
+          labelCol: {
+            span: 24,
+          },
+          wrapperCol: {
+            span: 24,
+          },
+        },
+        rules: [
+          {
+            required: true,
+            message: "Enter Description",
+          },
+        ],
+      },
+      {
+        label: "Before or After(Breakfast)",
+        name: "morning_meal_type",
+        type: "checkboxgroup",
+        className: "w-full",
+        // hidden: true,
+        layout: {
+          layout: "vertical",
+          labelCol: {
+            span: 24,
+          },
+          wrapperCol: {
+            span: 24,
+          },
+        },
+        rules: [
+          {
+            required: true,
+            message: "Select Before/After Meal",
+          },
+        ],
+        options: [
+          {
+            label: "Before Meal",
+            value: "Before",
+          },
+          {
+            label: "After Meal",
+            value: "After",
+          },
+        ],
+      }
+    );
+  }
+  if (dayTypeValues.includes("afternoon")) {
+    inputs.push(
+      {
+        label: "Afternoon Medicine Name",
+        name: "description",
+        type: "text",
+        placeholder: "Enter Description",
+        className: "w-full",
+        // hidden: !dayTypeValues.includes("morning"),
+        layout: {
+          layout: "vertical",
+          labelCol: {
+            span: 24,
+          },
+          wrapperCol: {
+            span: 24,
+          },
+        },
+        rules: [
+          {
+            required: true,
+            message: "Enter Description",
+          },
+        ],
+      },
+      {
+        label: "Before or After(Breakfast)",
+        name: "meal_type",
+        type: "checkboxgroup",
+        className: "w-full",
+        // hidden: true,
+        layout: {
+          layout: "vertical",
+          labelCol: {
+            span: 24,
+          },
+          wrapperCol: {
+            span: 24,
+          },
+        },
+        rules: [
+          {
+            required: true,
+            message: "Select Before/After Meal",
+          },
+        ],
+        options: [
+          {
+            label: "Before Meal",
+            value: "Before",
+          },
+          {
+            label: "After Meal",
+            value: "After",
+          },
+        ],
+      }
+    );
+  }
+  if (dayTypeValues.includes("night")) {
+    inputs.push(
+      {
+        label: "Night Medicine Name",
+        name: "description",
+        type: "text",
+        placeholder: "Enter Description",
+        className: "w-full",
+        // hidden: !dayTypeValues.includes("morning"),
+        layout: {
+          layout: "vertical",
+          labelCol: {
+            span: 24,
+          },
+          wrapperCol: {
+            span: 24,
+          },
+        },
+        rules: [
+          {
+            required: true,
+            message: "Enter Description",
+          },
+        ],
+      },
+      {
+        label: "Before or After(Breakfast)",
+        name: "meal_type",
+        type: "checkboxgroup",
+        className: "w-full",
+        // hidden: true,
+        layout: {
+          layout: "vertical",
+          labelCol: {
+            span: 24,
+          },
+          wrapperCol: {
+            span: 24,
+          },
+        },
+        rules: [
+          {
+            required: true,
+            message: "Select Before/After Meal",
+          },
+        ],
+        options: [
+          {
+            label: "Before Meal",
+            value: "Before",
+          },
+          {
+            label: "After Meal",
+            value: "After",
+          },
+        ],
+      }
+    );
+  }
+
+  return inputs;
 };
 
 export const appointmentCreateInputs = () => {
@@ -1358,6 +1511,7 @@ export const appointmentCreateInputs = () => {
       label: "Appointment Date",
       name: "appointment_date",
       type: "date",
+      // showTime: true,
       placeholder: "Enter Appointment Date",
       className: "w-full",
       layout: {
@@ -1514,7 +1668,7 @@ export const medicalCheckupCreateInputs = () => {
     },
     {
       label: "Attachments",
-      name: "attaches[]",
+      name: "attaches",
       type: "file",
       multiple: true,
       className: "w-full",

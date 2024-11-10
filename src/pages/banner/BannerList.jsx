@@ -67,7 +67,9 @@ const modalProps = {
   api: "/banner_delete",
   status: deleteBannerStatus,
   message: deleteBannerMessage,
-  extraData: { uby: JSON.parse(localStorage.getItem("user")).name },
+  extraData: {
+    uby: JSON.parse(localStorage.getItem("user")).name,
+  },
 };
 
 const BannerListWithTable = withTableAndTitle(

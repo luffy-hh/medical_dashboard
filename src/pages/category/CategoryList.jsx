@@ -29,9 +29,9 @@ const CategoryList = () => {
   const createStatus = useSelector(createCategoryStatus);
   const updateStatus = useSelector(updateCategoryStatus);
 
-  useEffect(() => {
-    dispatch(getCategories({ api: "/check_category_list" }));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getCategories({ api: "/check_category_list" }));
+  // }, []);
   useEffect(() => {
     if (
       deleteStatus === "succeeded" ||

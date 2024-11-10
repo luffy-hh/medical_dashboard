@@ -8,6 +8,8 @@ import bannerSlice from "./banners/bannerSlice.jsx";
 import medicineSlice from "./medicines/medicineSlice.jsx";
 import appointmentSlice from "./appointment/appointmentSlice.jsx";
 import authSlice from "./auth/authSlice.jsx";
+import dailyCheckSlice from "./dailyCheck/dailyCheckSlice.jsx";
+import masterDataSlice from "./masterData/masterDataSlice.jsx";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +22,8 @@ export const store = configureStore({
     medicines: medicineSlice,
     appointments: appointmentSlice,
     auth: authSlice,
+    dailyChecks: dailyCheckSlice,
+    masterData: masterDataSlice,
   },
 });
 

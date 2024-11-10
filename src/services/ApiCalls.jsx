@@ -72,6 +72,8 @@ export const postDataWithToken = async (api, postData, header = {}) => {
     if (response.status === 500 || response.status === 401) {
       expireToken();
     }
+    // console.log(await response.json());
+
     return response;
   } catch (error) {
     console.log(error);
@@ -86,9 +88,21 @@ export const postMultipartDataWithToken = async (
 ) => {
   console.log(api, postData);
   let formData = new FormData();
-  Object.keys(postData).forEach((key) => {
-    formData.append(key, postData[key]);
-  });
+  for (const key in postData) {
+    if (Object.prototype.hasOwnProperty.call(postData, key)) {
+      const value = postData[key];
+      if (Array.isArray(value) && key === "attaches") {
+        // If the value is an array, append each file separately
+        formData.append(`${key}[]`, value);
+        // value.forEach((file) => {
+        //   // console.log(`Appended ${key}: ${file.name} to formData`);
+        // });
+      } else {
+        formData.append(key, value);
+        // console.log(`Appended ${key}: ${value.name || value} to formData`);
+      }
+    }
+  }
   try {
     const response = await fetch(baseUrl + api, {
       method: "POST",
@@ -98,12 +112,12 @@ export const postMultipartDataWithToken = async (
       },
       body: formData,
     });
-    if (response.status === 500 || response.status === 401) {
+    if (response.status === 401) {
       expireToken();
     }
     return response;
   } catch (error) {
-    console.log(error);
+    console.log(error.stack, error.message);
     throw new Error("Error in post request");
   }
 };

@@ -2,17 +2,21 @@ import PropTypes from "prop-types";
 import withRouter from "../../components/hoc/withRouter.jsx";
 import InnerContainer from "../../components/common/InnerContainer.jsx";
 import PageTitleWithRouter from "../../components/common/PageTitle.jsx";
-import { Avatar, Card, Col, Row, Segmented } from "antd";
-import { dummyPatients } from "../../constants/DummyData.jsx";
+import { Avatar, Card, Col, Row } from "antd";
 import { useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
-import withTableAndTitle from "../../components/hoc/withTableAndTitle.jsx";
 import { dailyRecordsTableColumns } from "../../constants/TableColumns.jsx";
+import PatientsSegmented from "../../components/common/PatientsSegmented.jsx";
+import { useSelector } from "react-redux";
+import { patients } from "../../app/Patients/patientSlice.jsx";
+import { categories } from "../../app/category/categorySlice.jsx";
 
 const DailyRecords = ({ router }) => {
-  const [patient, setPatient] = useState(dummyPatients[0].id);
+  const patientList = useSelector(patients);
+  const categoryList = useSelector(categories);
+  const [patient, setPatient] = useState(patientList[0]?.id);
   console.log(patient);
-  const selectedPatient = dummyPatients.find((p) => p.id === patient);
+  const selectedPatient = patientList.find((p) => p.id === patient);
 
   return (
     <InnerContainer>
@@ -21,21 +25,7 @@ const DailyRecords = ({ router }) => {
         hasButton={false}
       />
       <p className="ml-6 text-xl font-bold">Patients</p>
-      <Segmented
-        className={" shadow-md gap"}
-        onChange={(val) => setPatient(val)}
-        defaultValue={dummyPatients[0].id}
-        value={patient}
-        options={dummyPatients.map((p) => ({
-          label: (
-            <>
-              <Avatar src={p.image} alt={`${p.name}'s avatar`} size={"large"} />
-              <div>{p.name}</div>
-            </>
-          ),
-          value: p.id,
-        }))}
-      />
+      <PatientsSegmented patient={patient} setPatient={setPatient} />
       <Row
         gutter={[
           {
@@ -48,111 +38,38 @@ const DailyRecords = ({ router }) => {
         ]}
         className="h-auto mx-auto my-6"
       >
-        <Col lg={6} md={8} sm={12} xs={24}>
-          <Card
-            actions={[
-              <CiCirclePlus
-                key="Add"
-                className={"mx-auto text-4xl"}
-                onClick={() =>
-                  router.nav("blood-sugar/create", {
-                    state: { ...selectedPatient },
-                  })
-                }
-              />,
-            ]}
-            hoverable={true}
-          >
-            <Card.Meta
-              avatar={<Avatar src={selectedPatient.image} />}
-              title={`Add ${selectedPatient.name}'s Blood Sugar Level`}
-            />
-          </Card>
-        </Col>
-        <Col lg={6} md={8} sm={12} xs={24}>
-          <Card
-            actions={[
-              <CiCirclePlus
-                key="Add"
-                className={"mx-auto text-4xl"}
-                onClick={() =>
-                  router.nav("blood-pressure/create", {
-                    state: { ...selectedPatient },
-                  })
-                }
-              />,
-            ]}
-            hoverable={true}
-          >
-            <Card.Meta
-              avatar={<Avatar src={selectedPatient.image} />}
-              title={`Add ${selectedPatient.name}'s Blood Pressure`}
-            />
-          </Card>
-        </Col>
-        <Col lg={6} md={8} sm={12} xs={24}>
-          <Card
-            actions={[
-              <CiCirclePlus
-                key="Add"
-                className={"mx-auto text-4xl"}
-                onClick={() =>
-                  router.nav("temperature/create", {
-                    state: { ...selectedPatient },
-                  })
-                }
-              />,
-            ]}
-            hoverable={true}
-          >
-            <Card.Meta
-              avatar={<Avatar src={selectedPatient.image} />}
-              title={`Add ${selectedPatient.name}'s Temperature`}
-            />
-          </Card>
-        </Col>
-        <Col lg={6} md={8} sm={12} xs={24}>
-          <Card
-            actions={[
-              <CiCirclePlus
-                key="Add"
-                className={"mx-auto text-4xl"}
-                onClick={() =>
-                  router.nav("pulse-rate/create", {
-                    state: { ...selectedPatient },
-                  })
-                }
-              />,
-            ]}
-            hoverable={true}
-          >
-            <Card.Meta
-              avatar={<Avatar src={selectedPatient.image} />}
-              title={`Add ${selectedPatient.name}'s Pulse Rate`}
-            />
-          </Card>
-        </Col>
-        <Col lg={6} md={8} sm={12} xs={24}>
-          <Card
-            actions={[
-              <CiCirclePlus
-                key="Add"
-                className={"mx-auto text-4xl"}
-                onClick={() =>
-                  router.nav("blood-oxygen/create", {
-                    state: { ...selectedPatient },
-                  })
-                }
-              />,
-            ]}
-            hoverable={true}
-          >
-            <Card.Meta
-              avatar={<Avatar src={selectedPatient.image} />}
-              title={`Add ${selectedPatient.name}'s Blood Oxygen Level`}
-            />
-          </Card>
-        </Col>
+        {categoryList.length > 0 &&
+          categoryList.map((c) => (
+            <Col lg={6} md={8} sm={12} xs={24} key={c.id}>
+              <Card
+                actions={[
+                  <CiCirclePlus
+                    key="Add"
+                    className={"mx-auto text-4xl"}
+                    onClick={() =>
+                      router.nav(`${c.cat_name}/create`, {
+                        state: { ...selectedPatient, category: c.id },
+                      })
+                    }
+                  />,
+                ]}
+                hoverable={true}
+              >
+                <Card.Meta
+                  avatar={
+                    <Avatar
+                      src={
+                        selectedPatient?.member_photo
+                          ? selectedPatient?.member_photo
+                          : "/img/avatar.png"
+                      }
+                    />
+                  }
+                  title={`Add ${selectedPatient?.name}'s ${c.cat_name} Level`}
+                />
+              </Card>
+            </Col>
+          ))}
       </Row>
     </InnerContainer>
   );

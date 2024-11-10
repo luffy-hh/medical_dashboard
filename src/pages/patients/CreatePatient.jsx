@@ -10,6 +10,7 @@ import {
   createPatientMessage,
   createPatientStatus,
 } from "../../app/Patients/patientSlice.jsx";
+import dayjs from "dayjs";
 
 const CreatePatient = ({ form, onFinish }) => {
   console.log(form, typeof form);
@@ -20,7 +21,13 @@ const CreatePatient = ({ form, onFinish }) => {
       <CustomFormWithRouter
         data={patientInputs()}
         initialValues={{}}
-        onFinish={onFinish}
+        onFinish={(values) => {
+          const finalValues = {
+            ...values,
+            dob: dayjs(values.dob).format("DD-MM-YYYY"),
+          };
+          onFinish(finalValues);
+        }}
       />
     </>
   );

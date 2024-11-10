@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useMemo, useState } from "react";
+import React, { lazy, Suspense, useEffect, useMemo, useState } from "react";
 const InnerContainer = lazy(
   () => import("../../components/common/InnerContainer"),
 );
@@ -25,10 +25,11 @@ const withTableAndTitle = (
 ) => {
   const HOC = (props) => {
     const dispatch = useDispatch();
-    console.log(modalProps);
+    // console.log(modalProps);
 
     const [id, setId] = useState(null);
     const [open, setOpen] = useState(false);
+    const [postData, setPostData] = useState({});
     let data = useSelector(tableProps?.data ? tableProps.data : () => {});
     let finalData = useMemo(() => {
       if (tableProps?.dateChange) {
@@ -41,6 +42,9 @@ const withTableAndTitle = (
       }
       return data;
     }, [data]);
+    useEffect(() => {
+      setPostData({ id: id });
+    }, [id]);
     const deleteStatus = useSelector(
       modalProps?.status ? modalProps.status : () => {},
     );
@@ -53,6 +57,8 @@ const withTableAndTitle = (
     const tableMessage = useSelector(
       tableProps?.message ? tableProps?.message : () => {},
     );
+    console.log(id);
+
     return (
       <Suspense fallback={<Loader />}>
         {(deleteStatus === "loading" || tableStatus === "loading") && (
@@ -98,8 +104,8 @@ const withTableAndTitle = (
             setOpen(false);
             dispatch(
               modalProps?.method({
-                api: modalProps?.api + "/" + id,
-                postData: modalProps?.postData ? modalProps?.postData : {},
+                api: modalProps?.api,
+                postData: postData,
                 header: { ...modalProps?.extraData },
               }),
             );
