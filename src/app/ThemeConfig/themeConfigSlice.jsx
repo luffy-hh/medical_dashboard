@@ -23,7 +23,7 @@ const ThemeConfigSlice = createSlice({
       state.isMiniSidebar = !state.isMiniSidebar;
     },
     setPageTitle: (state, action) => {
-      document.title = `${action.payload} | Personal Health Care`;
+      document.title = `${action.payload} | Linn PHR`;
     },
     ToggleMobileSidebar: (state) => {
       state.isMobileSidebar = !state.isMobileSidebar;

@@ -16,6 +16,7 @@ import {
   resetUpdateMedicinesStatus,
 } from "../../app/medicines/medicineSlice.jsx";
 import { useDispatch, useSelector } from "react-redux";
+import { setPageTitle } from "../../app/ThemeConfig/themeConfigSlice.jsx";
 
 const Medicine = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const Medicine = () => {
 
   useEffect(() => {
     dispatch(getMedicines({ api: "/medicine_record_list" }));
+    dispatch(setPageTitle("Medicines"));
   }, []);
   useEffect(() => {
     if (
@@ -75,7 +77,7 @@ const MedicineWithTableAndTitle = withTableAndTitle(
   pageTitleProps,
   buttonProps,
   tableProps,
-  modalProps,
+  modalProps
 );
 
 export default MedicineWithTableAndTitle;

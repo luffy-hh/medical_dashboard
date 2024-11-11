@@ -22,6 +22,7 @@ import {
   resetDeleteBannerStatus,
   resetUpdateBannerStatus,
 } from "../../app/banners/bannerSlice.jsx";
+import { setPageTitle } from "../../app/ThemeConfig/themeConfigSlice.jsx";
 
 const CategoryList = () => {
   const dispatch = useDispatch();
@@ -31,9 +32,9 @@ const CategoryList = () => {
   const categoryList = useSelector(categories);
   console.log(categoryList);
 
-  // useEffect(() => {
-  //   dispatch(getCategories({ api: "/check_category_list" }));
-  // }, []);
+  useEffect(() => {
+    dispatch(setPageTitle("Categories"));
+  }, []);
   useEffect(() => {
     if (
       deleteStatus === "succeeded" ||
@@ -80,6 +81,6 @@ const CategoryListWithTable = withTableAndTitle(
   pageTitleProps,
   buttonProps,
   tableProps,
-  modalProps,
+  modalProps
 );
 export default CategoryListWithTable;

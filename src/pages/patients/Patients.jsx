@@ -17,11 +17,15 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
+import { setPageTitle } from "../../app/ThemeConfig/themeConfigSlice.jsx";
 const Patients = ({ router }) => {
   const dispatch = useDispatch();
   const deleteStatus = useSelector(deletePatientStatus);
   const createStatus = useSelector(createPatientStatus);
   const updateStatus = useSelector(updatePatientStatus);
+  useEffect(() => {
+    dispatch(setPageTitle("Patients"));
+  }, []);
   useEffect(() => {
     (deleteStatus === "succeeded" ||
       createStatus === "succeeded" ||
@@ -71,7 +75,7 @@ const PatientsWithTableAndTitle = withTableAndTitle(
   pageTitleProps,
   buttonProps,
   tableProps,
-  modalProps,
+  modalProps
 );
 
 Patients.propTypes = {

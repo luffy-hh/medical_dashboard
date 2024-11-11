@@ -16,6 +16,7 @@ import {
 import withTableAndTitle from "../../components/hoc/withTableAndTitle.jsx";
 import { userTableColumns } from "../../constants/TableColumns.jsx";
 import { useDispatch, useSelector } from "react-redux";
+import { setPageTitle } from "../../app/ThemeConfig/themeConfigSlice.jsx";
 
 const UserList = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const UserList = () => {
   const updateStatus = useSelector(updateUserStatus);
   useEffect(() => {
     dispatch(getUsers({ api: "/user_list" }));
+    dispatch(setPageTitle("Users"));
   }, []);
   useEffect(() => {
     if (
@@ -72,6 +74,6 @@ const UserListWithTableAndTitle = withTableAndTitle(
   pageTitleProps,
   buttonProps,
   tableProps,
-  modalProps,
+  modalProps
 );
 export default UserListWithTableAndTitle;

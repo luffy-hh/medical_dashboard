@@ -16,6 +16,7 @@ import {
 } from "../../app/appointment/appointmentSlice.jsx";
 import { appointmentTableColumns } from "../../constants/TableColumns.jsx";
 import { useDispatch, useSelector } from "react-redux";
+import { setPageTitle } from "../../app/ThemeConfig/themeConfigSlice.jsx";
 
 const AppointmentList = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const AppointmentList = () => {
   const createStatus = useSelector(createAppointmentStatus);
   useEffect(() => {
     dispatch(getAppointments({ api: "/appointment_list" }));
+    dispatch(setPageTitle("Appointments"));
   }, []);
   useEffect(() => {
     if (
@@ -71,7 +73,7 @@ const AppointmentListWithTableAndTitle = withTableAndTitle(
   pageTitleProps,
   buttonProps,
   tableProps,
-  modalProps,
+  modalProps
 );
 
 export default AppointmentListWithTableAndTitle;

@@ -18,6 +18,7 @@ import CustomTable from "../../components/common/CustomTable.jsx";
 import { dailyRecordsTableColumns } from "../../constants/TableColumns.jsx";
 import { categories } from "../../app/category/categorySlice.jsx";
 import { FaFileExport } from "react-icons/fa";
+import { setPageTitle } from "../../app/ThemeConfig/themeConfigSlice.jsx";
 
 const ViewDailyRecords = ({ router }) => {
   const dispatch = useDispatch();
@@ -40,10 +41,13 @@ const ViewDailyRecords = ({ router }) => {
       dispatch(
         getDailyChecksChart({
           api: `/web_daily_record_chart?family_member_id=${patient}`,
-        }),
+        })
       );
     }
   }, [dispatch, selectedPatient]);
+  useEffect(() => {
+    dispatch(setPageTitle("Daily Checkup Records"));
+  }, []);
 
   return (
     <InnerContainer>

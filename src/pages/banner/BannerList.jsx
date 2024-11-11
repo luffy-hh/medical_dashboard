@@ -16,6 +16,7 @@ import {
   updateBannerStatus,
 } from "../../app/banners/bannerSlice.jsx";
 import { useDispatch, useSelector } from "react-redux";
+import { setPageTitle } from "../../app/ThemeConfig/themeConfigSlice.jsx";
 
 const BannerList = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const BannerList = () => {
 
   useEffect(() => {
     dispatch(getBanners({ api: "/banner_list" }));
+    dispatch(setPageTitle("Banners"));
   }, []);
 
   useEffect(() => {
@@ -77,7 +79,7 @@ const BannerListWithTable = withTableAndTitle(
   pageTitleProps,
   buttonProps,
   tableProps,
-  modalProps,
+  modalProps
 );
 
 export default BannerListWithTable;

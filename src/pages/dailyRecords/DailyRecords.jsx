@@ -3,19 +3,24 @@ import withRouter from "../../components/hoc/withRouter.jsx";
 import InnerContainer from "../../components/common/InnerContainer.jsx";
 import PageTitleWithRouter from "../../components/common/PageTitle.jsx";
 import { Avatar, Card, Col, Row } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import PatientsSegmented from "../../components/common/PatientsSegmented.jsx";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { patients } from "../../app/Patients/patientSlice.jsx";
 import { categories } from "../../app/category/categorySlice.jsx";
+import { setPageTitle } from "../../app/ThemeConfig/themeConfigSlice.jsx";
 
 const DailyRecords = ({ router }) => {
+  const dispatch = useDispatch();
   const patientList = useSelector(patients);
   const categoryList = useSelector(categories);
   const [patient, setPatient] = useState(patientList[0]?.id);
   console.log(patient, categoryList);
   const selectedPatient = patientList.find((p) => p.id === patient);
+  useEffect(() => {
+    dispatch(setPageTitle("Create Checkup"));
+  }, []);
 
   return (
     <InnerContainer>

@@ -16,6 +16,7 @@ import { monthsSelector } from "../../app/masterData/masterDataSlice.jsx";
 import dayjs from "dayjs";
 import withRouter from "../../components/hoc/withRouter.jsx";
 import { FaPlusCircle } from "react-icons/fa";
+import { setPageTitle } from "../../app/ThemeConfig/themeConfigSlice.jsx";
 
 const MonthlyRecords = ({ router }) => {
   const { location } = router;
@@ -31,6 +32,9 @@ const MonthlyRecords = ({ router }) => {
 
   const monthsList = useSelector(monthsSelector);
   const selectedMonth = monthsList.find((m) => m.id === month);
+  useEffect(() => {
+    dispatch(setPageTitle("Lab Records"));
+  }, []);
   useEffect(() => {
     if (patientsList.length > 0) {
       setPatient(patientsList[0]?.id);
@@ -49,7 +53,7 @@ const MonthlyRecords = ({ router }) => {
             month: selectedMonth.id,
             year: selectedMonth.year,
           },
-        }),
+        })
       );
     }
     setSelectedPatient(patientsList.find((p) => p.id === patient));
