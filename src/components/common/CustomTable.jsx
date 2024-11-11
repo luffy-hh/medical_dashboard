@@ -30,6 +30,87 @@ const CustomTable = ({
       return { no: index + 1, ...item };
     });
   };
+  const flattenColumns = (columns) => {
+    const flatColumns = [];
+    const processColumn = (col) => {
+      if (col.children) {
+        col.children.forEach(processColumn);
+      } else {
+        flatColumns.push(col);
+      }
+    };
+    columns.forEach(processColumn);
+    return flatColumns;
+  };
+
+  const generateMultiRowHeaders = (columns) => {
+    const headers = [];
+    const maxDepth = (cols, depth = 0) => {
+      return cols.reduce((max, col) => {
+        if (col.children) {
+          return Math.max(max, maxDepth(col.children, depth + 1));
+        }
+        return Math.max(max, depth);
+      }, depth);
+    };
+
+    const depth = maxDepth(columns);
+
+    const fillHeaders = (cols, level = 0, parentIndex = 0) => {
+      if (!headers[level]) headers[level] = [];
+      let colIndex = parentIndex;
+      cols.forEach((col) => {
+        headers[level][colIndex] = col.title;
+        if (col.children) {
+          const childColSpan = fillHeaders(col.children, level + 1, colIndex);
+          colIndex += childColSpan;
+        } else {
+          colIndex += 1;
+        }
+      });
+      return colIndex - parentIndex;
+    };
+
+    fillHeaders(columns);
+    // Ensure all header rows have the same length
+    const maxCols = headers.reduce((max, row) => Math.max(max, row.length), 0);
+    headers.forEach((row) => {
+      while (row.length < maxCols) {
+        row.push("");
+      }
+    });
+
+    return headers;
+  };
+
+  const mergeCells = (ws, columns, startRow = 0, startCol = 0) => {
+    const mergeRanges = [];
+    const processColumn = (col, row, colIndex) => {
+      if (col.children) {
+        // Calculate the span for the current parent column
+        const childColSpan = col.children.length;
+        mergeRanges.push({
+          s: { r: row, c: colIndex },
+          // Merge cells within the same row to represent the nested structure
+          e: { r: row, c: colIndex + childColSpan - 1 },
+        });
+        // Recursively process child columns
+        col.children.forEach((child, childIndex) => {
+          processColumn(child, row + 1, colIndex + childIndex);
+        });
+      }
+    };
+
+    columns.forEach((col, index) => {
+      processColumn(col, startRow, startCol + index);
+    });
+
+    mergeRanges.forEach((range) => {
+      if (!ws["!merges"]) ws["!merges"] = [];
+      ws["!merges"].push(range);
+    });
+  };
+
   const exportIndex = (data) => {
     const indexedData = data.map((item, index) => {
       const { id, ...rest } = item;
@@ -48,7 +129,8 @@ const CustomTable = ({
   };
 
   const handleExport = () => {
-    const checkedColumns = extraColumns.length > 0 ? extraColumns : columns;
+    const flatColumns = flattenColumns(columns);
+    const checkedColumns = extraColumns.length > 0 ? extraColumns : flatColumns;
     // Process data according to render functions
     const processedData = data.map((item) => {
       const processedItem = {};
@@ -85,32 +167,39 @@ const CustomTable = ({
     const ws = XLSX.utils.aoa_to_sheet([]);
 
     // Add headers
-    const headers =
-      extraColumns.length > 0
-        ? extraColumns.map((col) => col.title)
-        : columns.map((col) => col.title);
-    XLSX.utils.sheet_add_aoa(ws, [headers], { origin: "A1" });
+    // Generate multi-row headers
+    const headers = generateMultiRowHeaders(columns);
+    console.log(headers);
+    headers.forEach((headerRow, index) => {
+      XLSX.utils.sheet_add_aoa(ws, [headerRow], { origin: `A${index + 1}` });
+    });
+    // Merge cells for parent columns
+    mergeCells(ws, columns);
 
     // Add data
     XLSX.utils.sheet_add_json(ws, filteredData, {
-      origin: "A2",
+      origin: `A${headers.length + 1}`,
       skipHeader: true,
     });
-    // Apply bold formatting to the header row
-    const headerRange = XLSX.utils.decode_range(
-      "A1:" + XLSX.utils.encode_col(headers.length - 1) + "1"
-    );
-    for (let C = headerRange.s.c; C <= headerRange.e.c; ++C) {
-      const cellAddress = XLSX.utils.encode_cell({ r: 0, c: C });
-      if (!ws[cellAddress]) continue;
-      ws[cellAddress] = {
-        ...ws[cellAddress],
-        s: {
-          ...ws[cellAddress].s,
-          font: { bold: true },
-        },
-      };
-    }
+    // Apply bold formatting to the header rows
+    headers.forEach((headerRow, rowIndex) => {
+      const headerRange = XLSX.utils.decode_range(
+        `A${rowIndex + 1}:` +
+          XLSX.utils.encode_col(headerRow.length - 1) +
+          `${rowIndex + 1}`
+      );
+      for (let C = headerRange.s.c; C <= headerRange.e.c; ++C) {
+        const cellAddress = XLSX.utils.encode_cell({ r: rowIndex, c: C });
+        if (!ws[cellAddress]) continue;
+        ws[cellAddress] = {
+          ...ws[cellAddress],
+          s: {
+            ...ws[cellAddress].s,
+            font: { bold: true },
+          },
+        };
+      }
+    });
 
     // Apply alignment to each cell based on column alignment
     const dataRange = XLSX.utils.decode_range(ws["!ref"]);
@@ -124,7 +213,7 @@ const CustomTable = ({
             ...ws[cellAddress],
             s: {
               ...ws[cellAddress].s,
-              alignment: { horizontal: "left" },
+              alignment: { horizontal: col.align },
             },
           };
         }

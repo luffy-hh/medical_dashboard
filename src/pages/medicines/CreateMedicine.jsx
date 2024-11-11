@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageTitleWithRouter from "../../components/common/PageTitle.jsx";
 import CustomFormWithRouter from "../../components/common/CustomForm.jsx";
 import withNotiAndLoader from "../../components/hoc/withNotiAndLoader.jsx";
@@ -6,13 +6,22 @@ import { medicineCreateInputs } from "../../constants/FormInputs.jsx";
 import { dummyPatients } from "../../constants/DummyData.jsx";
 import { Avatar, Segmented } from "antd";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import { patients } from "../../app/Patients/patientSlice.jsx";
+import PatientsSegmented from "../../components/common/PatientsSegmented.jsx";
 
 const CreateMedicine = ({ onFinish }) => {
-  const [patient, setPatient] = useState(dummyPatients[0].id);
+  const patientList = useSelector(patients);
+  const [patient, setPatient] = useState(null);
   console.log(patient);
   const selectedPatient = dummyPatients.find((p) => p.id === patient);
   const [dayTypeValues, setDayTypeValues] = useState([]);
   const [mealTypeValues, setMealTypeValues] = useState([]);
+  useEffect(() => {
+    if (patientList.length > 0) {
+      setPatient(patientList[0]?.id);
+    }
+  }, [patientList]);
 
   const data = medicineCreateInputs(
     dayTypeValues,
@@ -23,21 +32,7 @@ const CreateMedicine = ({ onFinish }) => {
   return (
     <>
       <PageTitleWithRouter title="Create Medicine" />
-      <Segmented
-        className={" shadow-md gap my-4"}
-        onChange={(val) => setPatient(val)}
-        defaultValue={dummyPatients[0].id}
-        value={patient}
-        options={dummyPatients.map((p) => ({
-          label: (
-            <>
-              <Avatar src={p.image} alt={`${p.name}'s avatar`} size={"large"} />
-              <div>{p.name}</div>
-            </>
-          ),
-          value: p.id,
-        }))}
-      />
+      <PatientsSegmented setPatient={setPatient} patient={patient} />
       <CustomFormWithRouter
         data={data}
         initialValues={{}}

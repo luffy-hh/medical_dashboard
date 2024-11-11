@@ -122,13 +122,13 @@ export const patientsTableColumns = (nav, setId, setOpen) => {
 export const dailyRecordsTableColumns = () => {
   return [
     {
-      title: "No",
+      title: "စဥ်",
       dataIndex: "id",
       key: "id",
       render: (text, record, index) => index + 1,
     },
     {
-      title: "Date",
+      title: "ရက်စွဲ",
       dataIndex: "date",
       key: "date",
     },
@@ -138,11 +138,11 @@ export const dailyRecordsTableColumns = () => {
     //   key: "time",
     // },
     {
-      title: "Diabetes",
+      title: "ဆီးချိူ",
       align: "center",
       children: [
         {
-          title: "Before Eating",
+          title: "မစားမှီ",
           dataIndex: "Before Meal",
           key: "Before Meal",
           align: "right",
@@ -151,7 +151,7 @@ export const dailyRecordsTableColumns = () => {
           },
         },
         {
-          title: "After Eating",
+          title: "စားပြီး",
           dataIndex: "After Meal",
           key: "Before Meal",
           align: "right",
@@ -162,11 +162,11 @@ export const dailyRecordsTableColumns = () => {
       ],
     },
     {
-      title: "Blood Pressure",
+      title: "သွေးပေါင်ချိန်",
       align: "center",
       children: [
         {
-          title: "Systolic",
+          title: "အပေါ်သွေး",
           dataIndex: "Systolic",
           key: "Systolic",
           align: "right",
@@ -175,7 +175,7 @@ export const dailyRecordsTableColumns = () => {
           },
         },
         {
-          title: "Diastolic",
+          title: "အောက်သွေး",
           dataIndex: "Diastolic",
           key: "Diastolic",
           align: "right",
@@ -186,7 +186,7 @@ export const dailyRecordsTableColumns = () => {
       ],
     },
     {
-      title: "Temperature",
+      title: "အပူချိန်",
       dataIndex: "Temperature",
       key: "Temperature",
       align: "right",
@@ -204,7 +204,7 @@ export const dailyRecordsTableColumns = () => {
       },
     },
     {
-      title: "Pulse Rate",
+      title: "သွေးခုန်နှုန်း",
       dataIndex: "Pulse Rate",
       key: "Pulse Rate",
       align: "right",
@@ -212,73 +212,6 @@ export const dailyRecordsTableColumns = () => {
         return text ? text + " bpm" : "-";
       },
     },
-    // {
-    //   title: "Night Injection",
-    //   dataIndex: "night_injection",
-    //   key: "night_injection",
-    // },
-    // {
-    //   title: "Actions",
-    //   key: "action",
-    //   render: (text, record) => {
-    //     const menuItems = [
-    //       {
-    //         key: "view",
-    //         label: (
-    //           <div
-    //             onClick={() => nav(`${record.id}`, { state: { ...record } })}
-    //             className=" flex gap-2 items-center"
-    //           >
-    //             <FaEye /> <span className=" inline-block">View</span>
-    //           </div>
-    //         ),
-    //       },
-    //       {
-    //         key: "edit",
-    //         label: (
-    //           <div
-    //             className=" flex gap-2 items-center"
-    //             onClick={() =>
-    //               nav(`${record.id}/edit`, { state: { ...record } })
-    //             }
-    //           >
-    //             <FaEdit /> <span className=" inline-block">Edit</span>
-    //           </div>
-    //         ),
-    //       },
-    //       {
-    //         key: "delete",
-    //         label: (
-    //           <div
-    //             className=" flex gap-2 items-center"
-    //             onClick={() => {
-    //               //   setOpen(true);
-    //               //   setMeterId(record.id);
-    //             }}
-    //           >
-    //             <FaTrashCan /> <span className=" inline-block">Delete</span>
-    //           </div>
-    //         ),
-    //       },
-    //     ];
-    //     // console.log(record);
-    //     return (
-    //       <Suspense fallback={<Loader />}>
-    //         <Dropdown menu={{ items: menuItems }} trigger={["click"]}>
-    //           <a
-    //             className="ant-dropdown-link flex items-center"
-    //             onClick={(e) => e.preventDefault()}
-    //           >
-    //             Actions{" "}
-    //             <span>
-    //               <FaAngleDown />
-    //             </span>
-    //           </a>
-    //         </Dropdown>
-    //       </Suspense>
-    //     );
-    //   },
-    // },
   ];
 };
 
@@ -557,9 +490,39 @@ export const categoryTableColumns = (nav, setId, setOpen) => {
       key: "cat_name",
     },
     {
+      title: "Icon",
+      dataIndex: "icon",
+      key: "icon",
+      render: (text) => {
+        return (
+          <div className=" flex items-center justify-center">
+            <img src={text} alt="" className=" w-8 h-8" />
+          </div>
+        );
+      },
+    },
+    {
       title: "Warning Point",
       dataIndex: "threshold",
       key: "threshold",
+      align: "right",
+    },
+    {
+      title: "Warning Point 2",
+      dataIndex: "threshold2",
+      key: "threshold2",
+      align: "right",
+      render: (text) => {
+        return text === "null" ? "-" : text;
+      },
+    },
+    {
+      title: "Unit",
+      dataIndex: "unit",
+      key: "unit",
+      render: (text) => {
+        return text === "null" ? "-" : text;
+      },
     },
     {
       title: "Created By",

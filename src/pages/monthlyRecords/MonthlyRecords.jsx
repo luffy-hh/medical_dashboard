@@ -15,6 +15,7 @@ import { Avatar, Card, List, Segmented } from "antd";
 import { monthsSelector } from "../../app/masterData/masterDataSlice.jsx";
 import dayjs from "dayjs";
 import withRouter from "../../components/hoc/withRouter.jsx";
+import { FaPlusCircle } from "react-icons/fa";
 
 const MonthlyRecords = ({ router }) => {
   const { location } = router;
@@ -54,8 +55,14 @@ const MonthlyRecords = ({ router }) => {
     setSelectedPatient(patientsList.find((p) => p.id === patient));
   }, [dispatch, patient, selectedMonth, patientsList]);
   return (
-    <InnerContainer>
-      <PageTitleWithRouter title="Lab Records" />
+    <InnerContainer className={"pt-2"}>
+      <PageTitleWithRouter
+        title="Lab Records"
+        hasButton={true}
+        buttonText="Add New Lab Record"
+        buttonLink="create"
+        icon={<FaPlusCircle />}
+      />
       <div className={"flex flex-col items-start"}>
         <PatientsSegmented patient={patient} setPatient={setPatient} />
         <Segmented

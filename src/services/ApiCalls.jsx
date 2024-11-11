@@ -93,10 +93,10 @@ export const postMultipartDataWithToken = async (
       const value = postData[key];
       if (Array.isArray(value) && key === "attaches") {
         // If the value is an array, append each file separately
-        formData.append(`${key}[]`, value);
-        // value.forEach((file) => {
-        //   // console.log(`Appended ${key}: ${file.name} to formData`);
-        // });
+        value.forEach((file) => {
+          formData.append(`${key}[]`, file);
+          // console.log(`Appended ${key}: ${file.name} to formData`);
+        });
       } else {
         formData.append(key, value);
         // console.log(`Appended ${key}: ${value.name || value} to formData`);
@@ -104,6 +104,8 @@ export const postMultipartDataWithToken = async (
     }
   }
   try {
+    console.log(formData);
+
     const response = await fetch(baseUrl + api, {
       method: "POST",
       headers: {

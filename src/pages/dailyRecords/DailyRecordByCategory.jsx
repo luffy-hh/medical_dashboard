@@ -31,6 +31,8 @@ const DailyRecordByCategory = ({ router }) => {
   const dailyChecksMonthlyChartKeys = useSelector(
     dailyChecksMonthlyChartKeysSelector,
   );
+  console.log(dailyChecksMonthly);
+
   const dailyChecksMonthlyChartValues = useSelector(
     dailyChecksMonthlyChartValuesSelector,
   );

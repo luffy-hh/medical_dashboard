@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 // import ModalCmp from "../Modal/ModalCmp";
 import { useDispatch } from "react-redux";
-// import { deleteMaintenancePhoto } from "../../app/MaintenanceSlice/MaintenanceSlice";
+import { deleteLabRecordAttach } from "../../app/labRecords/labRecordSlice.jsx";
 
 const ImgViewer = ({ width, height, className, img, deleteAble = true }) => {
   const [image, setImage] = useState([]);
@@ -18,7 +18,12 @@ const ImgViewer = ({ width, height, className, img, deleteAble = true }) => {
   const handleDelete = (index, item) => {
     const newImages = image.filter((_, i) => i !== index);
     setImage(newImages);
-    // dispatch(deleteMaintenancePhoto({ api: `delete-photo?id=${item.id}` }));
+    dispatch(
+      deleteLabRecordAttach({
+        api: `/lab_record_attach_delete`,
+        postData: { id: item.id },
+      }),
+    );
   };
   if (Array.isArray(img)) {
     return (
@@ -26,7 +31,7 @@ const ImgViewer = ({ width, height, className, img, deleteAble = true }) => {
         {image.map((item, i) => (
           <div key={i} className=" relative inline-block m-2">
             <Image
-              src={item.photo_path}
+              src={item.lab_attach}
               width={width}
               height={height}
               className={className}
@@ -62,7 +67,7 @@ ImgViewer.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   className: PropTypes.string,
-  img: PropTypes.string,
+  img: PropTypes.any,
   deleteAble: PropTypes.bool,
 };
 

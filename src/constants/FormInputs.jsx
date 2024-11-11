@@ -1207,7 +1207,7 @@ export const medicineCreateInputs = (
       label: "Title",
       name: "title",
       type: "text",
-      placeholder: "Enter Medicine Name",
+      placeholder: "Enter Title",
       className: "w-full",
       layout: {
         layout: "vertical",
@@ -1221,7 +1221,7 @@ export const medicineCreateInputs = (
       rules: [
         {
           required: true,
-          message: "Enter Name",
+          message: "Enter Title",
         },
       ],
     },

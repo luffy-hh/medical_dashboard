@@ -19,6 +19,9 @@ const initialState = {
 
   updateLabRecordStatus: "idle",
   updateLabRecordMessage: "",
+
+  deleteLabRecordAttachStatus: "idle",
+  deleteLabRecordAttachMessage: "",
 };
 export const getLabRecords = createAsyncThunk(
   "labRecords/getLabRecords",
@@ -68,11 +71,29 @@ export const updateLabRecord = createAsyncThunk(
     return data;
   },
 );
+export const deleteLabRecordAttach = createAsyncThunk(
+  "labRecords/deleteLabRecordAttach",
+  async ({ api, postData }, thunkAPI) => {
+    const response = await postDataWithToken(api, postData);
+    const data = await response.json();
+    if (response.status !== 200) {
+      return thunkAPI.rejectWithValue(data);
+    }
+    return data;
+  },
+);
 
 const labRecordSlice = createSlice({
   name: "labRecords",
   initialState,
-  reducers: {},
+  reducers: {
+    resetCreateLabRecordStatus: (state) => {
+      state.createLabRecordStatus = "idle";
+    },
+    resetUpdateLabRecordStatus: (state) => {
+      state.updateLabRecordStatus = "idle";
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getLabRecords.fulfilled, (state, action) => {
@@ -124,6 +145,18 @@ const labRecordSlice = createSlice({
         state.updateLabRecordStatus = "failed";
         state.updateLabRecordMessage = action.payload.responseMessage;
       });
+    builder
+      .addCase(deleteLabRecordAttach.fulfilled, (state, action) => {
+        state.deleteLabRecordAttachStatus = "succeeded";
+        state.deleteLabRecordAttachMessage = action.payload.responseMessage;
+      })
+      .addCase(deleteLabRecordAttach.pending, (state) => {
+        state.deleteLabRecordAttachStatus = "loading";
+      })
+      .addCase(deleteLabRecordAttach.rejected, (state, action) => {
+        state.deleteLabRecordAttachStatus = "failed";
+        state.deleteLabRecordAttachMessage = action.payload.responseMessage;
+      });
   },
 });
 
@@ -146,5 +179,11 @@ export const updateLabRecordStatusSelector = (state) =>
   state.labRecords.updateLabRecordStatus;
 export const updateLabRecordMessageSelector = (state) =>
   state.labRecords.updateLabRecordMessage;
+export const deleteLabRecordAttachStatusSelector = (state) =>
+  state.labRecords.deleteLabRecordAttachStatus;
+export const deleteLabRecordAttachMessageSelector = (state) =>
+  state.labRecords.deleteLabRecordAttachMessage;
 
+export const { resetCreateLabRecordStatus, resetUpdateLabRecordStatus } =
+  labRecordSlice.actions;
 export default labRecordSlice.reducer;

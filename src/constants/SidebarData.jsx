@@ -16,14 +16,19 @@ export const sideBarData = [
     key: "/",
   },
   {
-    label: "Banners",
-    icon: <TbCarouselHorizontal />,
-    key: "/banner",
+    label: "Create Daily Checkup",
+    icon: <TbReportMedical />,
+    key: "/daily",
   },
   {
-    label: "Categories",
-    icon: <TbCategory />,
-    key: "/category",
+    label: "Daily Checkup Records",
+    icon: <AiOutlineHistory />,
+    key: "/daily-records",
+  },
+  {
+    label: "Lab Checkup Records",
+    icon: <TbReportAnalytics />,
+    key: "/lab-records",
   },
   {
     label: "Patients",
@@ -41,19 +46,14 @@ export const sideBarData = [
     key: "/appointment",
   },
   {
-    label: "Create Daily Checkup",
-    icon: <TbReportMedical />,
-    key: "/daily",
+    label: "Banners",
+    icon: <TbCarouselHorizontal />,
+    key: "/banner",
   },
   {
-    label: "Daily Checkup Records",
-    icon: <AiOutlineHistory />,
-    key: "/daily-records",
-  },
-  {
-    label: "Lab Checkup Records",
-    icon: <TbReportAnalytics />,
-    key: "/lab-records",
+    label: "Categories",
+    icon: <TbCategory />,
+    key: "/category",
   },
   {
     label: "Users",

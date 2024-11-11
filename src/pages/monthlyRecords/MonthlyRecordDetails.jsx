@@ -41,8 +41,13 @@ const MonthlyRecordDetails = ({ router }) => {
           "w-max mx-auto px-8 py-4 shadow transition duration-500 ease-in-out transform hover:shadow-lg"
         }
       >
-        <div className={"w-full"}>
-          <Button className={"float-end"} onClick={() => router.nav("edit")}>
+        <div className={"w-full flex justify-end"}>
+          <Button
+            className={""}
+            onClick={() =>
+              router.nav("edit", { state: { ...labRecordDetails } })
+            }
+          >
             Edit
           </Button>
         </div>

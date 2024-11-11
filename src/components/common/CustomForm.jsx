@@ -55,7 +55,7 @@ const CustomForm = ({
     <Suspense fallback={<Loader />}>
       <Form
         {...formItemLayout}
-        className="w-[100%] justify-center items-center"
+        className={`w-[100%] justify-center items-center`}
         onFinish={onFinish}
         initialValues={{
           ...initialValues,
@@ -73,91 +73,93 @@ const CustomForm = ({
           }, {}),
         }}
       >
-        {data.map((item, i) => {
-          // console.log(
-          //   item.name,
-          //   initialValues.user_name,
-          //   initialValues.loginId,
-          //   initialValues.password
-          // );
-          return (
-            <div
-              key={i}
-              className={`mb-2 w-[90%] mx-auto ${
-                data.length > 4 ? "sm:w-[50%" : ""
-              }`}
-            >
-              <Form.Item
-                label={item?.label}
-                {...item?.layout}
-                name={item?.name}
-                rules={item?.rules}
-                valuePropName={item.type === "file" ? "file" : "value"}
-                getValueFromEvent={
-                  item.type === "file"
-                    ? (e) => normFile(e, item.multiple)
-                    : undefined
-                }
-                hidden={item?.hidden}
-                className="justify-center items-center"
-                // labelAlign={``}
-                // validateStatus=""
-                // help="Should be combination of numbers & alphabets"
+        <div className={`${data.length > 4 && "grid grid-cols-2"}`}>
+          {data.map((item, i) => {
+            // console.log(
+            //   item.name,
+            //   initialValues.user_name,
+            //   initialValues.loginId,
+            //   initialValues.password
+            // );
+            return (
+              <div
+                key={i}
+                className={`mb-2  w-[90%] mx-auto ${
+                  data.length > 4 ? "sm:w-[80%] " : ""
+                }`}
               >
-                {item.type === "select" ? (
-                  <CustomSelect
-                    options={item.options}
-                    clearable={item?.clearable}
-                    value={initialValues[item?.name]}
-                    searchable={item?.searchable}
-                  />
-                ) : item.type === "date" ? (
-                  <DatePicker
-                    showTime={item?.showTime || false}
-                    placeholder={item.placeholder}
-                    className={item?.className}
-                    format="DD/MM/YYYY"
-                    allowClear={item?.clearable}
-                  />
-                ) : item.type === "time" ? (
-                  <TimePicker format={"HH:mm"} className={item.className} />
-                ) : item.type === "checkboxgroup" ? (
-                  <Checkbox.Group
-                    options={item.options}
-                    onChange={item.onChange}
-                    className={item.className}
-                  />
-                ) : (
-                  <CustomInput
-                    options={item?.options}
-                    placeholder={item.placeholder}
-                    className={item?.className}
-                    type={item?.type}
-                    clearable={item?.clearable}
-                    multiple={item?.multiple}
-                    value={
-                      item.type !== "file"
-                        ? initialValues[item?.name]
-                        : undefined
-                    }
-                  />
-                )}
-                {/* <Input placeholder="unavailable choice" id="error" /> */}
-                {/* <CustomSelect options={selectBranch} /> */}
-              </Form.Item>
-              {item.type === "file" &&
-                Object.keys(initialValues).length !== 0 && (
-                  <div className="text-center">
-                    <ImgViewer
-                      width={100}
-                      height={100}
-                      img={initialValues[item.name]}
+                <Form.Item
+                  label={item?.label}
+                  {...item?.layout}
+                  name={item?.name}
+                  rules={item?.rules}
+                  valuePropName={item.type === "file" ? "file" : "value"}
+                  getValueFromEvent={
+                    item.type === "file"
+                      ? (e) => normFile(e, item.multiple)
+                      : undefined
+                  }
+                  hidden={item?.hidden}
+                  className="justify-center items-center"
+                  // labelAlign={``}
+                  // validateStatus=""
+                  // help="Should be combination of numbers & alphabets"
+                >
+                  {item.type === "select" ? (
+                    <CustomSelect
+                      options={item.options}
+                      clearable={item?.clearable}
+                      value={initialValues[item?.name]}
+                      searchable={item?.searchable}
                     />
-                  </div>
-                )}
-            </div>
-          );
-        })}
+                  ) : item.type === "date" ? (
+                    <DatePicker
+                      showTime={item?.showTime || false}
+                      placeholder={item.placeholder}
+                      className={item?.className}
+                      format="DD/MM/YYYY"
+                      allowClear={item?.clearable}
+                    />
+                  ) : item.type === "time" ? (
+                    <TimePicker format={"HH:mm"} className={item.className} />
+                  ) : item.type === "checkboxgroup" ? (
+                    <Checkbox.Group
+                      options={item.options}
+                      onChange={item.onChange}
+                      className={item.className}
+                    />
+                  ) : (
+                    <CustomInput
+                      options={item?.options}
+                      placeholder={item.placeholder}
+                      className={item?.className}
+                      type={item?.type}
+                      clearable={item?.clearable}
+                      multiple={item?.multiple}
+                      value={
+                        item.type !== "file"
+                          ? initialValues[item?.name]
+                          : undefined
+                      }
+                    />
+                  )}
+                  {/* <Input placeholder="unavailable choice" id="error" /> */}
+                  {/* <CustomSelect options={selectBranch} /> */}
+                </Form.Item>
+                {item.type === "file" &&
+                  Object.keys(initialValues).length !== 0 && (
+                    <div className="text-center">
+                      <ImgViewer
+                        width={100}
+                        height={100}
+                        img={initialValues[item.name]}
+                      />
+                    </div>
+                  )}
+              </div>
+            );
+          })}
+        </div>
 
         <div className="flex gap-8 mt-12 w-full justify-center">
           {backButton && (
