@@ -145,7 +145,7 @@ export const dailyRecordsTableColumns = () => {
           title: "မစားမှီ",
           dataIndex: "Before Meal",
           key: "Before Meal",
-          align: "right",
+          align: "center",
           render: (text) => {
             return text ? text + " mg/dl" : "-";
           },
@@ -154,7 +154,7 @@ export const dailyRecordsTableColumns = () => {
           title: "စားပြီး",
           dataIndex: "After Meal",
           key: "Before Meal",
-          align: "right",
+          align: "center",
           render: (text) => {
             return text ? text + " mg/dl" : "-";
           },
@@ -169,7 +169,7 @@ export const dailyRecordsTableColumns = () => {
           title: "အပေါ်သွေး",
           dataIndex: "Systolic",
           key: "Systolic",
-          align: "right",
+          align: "center",
           render: (text) => {
             return text ? text + " mmHg" : "-";
           },
@@ -178,7 +178,7 @@ export const dailyRecordsTableColumns = () => {
           title: "အောက်သွေး",
           dataIndex: "Diastolic",
           key: "Diastolic",
-          align: "right",
+          align: "center",
           render: (text) => {
             return text ? text + " mmHg" : "-";
           },
@@ -189,7 +189,7 @@ export const dailyRecordsTableColumns = () => {
       title: "အပူချိန်",
       dataIndex: "Temperature",
       key: "Temperature",
-      align: "right",
+      align: "center",
       render: (text) => {
         return text ? text + " °F" : "-";
       },
@@ -198,7 +198,7 @@ export const dailyRecordsTableColumns = () => {
       title: "SPO2",
       dataIndex: "Blood Oxygen",
       key: "Blood Oxygen",
-      align: "right",
+      align: "center",
       render: (text) => {
         return text ? text + " mg/dl" : "-";
       },
@@ -207,7 +207,7 @@ export const dailyRecordsTableColumns = () => {
       title: "သွေးခုန်နှုန်း",
       dataIndex: "Pulse Rate",
       key: "Pulse Rate",
-      align: "right",
+      align: "center",
       render: (text) => {
         return text ? text + " bpm" : "-";
       },
