@@ -38,7 +38,7 @@ const MonthlyRecordDetails = ({ router }) => {
       />
       <div
         className={
-          "w-max mx-auto px-8 py-4 shadow transition duration-500 ease-in-out transform hover:shadow-lg"
+          "max-w-max mx-auto px-8 py-4 shadow transition duration-500 ease-in-out transform hover:shadow-lg"
         }
       >
         <div className={"w-full flex justify-end"}>
@@ -74,7 +74,7 @@ const MonthlyRecordDetails = ({ router }) => {
           {labRecordDetails.lab_date}
         </p>
         <p className={"my-2 text-xl"}>Attaches</p>
-        <Image.PreviewGroup>
+        <Image.PreviewGroup rootClassName={"flex gap-x-4 flex-wrap"}>
           {labRecordDetailsStatus === "loading" ? (
             <Loader />
           ) : (

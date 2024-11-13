@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PageTitleWithRouter from "../../components/common/PageTitle";
 import InnerContainer from "../../components/common/InnerContainer";
 import CustomFormWithRouter from "../../components/common/CustomForm";
@@ -16,13 +16,18 @@ import {
   createDailyCheck,
   getCreateDailyCheckMessage,
   getCreateDailyCheckStatus,
+  resetCreateDailyCheckStatus,
 } from "../../app/dailyCheck/dailyCheckSlice.jsx";
 import { transformObject } from "../../utilities/utilsFunctions.js";
 import dayjs from "dayjs";
+import { useDispatch, useSelector } from "react-redux";
 
 const CreateDailyRecord = ({ router, onFinish }) => {
   const { name } = useParams();
   const { location } = router;
+  const dispatch = useDispatch();
+  const dailyCheckCreateStatus = useSelector(getCreateDailyCheckStatus);
+
   let inputs = () => {
     switch (name) {
       case "blood_pressure":
@@ -39,6 +44,14 @@ const CreateDailyRecord = ({ router, onFinish }) => {
         return [];
     }
   };
+  useEffect(() => {
+    if (
+      dailyCheckCreateStatus === "succeeded" ||
+      dailyCheckCreateStatus === "failed"
+    ) {
+      dispatch(resetCreateDailyCheckStatus());
+    }
+  }, [dailyCheckCreateStatus, dispatch]);
 
   return (
     <>

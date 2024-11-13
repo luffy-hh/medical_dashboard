@@ -91,7 +91,10 @@ export const postMultipartDataWithToken = async (
   for (const key in postData) {
     if (Object.prototype.hasOwnProperty.call(postData, key)) {
       const value = postData[key];
-      if (Array.isArray(value) && key === "attaches") {
+      if (
+        Array.isArray(value) &&
+        (key === "attaches" || key === "medicine_photo")
+      ) {
         // If the value is an array, append each file separately
         value.forEach((file) => {
           formData.append(`${key}[]`, file);

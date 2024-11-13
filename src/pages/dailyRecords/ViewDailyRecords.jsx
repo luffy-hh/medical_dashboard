@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import InnerContainer from "../../components/common/InnerContainer.jsx";
 import PageTitleWithRouter from "../../components/common/PageTitle.jsx";
-import { Button, Flex } from "antd";
+import { Button, DatePicker, Flex } from "antd";
 import withRouter from "../../components/hoc/withRouter.jsx";
 import PropTypes from "prop-types";
 import PatientsSegmented from "../../components/common/PatientsSegmented.jsx";
@@ -19,15 +19,17 @@ import { dailyRecordsTableColumns } from "../../constants/TableColumns.jsx";
 import { categories } from "../../app/category/categorySlice.jsx";
 import { FaFileExport } from "react-icons/fa";
 import { setPageTitle } from "../../app/ThemeConfig/themeConfigSlice.jsx";
+import dayjs from "dayjs";
 
 const ViewDailyRecords = ({ router }) => {
   const dispatch = useDispatch();
   const patientList = useSelector(patients);
   const dailyChecksChart = useSelector(dailyChecksChartSelector);
   const dailyChecksChartStatus = useSelector(getDailyChecksChartStatus);
-  console.log(dailyChecksChart);
+  // console.log(dailyChecksChart);
   const categoryList = useSelector(categories);
-  console.log(categoryList);
+  const [searchParams, setSearchParams] = useState({});
+  // console.log(categoryList);
 
   const [patient, setPatient] = useState(null);
   const selectedPatient = patientList.find((p) => p.id === patient);
@@ -41,7 +43,7 @@ const ViewDailyRecords = ({ router }) => {
       dispatch(
         getDailyChecksChart({
           api: `/web_daily_record_chart?family_member_id=${patient}`,
-        })
+        }),
       );
     }
   }, [dispatch, selectedPatient]);
@@ -53,7 +55,7 @@ const ViewDailyRecords = ({ router }) => {
     <InnerContainer>
       <PageTitleWithRouter title="Daily Checkup Records" />
       <PatientsSegmented patient={patient} setPatient={setPatient} />
-      <div className={"my-4 flex gap-4"}>
+      <div className={"my-4 flex gap-4 flex-wrap"}>
         {categoryList.length > 0 &&
           categoryList.map((c) => (
             <Button
@@ -72,6 +74,24 @@ const ViewDailyRecords = ({ router }) => {
               {/*<FaAngleDoubleRight />*/}
             </Button>
           ))}
+      </div>
+      <div className={"flex flex-wrap gap-4"}>
+        <DatePicker
+          picker={"month"}
+          placeholder={"Select Month"}
+          // format={"DD-MM-YYYY"}
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, month: dayjs(e).format("M") })
+          }
+          className={"w-[90vw] sm:w-[12rem]"}
+        />
+        <DatePicker
+          placeholder={"Select Year"}
+          // format={"DD-MM-YYYY"}
+          picker={"year"}
+          className={"w-[90vw] sm:w-[12rem]"}
+          onChange={(e) => dayjs(e).format("YYYY")}
+        />
       </div>
       <CustomTable
         columns={dailyRecordsTableColumns()}

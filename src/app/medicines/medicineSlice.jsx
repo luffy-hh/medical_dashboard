@@ -10,6 +10,10 @@ const initialState = {
   medicinesStatus: "idle",
   medicinesMessage: "",
 
+  medicineDetails: [],
+  medicineDetailsMessage: "",
+  medicineDetailsStatus: "idle",
+
   createMedicinesStatus: "idle",
   createMedicinesMessage: "",
 
@@ -34,8 +38,8 @@ export const getMedicines = createAsyncThunk(
 
 export const createMedicine = createAsyncThunk(
   "medicines/createMedicine",
-  async ({ api, reqData }, thunkAPI) => {
-    const response = await postMultipartDataWithToken(api, reqData);
+  async ({ api, postData, header = {} }, thunkAPI) => {
+    const response = await postMultipartDataWithToken(api, postData, header);
     const data = await response.json();
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue(data);
@@ -46,8 +50,8 @@ export const createMedicine = createAsyncThunk(
 
 export const updateMedicine = createAsyncThunk(
   "medicines/updateMedicine",
-  async ({ api, reqData }, thunkAPI) => {
-    const response = await postMultipartDataWithToken(api, reqData);
+  async ({ api, postData, header = {} }, thunkAPI) => {
+    const response = await postMultipartDataWithToken(api, postData, header);
     const data = await response.json();
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue(data);
@@ -58,8 +62,20 @@ export const updateMedicine = createAsyncThunk(
 
 export const deleteMedicine = createAsyncThunk(
   "medicines/deleteMedicine",
-  async ({ api, reqData }, thunkAPI) => {
-    const response = await postDataWithToken(api, reqData);
+  async ({ api, postData, header = {} }, thunkAPI) => {
+    const response = await postDataWithToken(api, postData, header);
+    const data = await response.json();
+    if (response.status !== 200) {
+      return thunkAPI.rejectWithValue(data);
+    }
+    return data;
+  },
+);
+
+export const getPatientMedicineDetails = createAsyncThunk(
+  "medicines/getPatientMedicineDetails",
+  async ({ api, postData }, thunkAPI) => {
+    const response = await postDataWithToken(api, postData);
     const data = await response.json();
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue(data);
@@ -131,6 +147,18 @@ const medicineSlice = createSlice({
       })
       .addCase(deleteMedicine.pending, (state) => {
         state.deleteMedicinesStatus = "loading";
+      })
+      .addCase(getPatientMedicineDetails.fulfilled, (state, action) => {
+        state.medicineDetailsStatus = "succeeded";
+        state.medicineDetails = action.payload.data;
+        state.medicineDetailsMessage = action.payload.responseMessage;
+      })
+      .addCase(getPatientMedicineDetails.pending, (state) => {
+        state.medicineDetailsStatus = "loading";
+      })
+      .addCase(getPatientMedicineDetails.rejected, (state, action) => {
+        state.medicineDetailsStatus = "failed";
+        state.medicineDetailsMessage = action.payload?.responseMessage;
       });
   },
 });
@@ -138,6 +166,12 @@ const medicineSlice = createSlice({
 export const getMedicinesList = (state) => state.medicines.medicines;
 export const getMedicinesStatus = (state) => state.medicines.medicinesStatus;
 export const getMedicinesMessage = (state) => state.medicines.medicinesMessage;
+
+export const getMedicineDetails = (state) => state.medicines.medicineDetails;
+export const getMedicineDetailsStatus = (state) =>
+  state.medicines.medicineDetailsStatus;
+export const getMedicineDetailsMessage = (state) =>
+  state.medicines.medicineDetailsMessage;
 
 export const getCreateMedicinesStatus = (state) =>
   state.medicines.createMedicinesStatus;

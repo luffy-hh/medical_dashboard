@@ -41,7 +41,12 @@ const BlankLayout = Loadable(lazy(() => import("../layouts/BlankLayout")));
 const CreateDailyRecord = Loadable(
   lazy(() => import("../pages/dailyRecords/CreateDailyRecord")),
 );
-
+const DailyRecordDetails = Loadable(
+  lazy(() => import("../pages/dailyRecords/DailyRecordDetails")),
+);
+const UpdateDailyRecord = Loadable(
+  lazy(() => import("../pages/dailyRecords/UpdateDailyRecord")),
+);
 const ViewDailyRecords = Loadable(
   lazy(() => import("../pages/dailyRecords/ViewDailyRecords")),
 );
@@ -55,6 +60,9 @@ const UpdateCategory = Loadable(
   lazy(() => import("../pages/category/UpdateCategory")),
 );
 const Medicine = Loadable(lazy(() => import("../pages/medicines/Medicine")));
+const MedicinesDetails = Loadable(
+  lazy(() => import("../pages/medicines/MedicinesDetails")),
+);
 const CreateMedicine = Loadable(
   lazy(() => import("../pages/medicines/CreateMedicine")),
 );
@@ -168,6 +176,16 @@ const Routes = [
         element: <DailyRecordsByCategory />,
       },
       {
+        path: "/daily-records/:id/details",
+        name: "Daily Record Details",
+        element: <DailyRecordDetails />,
+      },
+      {
+        path: "/daily-records/:id/edit",
+        name: "Edit Daily",
+        element: <UpdateDailyRecord />,
+      },
+      {
         path: "/lab-records",
         name: "Monthly",
         element: <MonthlyRecords />,
@@ -191,6 +209,11 @@ const Routes = [
         path: "/medicine",
         name: "Medicine",
         element: <Medicine />,
+      },
+      {
+        path: "/medicine/:id",
+        name: "Medicine Details",
+        element: <MedicinesDetails />,
       },
       {
         path: "/medicine/create",

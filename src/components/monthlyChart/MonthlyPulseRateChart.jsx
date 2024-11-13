@@ -2,12 +2,12 @@ import React from "react";
 import { daysOfWeek } from "../../utilities/utilsFunctions.js";
 import Chart from "react-apexcharts";
 
-const MonthlyPulseReateChart = () => {
+const MonthlyPulseRateChart = ({ label, pulse }) => {
   const pulseRateChart = {
     series: [
       {
         name: "Heart Beats per Minute",
-        data: [],
+        data: pulse,
       },
     ],
     options: {
@@ -53,7 +53,7 @@ const MonthlyPulseReateChart = () => {
         colors: ["transparent"],
       },
       xaxis: {
-        categories: [],
+        categories: label,
       },
       yaxis: {
         show: true,
@@ -90,8 +90,13 @@ const MonthlyPulseReateChart = () => {
   };
   return (
     <>
-      <Chart options={[]} series={[]} type="bar" height={325} />
+      <Chart
+        options={pulseRateChart.options}
+        series={pulseRateChart.series}
+        type="bar"
+        height={325}
+      />
     </>
   );
 };
-export default MonthlyPulseReateChart;
+export default MonthlyPulseRateChart;

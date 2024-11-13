@@ -2,12 +2,12 @@ import React from "react";
 import { daysOfWeek } from "../../utilities/utilsFunctions.js";
 import Chart from "react-apexcharts";
 
-const MonthlyTemperatureChart = () => {
+const MonthlyTemperatureChart = ({ label, temperature }) => {
   const temperatureChart = {
     series: [
       {
         name: "Temperature",
-        data: [],
+        data: temperature,
       },
     ],
     options: {
@@ -40,7 +40,7 @@ const MonthlyTemperatureChart = () => {
         enabled: true,
         offsetY: -20,
         formatter: function (val) {
-          return val.toLocaleString() + " ºF";
+          return val.toLocaleString();
         },
         style: {
           fontSize: "12px",
@@ -53,7 +53,7 @@ const MonthlyTemperatureChart = () => {
         colors: ["transparent"],
       },
       xaxis: {
-        categories: [],
+        categories: label,
       },
       yaxis: {
         show: true,
@@ -90,7 +90,12 @@ const MonthlyTemperatureChart = () => {
   };
   return (
     <>
-      <Chart options={[]} series={[]} type="bar" height={325} />
+      <Chart
+        options={temperatureChart.options}
+        series={temperatureChart.series}
+        type="bar"
+        height={325}
+      />
     </>
   );
 };

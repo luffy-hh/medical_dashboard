@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Button, Checkbox, DatePicker, Form, TimePicker } from "antd";
+import { Button, Checkbox, DatePicker, Form, Radio, TimePicker } from "antd";
 const CustomInput = lazy(() => import("../common/CustomInput"));
 const CustomSelect = lazy(() => import("../common/CustomSelect"));
 const ImgViewer = lazy(() => import("../common/ImgViewer"));
@@ -126,6 +126,11 @@ const CustomForm = ({
                     <Checkbox.Group
                       options={item.options}
                       onChange={item.onChange}
+                      className={item.className}
+                    />
+                  ) : item.type === "radioGroup" ? (
+                    <Radio.Group
+                      options={item.options}
                       className={item.className}
                     />
                   ) : (

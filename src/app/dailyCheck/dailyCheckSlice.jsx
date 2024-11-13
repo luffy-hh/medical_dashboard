@@ -10,6 +10,10 @@ const initialState = {
   dailyChecksChartStatus: "idle",
   dailyChecksChartMessage: "",
 
+  dailyCheckDetails: {},
+  dailyCheckDetailsMessage: "",
+  dailyCheckDetailsStatus: "idle",
+
   dailyChecksMonthlyChartKeys: [],
   dailyChecksMonthlyChartValues: [],
   dailyChecksMonthly: [],
@@ -42,6 +46,22 @@ export const getDailyChecksMonthly = createAsyncThunk(
   "dailyChecks/getDailyChecksMonthly",
   async ({ api, postData = {}, header = {} }, thunkAPI) => {
     const response = await postDataWithToken(api, postData, header);
+    const data = await response.json();
+    if (response.status !== 200) {
+      return thunkAPI.rejectWithValue(data);
+    }
+    return data;
+  },
+);
+
+export const getDailyCheckDetails = createAsyncThunk(
+  "dailyChecks/getDailyCheckDetails",
+  async ({ api, postData = {}, header = {} }, thunkAPI) => {
+    console.log("work");
+
+    const response = await postDataWithToken(api, postData, header);
+    console.log(api, response);
+
     const data = await response.json();
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue(data);
@@ -165,6 +185,20 @@ const dailyCheckSlice = createSlice({
       .addCase(getDailyChecksMonthly.pending, (state) => {
         state.dailyChecksStatus = "loading";
       });
+    builder
+      .addCase(getDailyCheckDetails.fulfilled, (state, action) => {
+        state.dailyCheckDetails = action.payload.data.detail;
+        state.dailyCheckDetailsStatus = "succeeded";
+        state.dailyCheckDetailsMessage = action.payload.responseMessage;
+      })
+      .addCase(getDailyCheckDetails.rejected, (state, action) => {
+        state.dailyCheckDetailsStatus = "failed";
+        state.dailyCheckDetailsMessage = action.payload?.responseMessage;
+      })
+      .addCase(getDailyCheckDetails.pending, (state, action) => {
+        state.dailyCheckDetailsStatus = "loading";
+        // state.dailyCheckDetailsMessage = action.payload.responseMessage;
+      });
   },
 });
 
@@ -196,6 +230,12 @@ export const dailyChecksMonthlyStatusSelector = (state) =>
   state.dailyChecks.dailyChecksMonthlyStatus;
 export const dailyChecksMonthlyMessageSelector = (state) =>
   state.dailyChecks.dailyChecksMonthlyMessage;
+export const dailyCheckDetailsSelector = (state) =>
+  state.dailyChecks.dailyCheckDetails;
+export const dailyCheckDetailsStatusSelector = (state) =>
+  state.dailyChecks.dailyCheckDetailsStatus;
+export const dailyCheckDetailsMessageSelector = (state) =>
+  state.dailyChecks.dailyCheckDetailsMessage;
 
 export const {
   resetCreateDailyCheckStatus,

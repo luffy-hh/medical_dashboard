@@ -16,22 +16,28 @@ import {
   dailyChecksMonthlySelector,
   dailyChecksMonthlyStatusSelector,
   getDailyChecksMonthly,
+  getUpdateDailyCheckStatus,
+  resetUpdateDailyCheckStatus,
 } from "../../app/dailyCheck/dailyCheckSlice.jsx";
 // import { months } from "../../constants/MonthData.jsx";
 import Loader from "../../components/common/Loader.jsx";
 import { monthsSelector } from "../../app/masterData/masterDataSlice.jsx";
 import MonthlyBloodPressureChart from "../../components/monthlyChart/MonthlyBloodPressureChart.jsx";
+import MonthlyBloodSugarChart from "../../components/monthlyChart/MonthlyBloodSugarChart.jsx";
+import MonthlyTemperatureChart from "../../components/monthlyChart/MonthlyTemperatureChart.jsx";
+import MonthlyBloodOxygenChart from "../../components/monthlyChart/MonthlyBloodOxygenChart.jsx";
+import MonthlyPulseRateChart from "../../components/monthlyChart/MonthlyPulseRateChart.jsx";
 
 const DailyRecordByCategory = ({ router }) => {
   const { location } = router;
   const dispatch = useDispatch();
   const currentMonth = new Date().getMonth();
   const currentYear = new Date().getFullYear();
+  const { category } = useParams();
   const dailyChecksMonthly = useSelector(dailyChecksMonthlySelector);
   const dailyChecksMonthlyChartKeys = useSelector(
     dailyChecksMonthlyChartKeysSelector,
   );
-  console.log(dailyChecksMonthly);
 
   const dailyChecksMonthlyChartValues = useSelector(
     dailyChecksMonthlyChartValuesSelector,
@@ -40,27 +46,66 @@ const DailyRecordByCategory = ({ router }) => {
   const dailyChecksMonthlyStatus = useSelector(
     dailyChecksMonthlyStatusSelector,
   );
-  console.log(location);
+  console.log({ ...location.state });
 
   const months = useSelector(monthsSelector);
   const [month, setMonth] = React.useState(null);
   const [systolic, setSystolic] = useState([]);
   const [diastolic, setDiastolic] = useState([]);
+  const [afterMeal, setAfterMeal] = useState([]);
+  const [beforeMeal, setBeforeMeal] = useState([]);
+  const [temperature, setTemperature] = useState([]);
+  const [oxygen, setOxygen] = useState([]);
+  const [pulse, setPulse] = useState([]);
   // const []
   const [monthLabels, setMonthLabels] = useState([]);
+  console.log(dailyChecksMonthly);
+
   useEffect(() => {
     if (dailyChecksMonthlyChartKeys.length > 0) {
       setMonthLabels(dailyChecksMonthlyChartKeys);
     }
-    if (dailyChecksMonthlyChartValues.length > 0) {
-      const sys = dailyChecksMonthlyChartValues.map((d) =>
+    if (category === "blood_pressure") {
+      if (dailyChecksMonthlyChartValues.length > 0) {
+        const sys = dailyChecksMonthlyChartValues.map((d) =>
+          d.value1 ? d.value1 : 0,
+        );
+        const dia = dailyChecksMonthlyChartValues.map((d) =>
+          d.value2 ? d.value2 : 0,
+        );
+        setSystolic(sys);
+        setDiastolic(dia);
+      }
+    } else if (category === "blood_sugar") {
+      if (dailyChecksMonthlyChartValues.length > 0) {
+        const before = dailyChecksMonthlyChartValues.map((d) =>
+          d.value1 ? d.value1 : 0,
+        );
+        const after = dailyChecksMonthlyChartValues.map((d) =>
+          d.value2 ? d.value2 : 0,
+        );
+        setBeforeMeal(before);
+        setAfterMeal(after);
+      }
+    } else if (category === "temperature") {
+      if (dailyChecksMonthlyChartValues.length > 0) {
+        const temp = dailyChecksMonthlyChartValues.map((d) =>
+          d.value1 ? d.value1 : 0,
+        );
+        setTemperature(temp);
+      }
+    } else if (category === "blood_oxygen") {
+      if (dailyChecksMonthlyChartValues.length > 0) {
+        const oxy = dailyChecksMonthlyChartValues.map((d) =>
+          d.value1 ? d.value1 : 0,
+        );
+        setOxygen(oxy);
+      }
+    } else if (category === "pulse_rate") {
+      const rate = dailyChecksMonthlyChartValues.map((d) =>
         d.value1 ? d.value1 : 0,
       );
-      const dia = dailyChecksMonthlyChartValues.map((d) =>
-        d.value2 ? d.value2 : 0,
-      );
-      setSystolic(sys);
-      setDiastolic(dia);
+      setPulse(rate);
     }
   }, [dailyChecksMonthlyChartKeys]);
   // console.log(location);
@@ -82,7 +127,6 @@ const DailyRecordByCategory = ({ router }) => {
   useEffect(() => {
     !location.state && router.nav(-1);
   }, [location]);
-  const { category } = useParams();
   // console.log(
   //   category
   //     .split("-")
@@ -126,8 +170,15 @@ const DailyRecordByCategory = ({ router }) => {
                 xxl: 3,
               }}
               renderItem={(item) => (
-                <List.Item>
-                  <Card title={`${item.record_date}`}>
+                <List.Item
+                  onClick={() =>
+                    item.id !== null &&
+                    router.nav(`/daily-records/${item.id}/details`, {
+                      state: { ...location.state },
+                    })
+                  }
+                >
+                  <Card title={`${item.record_date}`} hoverable={true}>
                     {item.value !== "" ? item.value : "-"}
                   </Card>
                 </List.Item>
@@ -141,14 +192,29 @@ const DailyRecordByCategory = ({ router }) => {
       key: "chart",
       label: "Chart",
       children:
-        router.location.state.category.slug === "blood_pressure" ? (
+        category === "blood_pressure" ? (
           <MonthlyBloodPressureChart
             systolicData={systolic}
             diastolicData={diastolic}
             label={monthLabels}
           />
+        ) : category === "blood_sugar" ? (
+          <MonthlyBloodSugarChart
+            label={monthLabels}
+            before={beforeMeal}
+            after={afterMeal}
+          />
+        ) : category === "temperature" ? (
+          <MonthlyTemperatureChart
+            label={monthLabels}
+            temperature={temperature}
+          />
+        ) : category === "blood_oxygen" ? (
+          <MonthlyBloodOxygenChart label={monthLabels} oxygen={oxygen} />
+        ) : category === "pulse_rate" ? (
+          <MonthlyPulseRateChart label={monthLabels} pulse={pulse} />
         ) : (
-          <>Some</>
+          <></>
         ),
     },
   ];

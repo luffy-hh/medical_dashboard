@@ -143,7 +143,7 @@ export const dailyRecordsTableColumns = () => {
       children: [
         {
           title: "မစားမှီ",
-          dataIndex: "Before Meal",
+          dataIndex: "(Before Meal)",
           key: "Before Meal",
           align: "center",
           render: (text) => {
@@ -152,7 +152,7 @@ export const dailyRecordsTableColumns = () => {
         },
         {
           title: "စားပြီး",
-          dataIndex: "After Meal",
+          dataIndex: "(After Meal)",
           key: "Before Meal",
           align: "center",
           render: (text) => {
@@ -686,9 +686,9 @@ export const medicineTableColumns = (nav) => {
       render: (text, record, index) => index + 1,
     },
     {
-      title: "Name",
-      dataIndex: "title",
-      key: "title",
+      title: "Medicine Name",
+      dataIndex: "medicine_name",
+      key: "medicine_name",
     },
     {
       title: "Patient Name",
@@ -699,11 +699,13 @@ export const medicineTableColumns = (nav) => {
       title: "Start Taking Date",
       dataIndex: "from_date",
       key: "from_date",
+      render: (text) => dayjs(text).format("DD-MM-YYYY"),
     },
     {
       title: "Last Taking Date",
       dataIndex: "to_date",
       key: "to_date",
+      render: (text) => dayjs(text).format("DD-MM-YYYY"),
     },
     {
       title: "Actions",
@@ -714,40 +716,42 @@ export const medicineTableColumns = (nav) => {
             key: "view",
             label: (
               <div
-                onClick={() => nav(`${record.id}`, { state: { ...record } })}
+                onClick={() =>
+                  nav(`${record.family_member_id}`, { state: { ...record } })
+                }
                 className=" flex gap-2 items-center"
               >
                 <FaEye /> <span className=" inline-block">View</span>
               </div>
             ),
           },
-          {
-            key: "edit",
-            label: (
-              <div
-                className=" flex gap-2 items-center"
-                onClick={() =>
-                  nav(`${record.id}/edit`, { state: { ...record } })
-                }
-              >
-                <FaEdit /> <span className=" inline-block">Edit</span>
-              </div>
-            ),
-          },
-          {
-            key: "delete",
-            label: (
-              <div
-                className=" flex gap-2 items-center"
-                onClick={() => {
-                  //   setOpen(true);
-                  //   setMeterId(record.id);
-                }}
-              >
-                <FaTrashCan /> <span className=" inline-block">Delete</span>
-              </div>
-            ),
-          },
+          // {
+          //   key: "edit",
+          //   label: (
+          //     <div
+          //       className=" flex gap-2 items-center"
+          //       onClick={() =>
+          //         nav(`${record.id}/edit`, { state: { ...record } })
+          //       }
+          //     >
+          //       <FaEdit /> <span className=" inline-block">Edit</span>
+          //     </div>
+          //   ),
+          // },
+          // {
+          //   key: "delete",
+          //   label: (
+          //     <div
+          //       className=" flex gap-2 items-center"
+          //       onClick={() => {
+          //         //   setOpen(true);
+          //         //   setMeterId(record.id);
+          //       }}
+          //     >
+          //       <FaTrashCan /> <span className=" inline-block">Delete</span>
+          //     </div>
+          //   ),
+          // },
         ];
         // console.log(record);
         return (
@@ -766,6 +770,39 @@ export const medicineTableColumns = (nav) => {
           </Suspense>
         );
       },
+    },
+  ];
+};
+
+export const dashboardAppointmentTableColumns = () => {
+  return [
+    {
+      title: "No",
+      dataIndex: "id",
+      key: "id",
+      hidden: true,
+      render: (text, record, index) => index + 1,
+    },
+    {
+      title: "Hospital Name",
+      dataIndex: "check_location",
+      key: "check_location",
+    },
+    {
+      title: "Check Category",
+      dataIndex: "title",
+      key: "title",
+    },
+    {
+      title: "Appointment Date",
+      dataIndex: "appointment_date",
+      key: "appointment_date",
+      render: (text) => dayjs(text).format("DD-MM-YYYY"),
+    },
+    {
+      title: "Patient Name",
+      dataIndex: "family_member_name",
+      key: "family_member_name",
     },
   ];
 };

@@ -2,12 +2,12 @@ import React from "react";
 import { daysOfWeek } from "../../utilities/utilsFunctions.js";
 import Chart from "react-apexcharts";
 
-const MonthlyBloodOxygenChart = () => {
+const MonthlyBloodOxygenChart = ({ label, oxygen }) => {
   const bloodOxygenChart = {
     series: [
       {
         name: "SpO2",
-        data: [],
+        data: oxygen,
       },
     ],
     options: {
@@ -40,7 +40,7 @@ const MonthlyBloodOxygenChart = () => {
         enabled: true,
         offsetY: -20,
         formatter: function (val) {
-          return val.toLocaleString() + " %";
+          return val.toLocaleString();
         },
         style: {
           fontSize: "12px",
@@ -53,7 +53,7 @@ const MonthlyBloodOxygenChart = () => {
         colors: ["transparent"],
       },
       xaxis: {
-        categories: [],
+        categories: label,
       },
       yaxis: {
         show: true,
@@ -90,7 +90,12 @@ const MonthlyBloodOxygenChart = () => {
   };
   return (
     <>
-      <Chart options={[]} series={[]} type="bar" height={325} />
+      <Chart
+        options={bloodOxygenChart.options}
+        series={bloodOxygenChart.series}
+        type="bar"
+        height={325}
+      />
     </>
   );
 };

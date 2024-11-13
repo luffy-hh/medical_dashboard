@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import withTableAndTitle from "../../components/hoc/withTableAndTitle.jsx";
 import {
   appointments,
@@ -17,12 +17,14 @@ import {
 import { appointmentTableColumns } from "../../constants/TableColumns.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { setPageTitle } from "../../app/ThemeConfig/themeConfigSlice.jsx";
+import PatientsSegmented from "../../components/common/PatientsSegmented.jsx";
 
 const AppointmentList = () => {
   const dispatch = useDispatch();
   const deleteStatus = useSelector(deleteAppointmentStatus);
   const updateStatus = useSelector(updateAppointmentStatus);
   const createStatus = useSelector(createAppointmentStatus);
+  const [patient, setPatient] = useState();
   useEffect(() => {
     dispatch(getAppointments({ api: "/appointment_list" }));
     dispatch(setPageTitle("Appointments"));
@@ -42,7 +44,11 @@ const AppointmentList = () => {
     (createStatus === "succeeded" || createStatus === "failed") &&
       dispatch(resetCreateAppointmentStatus());
   }, [createStatus, deleteStatus, dispatch, updateStatus]);
-  return <></>;
+  return (
+    <>
+      <PatientsSegmented setPatient={setPatient} patient={patient} />
+    </>
+  );
 };
 const pageTitleProps = {
   title: "Appointments",
@@ -73,7 +79,7 @@ const AppointmentListWithTableAndTitle = withTableAndTitle(
   pageTitleProps,
   buttonProps,
   tableProps,
-  modalProps
+  modalProps,
 );
 
 export default AppointmentListWithTableAndTitle;

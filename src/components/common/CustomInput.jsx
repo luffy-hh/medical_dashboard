@@ -20,13 +20,15 @@ const CustomInput = forwardRef(
       onKeyPress,
       options = [],
     },
-    ref
+    ref,
   ) => {
-    if (type === "checked") {
+    if (type === "checkbox") {
       return (
         <Checkbox
           ref={ref}
-          onChange={onChange}
+          onChange={(e) => {
+            onChange(e.target.checked);
+          }}
           checked={value}
           className={className}
         />
@@ -74,7 +76,7 @@ const CustomInput = forwardRef(
         onKeyDown={onKeyPress}
       />
     );
-  }
+  },
 );
 CustomInput.propTypes = {
   placeholder: PropTypes.string,

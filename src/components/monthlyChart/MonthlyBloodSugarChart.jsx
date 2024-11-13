@@ -2,16 +2,16 @@ import React from "react";
 import { daysOfWeek } from "../../utilities/utilsFunctions.js";
 import Chart from "react-apexcharts";
 
-const MonthlyBloodSugarChart = () => {
+const MonthlyBloodSugarChart = ({ label, before, after }) => {
   const bloodSugarLevelChart = {
     series: [
       {
         name: "Before Meal",
-        data: [],
+        data: before,
       },
       {
         name: "After Meal",
-        data: [],
+        data: after,
       },
     ],
     options: {
@@ -44,7 +44,7 @@ const MonthlyBloodSugarChart = () => {
         enabled: true,
         offsetY: -20,
         formatter: function (val) {
-          return val.toLocaleString() + " mg/dL";
+          return val.toLocaleString();
         },
         style: {
           fontSize: "12px",
@@ -57,7 +57,7 @@ const MonthlyBloodSugarChart = () => {
         colors: ["transparent"],
       },
       xaxis: {
-        categories: [],
+        categories: label,
       },
       yaxis: {
         show: true,
@@ -94,7 +94,12 @@ const MonthlyBloodSugarChart = () => {
   };
   return (
     <>
-      <Chart options={[]} series={[]} type="bar" height={325} />
+      <Chart
+        options={bloodSugarLevelChart.options}
+        series={bloodSugarLevelChart.series}
+        type="bar"
+        height={325}
+      />
     </>
   );
 };

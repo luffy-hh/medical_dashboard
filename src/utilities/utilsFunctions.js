@@ -117,11 +117,27 @@ const transformObject = (obj) => {
     // Skip 'note', 'photo', and 'record_date'
     if (key !== "note" && key !== "attaches" && key !== "record_date") {
       // Add the key-value pair to the param array in the desired format
-      result.param.push({ key: key, value: obj[key] });
+      obj[key] && result.param.push({ key: key, value: obj[key] });
     }
   }
 
   return result;
+};
+
+const generateQueryString = (searchInputs) => {
+  const queryParams = [];
+
+  for (const key in searchInputs) {
+    if (
+      Object.prototype.hasOwnProperty.call(searchInputs, key) &&
+      searchInputs[key] !== null &&
+      searchInputs[key] !== ""
+    ) {
+      queryParams.push(`${key}=${encodeURIComponent(searchInputs[key])}`);
+    }
+  }
+
+  return queryParams.length > 0 ? `${queryParams.join("&")}` : "";
 };
 
 export {
@@ -131,4 +147,5 @@ export {
   parseDate,
   daysOfWeek,
   photoUrlFix,
+  generateQueryString,
 };
