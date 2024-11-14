@@ -3,6 +3,7 @@ import { FaEdit } from "react-icons/fa";
 import { FaAngleDown, FaEye, FaTrashCan } from "react-icons/fa6";
 import Loader from "../components/common/Loader";
 import dayjs from "dayjs";
+import ImgViewer from "../components/common/ImgViewer.jsx";
 
 const Dropdown = lazy(() => import("antd/lib/dropdown"));
 
@@ -707,70 +708,8 @@ export const medicineTableColumns = (nav) => {
       key: "to_date",
       render: (text) => dayjs(text).format("DD-MM-YYYY"),
     },
-    {
-      title: "Actions",
-      key: "action",
-      render: (text, record) => {
-        const menuItems = [
-          {
-            key: "view",
-            label: (
-              <div
-                onClick={() =>
-                  nav(`${record.family_member_id}`, { state: { ...record } })
-                }
-                className=" flex gap-2 items-center"
-              >
-                <FaEye /> <span className=" inline-block">View</span>
-              </div>
-            ),
-          },
-          // {
-          //   key: "edit",
-          //   label: (
-          //     <div
-          //       className=" flex gap-2 items-center"
-          //       onClick={() =>
-          //         nav(`${record.id}/edit`, { state: { ...record } })
-          //       }
-          //     >
-          //       <FaEdit /> <span className=" inline-block">Edit</span>
-          //     </div>
-          //   ),
-          // },
-          // {
-          //   key: "delete",
-          //   label: (
-          //     <div
-          //       className=" flex gap-2 items-center"
-          //       onClick={() => {
-          //         //   setOpen(true);
-          //         //   setMeterId(record.id);
-          //       }}
-          //     >
-          //       <FaTrashCan /> <span className=" inline-block">Delete</span>
-          //     </div>
-          //   ),
-          // },
-        ];
-        // console.log(record);
-        return (
-          <Suspense fallback={<Loader />}>
-            <Dropdown menu={{ items: menuItems }} trigger={["click"]}>
-              <a
-                className="ant-dropdown-link flex items-center"
-                onClick={(e) => e.preventDefault()}
-              >
-                Actions
-                <span>
-                  <FaAngleDown />
-                </span>
-              </a>
-            </Dropdown>
-          </Suspense>
-        );
-      },
-    },
+
+    // },
   ];
 };
 
@@ -895,6 +834,84 @@ export const appointmentTableColumns = (nav, setId, setOpen) => {
                 }}
               >
                 <FaTrashCan /> <span className=" inline-block">Delete</span>
+              </div>
+            ),
+          },
+        ];
+        // console.log(record);
+        return (
+          <Suspense fallback={<Loader />}>
+            <Dropdown menu={{ items: menuItems }} trigger={["click"]}>
+              <a
+                className="ant-dropdown-link flex items-center"
+                onClick={(e) => e.preventDefault()}
+              >
+                Actions
+                <span>
+                  <FaAngleDown />
+                </span>
+              </a>
+            </Dropdown>
+          </Suspense>
+        );
+      },
+    },
+  ];
+};
+
+export const patientMedicinesTableColumns = (nav, patient) => {
+  return [
+    {
+      title: "No",
+      dataIndex: "id",
+      key: "id",
+      render: (text, record, index) => index + 1,
+    },
+    {
+      title: "Medicine Name",
+      dataIndex: "medicine_name",
+      key: "medicine_name",
+    },
+    {
+      title: "Medicine Photo",
+      dataIndex: "medicine_photo",
+      key: "medicine_photo",
+      align: "center",
+      render: (text) => (
+        <div className={"w-16"}>
+          <ImgViewer img={text} />
+        </div>
+      ),
+    },
+    {
+      title: "Start Taking Date",
+      dataIndex: "start_date",
+      key: "start_date",
+      render: (text) => dayjs(text, "YYYY-MM-DD").format("DD-MM-YYYY"),
+    },
+    {
+      title: "End Taking Date",
+      dataIndex: "end_date",
+      key: "end_date",
+      render: (text) => dayjs(text, "YYYY-MM-DD").format("DD-MM-YYYY"),
+    },
+    {
+      title: "Actions",
+      key: "action",
+      render: (text, record) => {
+        const menuItems = [
+          {
+            key: "edit",
+            label: (
+              <div
+                className=" flex gap-2 items-center"
+                onClick={() =>
+                  nav(`${record.record_id}/edit`, {
+                    state: { ...record, patient: patient },
+                  })
+                }
+              >
+                <FaEdit /> <span className=" inline-block">Edit</span>
               </div>
             ),
           },

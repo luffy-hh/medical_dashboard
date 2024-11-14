@@ -60,8 +60,8 @@ const UpdateCategory = Loadable(
   lazy(() => import("../pages/category/UpdateCategory")),
 );
 const Medicine = Loadable(lazy(() => import("../pages/medicines/Medicine")));
-const MedicinesDetails = Loadable(
-  lazy(() => import("../pages/medicines/MedicinesDetails")),
+const UpdateMedicine = Loadable(
+  lazy(() => import("../pages/medicines/UpdateMedicine")),
 );
 const CreateMedicine = Loadable(
   lazy(() => import("../pages/medicines/CreateMedicine")),
@@ -211,9 +211,9 @@ const Routes = [
         element: <Medicine />,
       },
       {
-        path: "/medicine/:id",
-        name: "Medicine Details",
-        element: <MedicinesDetails />,
+        path: "/medicine/:id/edit",
+        name: "Medicine Update",
+        element: <UpdateMedicine />,
       },
       {
         path: "/medicine/create",

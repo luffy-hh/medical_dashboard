@@ -18,8 +18,8 @@ const initialState = {
 
 export const getAppointments = createAsyncThunk(
   "appointments/getAppointments",
-  async ({ api }, thunkAPI) => {
-    const response = await postDataWithToken(api);
+  async ({ api, postData }, thunkAPI) => {
+    const response = await postDataWithToken(api, postData);
     const data = await response.json();
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue(data);

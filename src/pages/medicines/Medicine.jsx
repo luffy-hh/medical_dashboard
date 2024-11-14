@@ -18,23 +18,32 @@ import {
 } from "../../app/medicines/medicineSlice.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { setPageTitle } from "../../app/ThemeConfig/themeConfigSlice.jsx";
-import { DatePicker } from "antd";
+import { Button, DatePicker, Tabs } from "antd";
 import PatientsSegmented from "../../components/common/PatientsSegmented.jsx";
 import { patients } from "../../app/Patients/patientSlice.jsx";
 import { generateQueryString } from "../../utilities/utilsFunctions.js";
 import dayjs from "dayjs";
+import PageTitleWithRouter from "../../components/common/PageTitle.jsx";
+import InnerContainer from "../../components/common/InnerContainer.jsx";
+import { FaPlusCircle } from "react-icons/fa";
+import withRouter from "../../components/hoc/withRouter.jsx";
+import PropsTypes from "prop-types";
+import CustomTable from "../../components/common/CustomTable.jsx";
+import MedicinesDetails from "./MedicinesDetails.jsx";
 
-const Medicine = () => {
+const Medicine = ({ router }) => {
   const dispatch = useDispatch();
   const deleteStatus = useSelector(getDeleteMedicinesStatus);
   const updateStatus = useSelector(getUpdateMedicinesStatus);
   const createStatus = useSelector(getCreateMedicinesStatus);
   const patientList = useSelector(patients);
   const medicines = useSelector(getMedicinesList);
+  const medicinesStatus = useSelector(getMedicinesStatus);
+  // const medicinesMessage = useSelector(getMedicinesMessage);
   console.log(medicines);
 
   const [patient, setPatient] = useState(null);
-  // const selectedPatient = patientList.find((p) => p.id === patient);
+  const selectedPatient = patientList.find((p) => p.id === patient);
   const currentDate = new Date();
   const formattedCurrentDate = dayjs(currentDate).format("DD-MM-YYYY");
   const day1InCurrentMonth = dayjs(
@@ -63,17 +72,20 @@ const Medicine = () => {
           api: `/medicine_record_list?family_member_id=${patient}&${memoizedQueryString}`,
         }),
       );
-    dispatch(
-      getPatientMedicineDetails({
-        api: "/medicine_record_data",
-        postData: {
-          family_member_id: patient,
-          start_date: searchParams.start_date,
-          end_date: searchParams.end_date,
-        },
-      }),
-    );
-  }, [patient, memoizedQueryString]);
+    patient &&
+      dispatch(
+        getPatientMedicineDetails({
+          api: "/medicine_record_data",
+          postData: {
+            family_member_id: patient,
+            start_date: searchParams.start_date,
+            end_date: searchParams.end_date,
+          },
+        }),
+      );
+  }, [patient, memoizedQueryString, searchParams]);
+  console.log(selectedPatient);
+
   useEffect(() => {
     if (
       deleteStatus === "succeeded" ||
@@ -90,7 +102,8 @@ const Medicine = () => {
       dispatch(resetUpdateMedicinesStatus());
   }, [createStatus, deleteStatus, dispatch, updateStatus]);
   return (
-    <>
+    <InnerContainer>
+      <PageTitleWithRouter title={"Medicines"} />
       <PatientsSegmented patient={patient} setPatient={setPatient} />
       <div className={"flex flex-wrap gap-4"}>
         <DatePicker
@@ -102,7 +115,7 @@ const Medicine = () => {
           onChange={(e) =>
             setSearchParams({
               ...searchParams,
-              start_date: e.format("DD-MM-YYYY"),
+              start_date: dayjs(e).format("DD-MM-YYYY"),
             })
           }
         />
@@ -115,14 +128,50 @@ const Medicine = () => {
           onChange={(e) =>
             setSearchParams({
               ...searchParams,
-              end_date: e.format("DD-MM-YYYY"),
+              end_date: dayjs(e).format("DD-MM-YYYY"),
             })
           }
         />
       </div>
-    </>
+      <Tabs
+        items={[
+          {
+            label: "Table",
+            key: "table",
+            children: (
+              <>
+                <div className="flex">
+                  <Button
+                    className="btn ml-auto"
+                    onClick={() => router.nav("create")}
+                  >
+                    <FaPlusCircle />
+                    <span>{buttonProps.text}</span>
+                  </Button>
+                </div>
+                <CustomTable
+                  columns={medicineTableColumns()}
+                  data={medicines}
+                  loading={medicinesStatus === "loading"}
+                />
+              </>
+            ),
+          },
+          {
+            label: "Details",
+            key: "details",
+            children: <MedicinesDetails patient={selectedPatient} />,
+          },
+        ]}
+      />
+    </InnerContainer>
   );
 };
+
+Medicine.propTypes = {
+  router: PropsTypes.object,
+};
+
 const pageTitleProps = {
   title: "Medicines",
   hasButton: false,
@@ -157,5 +206,6 @@ const MedicineWithTableAndTitle = withTableAndTitle(
   tableProps,
   modalProps,
 );
+const MedicineWithRouter = withRouter(Medicine);
 
-export default MedicineWithTableAndTitle;
+export default MedicineWithRouter;

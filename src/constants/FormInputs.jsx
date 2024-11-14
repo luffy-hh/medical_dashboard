@@ -1183,11 +1183,11 @@ export const medicineCreateInputs = (
   mealTypeValues,
   setMealTypeValues,
 ) => {
-  const handleDayTypeChange = (values) => {
-    console.log(values);
-    setDayTypeValues([...dayTypeValues, ...values]);
-  };
-  let inputs = [
+  // const handleDayTypeChange = (values) => {
+  //   console.log(values);
+  //   setDayTypeValues([...dayTypeValues, ...values]);
+  // };
+  return [
     {
       label: "Start Taking Date",
       name: "start_date",
@@ -1303,7 +1303,7 @@ export const medicineCreateInputs = (
       label: "Morning",
       name: "morning",
       type: "checkbox",
-      onChange: handleDayTypeChange,
+      // onChange: handleDayTypeChange,
       options: [{ label: "Morning", value: "morning" }],
       className: "w-auto",
       layout: {
@@ -1445,7 +1445,7 @@ export const medicineCreateInputs = (
       label: "Night",
       name: "night",
       type: "checkbox",
-      onChange: handleDayTypeChange,
+      // onChange: handleDayTypeChange,
       options: [{ label: "Night", value: "night" }],
       className: "w-auto",
       layout: {
@@ -1590,17 +1590,17 @@ export const medicineCreateInputs = (
     //   ],
     // },
   ];
-  if (dayTypeValues.includes("morning")) {
-    inputs.push();
-  }
-  if (dayTypeValues.includes("afternoon")) {
-    inputs.push();
-  }
-  if (dayTypeValues.includes("night")) {
-    inputs.push();
-  }
+  // if (dayTypeValues.includes("morning")) {
+  //   inputs.push();
+  // }
+  // if (dayTypeValues.includes("afternoon")) {
+  //   inputs.push();
+  // }
+  // if (dayTypeValues.includes("night")) {
+  //   inputs.push();
+  // }
 
-  return inputs;
+  // return inputs;
 };
 
 export const appointmentCreateInputs = () => {

@@ -130,6 +130,7 @@ const withTableAndTitle = (
           <CustomTable
             columns={tableProps.columns(props.router.nav, setId, setOpen)}
             data={finalData ? finalData : []}
+            loading={tableStatus === "loading"}
           />
         </InnerContainer>
       </Suspense>

@@ -121,7 +121,11 @@ const CustomForm = ({
                       allowClear={item?.clearable}
                     />
                   ) : item.type === "time" ? (
-                    <TimePicker format={"HH:mm"} className={item.className} />
+                    <TimePicker
+                      format={"HH:mm"}
+                      className={item.className}
+                      value={initialValues[item?.name]}
+                    />
                   ) : item.type === "checkboxgroup" ? (
                     <Checkbox.Group
                       options={item.options}
