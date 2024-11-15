@@ -21,7 +21,10 @@ import {
   dashboardAppointmentTableColumns,
 } from "../../constants/TableColumns.jsx";
 import CustomFormWithRouter from "../../components/common/CustomForm.jsx";
-import { appointments } from "../../app/appointment/appointmentSlice.jsx";
+import {
+  appointments,
+  getAppointments,
+} from "../../app/appointment/appointmentSlice.jsx";
 
 const Home = ({ router }) => {
   const dispatch = useDispatch();
@@ -32,6 +35,18 @@ const Home = ({ router }) => {
   const [patient, setPatient] = useState(null);
   const selectedPatient = patientList.find((p) => p.id === patient);
 
+  useEffect(() => {
+    dispatch(
+      getAppointments({
+        api: "/appointment_list",
+        postData: {
+          // family_member_id: patient,
+          // from_date: searchParams.from_date,
+          // to_date: searchParams.to_date,
+        },
+      }),
+    );
+  }, [dispatch]);
   useEffect(() => {
     dispatch(setPageTitle("Dashboard"));
   }, []);

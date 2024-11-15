@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   getDataWithToken,
   postDataWithToken,
+  postMultipartDataWithToken,
 } from "../../services/ApiCalls.jsx";
 
 const initialState = {
@@ -32,7 +33,7 @@ export const getUsers = createAsyncThunk(
 export const createUser = createAsyncThunk(
   "users/createUser",
   async ({ api, postData, header }, thunkAPI) => {
-    const response = await postDataWithToken(api, postData, header);
+    const response = await postMultipartDataWithToken(api, postData, header);
     const data = await response.json();
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue(data);
@@ -43,7 +44,7 @@ export const createUser = createAsyncThunk(
 export const updateUser = createAsyncThunk(
   "users/updateUser",
   async ({ api, postData, header }, thunkAPI) => {
-    const response = await postDataWithToken(api, postData, header);
+    const response = await postMultipartDataWithToken(api, postData, header);
     const data = await response.json();
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue(data);

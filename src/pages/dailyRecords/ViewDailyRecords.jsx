@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import InnerContainer from "../../components/common/InnerContainer.jsx";
 import PageTitleWithRouter from "../../components/common/PageTitle.jsx";
 import { Button, DatePicker, Flex } from "antd";
@@ -20,6 +20,7 @@ import { categories } from "../../app/category/categorySlice.jsx";
 import { FaFileExport } from "react-icons/fa";
 import { setPageTitle } from "../../app/ThemeConfig/themeConfigSlice.jsx";
 import dayjs from "dayjs";
+import { generateQueryString } from "../../utilities/utilsFunctions.js";
 
 const ViewDailyRecords = ({ router }) => {
   const dispatch = useDispatch();
@@ -33,6 +34,10 @@ const ViewDailyRecords = ({ router }) => {
 
   const [patient, setPatient] = useState(null);
   const selectedPatient = patientList.find((p) => p.id === patient);
+  const memoizedQueryString = useMemo(
+    () => generateQueryString(searchParams),
+    [searchParams],
+  );
   useEffect(() => {
     if (patientList.length > 0) {
       setPatient(patientList[0]?.id);
@@ -42,11 +47,11 @@ const ViewDailyRecords = ({ router }) => {
     if (selectedPatient) {
       dispatch(
         getDailyChecksChart({
-          api: `/web_daily_record_chart?family_member_id=${patient}`,
+          api: `/web_daily_record_chart?family_member_id=${patient}&${memoizedQueryString}`,
         }),
       );
     }
-  }, [dispatch, selectedPatient]);
+  }, [dispatch, selectedPatient, memoizedQueryString]);
   useEffect(() => {
     dispatch(setPageTitle("Daily Checkup Records"));
   }, []);
@@ -79,18 +84,28 @@ const ViewDailyRecords = ({ router }) => {
         <DatePicker
           picker={"month"}
           placeholder={"Select Month"}
+          // allowClear={false}
           // format={"DD-MM-YYYY"}
-          onChange={(e) =>
-            setSearchParams({ ...searchParams, month: dayjs(e).format("M") })
-          }
+          onChange={(e) => {
+            setSearchParams({
+              ...searchParams,
+              month: e && dayjs(e).format("M"),
+            });
+          }}
           className={"w-[90vw] sm:w-[12rem]"}
         />
         <DatePicker
           placeholder={"Select Year"}
           // format={"DD-MM-YYYY"}
           picker={"year"}
+          // allowClear={false}
           className={"w-[90vw] sm:w-[12rem]"}
-          onChange={(e) => dayjs(e).format("YYYY")}
+          onChange={(e) =>
+            setSearchParams({
+              ...searchParams,
+              year: e && dayjs(e).format("YYYY"),
+            })
+          }
         />
       </div>
       <CustomTable

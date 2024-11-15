@@ -33,8 +33,8 @@ const withNotiAndLoader = (WrappedComponent, formProps) => {
             props.router?.location?.state[formProps?.apiHasExtra]
               ? `/${props.router?.location?.state[formProps?.apiHasExtra]}`
               : ""),
-          postData: { ...values, ...extra },
-          header: { ...formProps?.extraData },
+          postData: { ...values },
+          header: { ...formProps?.extraData, ...extra },
         }),
       );
     };

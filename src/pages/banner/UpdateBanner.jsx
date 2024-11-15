@@ -19,7 +19,7 @@ const UpdateBanner = ({ router, onFinish }) => {
         data={bannerCreateInputs()}
         initialValues={router.location.state}
         onFinish={(values) => {
-          onFinish(values, { id: id });
+          onFinish({ ...values, id: id });
         }}
       />
     </>

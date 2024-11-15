@@ -13,11 +13,13 @@ import {
 } from "../../app/User/userSlice.jsx";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
+import dayjs from "dayjs";
 
 const UpdateUser = ({ router, onFinish }) => {
   const { id } = useParams();
   const initialValues = {
     ...router.location.state,
+    dob: dayjs(router.location.state.dob).format("DD-MM-YYYY"),
   };
   return (
     <>
@@ -26,7 +28,8 @@ const UpdateUser = ({ router, onFinish }) => {
         data={userUpdateInputs()}
         initialValues={initialValues}
         onFinish={(values) => {
-          onFinish(values, { id: id });
+          values.dob = dayjs(values.dob).format("DD-MM-YYYY");
+          onFinish(values, { "User-Id": id });
         }}
       />
     </>

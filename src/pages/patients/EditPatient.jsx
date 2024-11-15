@@ -35,7 +35,7 @@ const EditPatient = ({ router, onFinish }) => {
             ...values,
             dob: dayjs(values.dob).format("DD-MM-YYYY"),
           };
-          onFinish(finalValues, { id: id });
+          onFinish({ ...finalValues, id: id });
         }}
       />
     </>

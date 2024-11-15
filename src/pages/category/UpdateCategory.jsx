@@ -26,7 +26,7 @@ const UpdateCategory = ({ router, onFinish }) => {
         data={categoryCreateInputs()}
         initialValues={initialValues}
         onFinish={(values) => {
-          onFinish(values, { id: id });
+          onFinish({ ...values, id: id });
         }}
       />
     </>

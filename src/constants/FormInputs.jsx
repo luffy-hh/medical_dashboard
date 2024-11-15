@@ -899,6 +899,79 @@ export const userCreateInputs = () => {
         },
       ],
     },
+    {
+      label: "Gender",
+      name: "gender",
+      type: "radioGroup",
+      className: "w-full",
+      options: [
+        {
+          label: "Male",
+          value: "Male",
+        },
+        {
+          label: "Female",
+          value: "Female",
+        },
+      ],
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+      rules: [
+        {
+          required: true,
+          message: "Please Select Gender",
+        },
+      ],
+    },
+    {
+      label: "Date of Birth",
+      name: "dob",
+      type: "date",
+      className: "w-full",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+      rules: [
+        {
+          required: true,
+          message: "Please Select Date of Birth",
+        },
+      ],
+    },
+    {
+      label: "Photo",
+      name: "user_photo",
+      type: "file",
+      className: "w-full",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+      rules: [
+        {
+          required: true,
+          message: "Please Select Photo",
+        },
+      ],
+    },
   ];
 };
 
@@ -963,6 +1036,79 @@ export const userUpdateInputs = () => {
           span: 24,
         },
       },
+    },
+    {
+      label: "Gender",
+      name: "gender",
+      type: "radioGroup",
+      className: "w-full",
+      options: [
+        {
+          label: "Male",
+          value: "Male",
+        },
+        {
+          label: "Female",
+          value: "Female",
+        },
+      ],
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+      rules: [
+        {
+          required: true,
+          message: "Please Select Gender",
+        },
+      ],
+    },
+    {
+      label: "Date of Birth",
+      name: "dob",
+      type: "date",
+      className: "w-full",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+      rules: [
+        {
+          required: true,
+          message: "Please Select Date of Birth",
+        },
+      ],
+    },
+    {
+      label: "Photo",
+      name: "user_photo",
+      type: "file",
+      className: "w-full",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+      rules: [
+        {
+          required: true,
+          message: "Please Select Photo",
+        },
+      ],
     },
   ];
 };

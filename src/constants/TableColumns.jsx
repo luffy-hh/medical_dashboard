@@ -609,6 +609,17 @@ export const userTableColumns = (nav, setId, setOpen) => {
       key: "name",
     },
     {
+      title: "Gender",
+      dataIndex: "gender",
+      key: "gender",
+    },
+    {
+      title: "Date Of Birth",
+      dataIndex: "dob",
+      key: "dob",
+      render: (text) => dayjs(text).format("DD-MM-YYYY"),
+    },
+    {
       title: "Login ID",
       dataIndex: "loginId",
       key: "loginId",

@@ -46,7 +46,7 @@ const CreateAppointment = ({ router, onFinish }) => {
               "DD-MM-YYYY",
             ),
           };
-          onFinish(finalValues, { family_member_id: patient });
+          onFinish({ ...finalValues, family_member_id: patient });
         }}
       />
     </>

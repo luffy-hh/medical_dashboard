@@ -40,7 +40,8 @@ const UpdateAppointment = ({ router, onFinish }) => {
           };
           console.log(finalValues.appointment_date);
 
-          onFinish(finalValues, {
+          onFinish({
+            ...finalValues,
             family_member_id: patient,
             id: router.location.state.id,
           });

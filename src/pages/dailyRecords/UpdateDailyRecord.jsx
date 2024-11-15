@@ -29,14 +29,20 @@ const UpdateDailyRecord = ({ router, onFinish }) => {
     ),
   };
   if (location.state.category.slug === "blood_pressure") {
-    initialValues.Systolic = location.state.dailyCheck.categories[0]?.value;
-    initialValues.Diastolic = location.state.dailyCheck.categories[1]?.value;
+    initialValues.Systolic = location.state.dailyCheck.categories.find(
+      (c) => c.key === "Systolic",
+    )?.value;
+    initialValues.Diastolic = location.state.dailyCheck.categories.find(
+      (c) => c.key === "Diastolic",
+    )?.value;
   }
   if (location.state.category.slug === "blood_sugar") {
-    initialValues["(After Meal)"] =
-      location.state.dailyCheck.categories[0]?.value;
-    initialValues["(Before Meal)"] =
-      location.state.dailyCheck.categories[1]?.value;
+    initialValues["(After Meal)"] = location.state.dailyCheck.categories.find(
+      (c) => c.key === "(After Meal)",
+    )?.value;
+    initialValues["(Before Meal)"] = location.state.dailyCheck.categories.find(
+      (c) => c.key === "(Before Meal)",
+    )?.value;
   }
   if (location.state.category.slug === "blood_oxygen") {
     initialValues["%"] = location.state.dailyCheck.categories[0]?.value;
