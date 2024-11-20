@@ -14,7 +14,7 @@ export const login = createAsyncThunk(
   async ({ api, reqData }, thunkAPI) => {
     const response = await postData(api, reqData);
 
-    console.log(response);
+    // console.log(response);
 
     const data = await response.json();
     if (response.status !== 200) {
@@ -26,7 +26,7 @@ export const login = createAsyncThunk(
       localStorage.setItem("token", JSON.stringify(data.data.token));
     }
     return data;
-  },
+  }
 );
 
 export const authSlice = createSlice({

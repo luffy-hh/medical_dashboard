@@ -21,27 +21,27 @@ import {
 
 const UpdateDailyRecord = ({ router, onFinish }) => {
   const { location } = router;
-  console.log(location);
+  // console.log(location);
   let initialValues = {
     ...location.state.dailyCheck,
     record_date: dayjs(location.state.dailyCheck.record_date).format(
-      "DD-MM-YYYY HH:mm:ss",
+      "DD-MM-YYYY HH:mm:ss"
     ),
   };
   if (location.state.category.slug === "blood_pressure") {
     initialValues.Systolic = location.state.dailyCheck.categories.find(
-      (c) => c.key === "Systolic",
+      (c) => c.key === "Systolic"
     )?.value;
     initialValues.Diastolic = location.state.dailyCheck.categories.find(
-      (c) => c.key === "Diastolic",
+      (c) => c.key === "Diastolic"
     )?.value;
   }
   if (location.state.category.slug === "blood_sugar") {
     initialValues["(After Meal)"] = location.state.dailyCheck.categories.find(
-      (c) => c.key === "(After Meal)",
+      (c) => c.key === "(After Meal)"
     )?.value;
     initialValues["(Before Meal)"] = location.state.dailyCheck.categories.find(
-      (c) => c.key === "(Before Meal)",
+      (c) => c.key === "(Before Meal)"
     )?.value;
   }
   if (location.state.category.slug === "blood_oxygen") {
@@ -79,21 +79,21 @@ const UpdateDailyRecord = ({ router, onFinish }) => {
         onFinish={(values) => {
           const finalValues = transformObject(values);
           finalValues.record_date = dayjs(finalValues.record_date).format(
-            "DD-MM-YYYY HH:mm:ss",
+            "DD-MM-YYYY HH:mm:ss"
           );
           finalValues.param = JSON.stringify(
             location.state.dailyCheck.categories.map((c) => {
               const obj = finalValues.param.find((p) => c.key === p.key);
-              console.log(obj);
+              // console.log(obj);
 
               return { ...obj, id: c.id };
-            }),
+            })
           );
           finalValues.family_member_id =
             location.state.dailyCheck.family_member_id;
           finalValues.check_cat_id = location.state.category.id;
           finalValues.record_id = location.state.dailyCheck.id;
-          console.log(finalValues);
+          // console.log(finalValues);
 
           onFinish(finalValues);
         }}
@@ -118,6 +118,6 @@ const formProps = {
 
 const UpdateDailyRecordWithNotiAndLoader = withNotiAndLoader(
   UpdateDailyRecord,
-  formProps,
+  formProps
 );
 export default UpdateDailyRecordWithNotiAndLoader;

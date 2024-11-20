@@ -9,7 +9,7 @@ import MonthlyRecords from "../monthlyRecords/MonthlyRecords.jsx";
 
 const PatientDetails = ({ router }) => {
   const { location } = router;
-  console.log(location);
+  // console.log(location);
   const items = [
     {
       label: "Information",

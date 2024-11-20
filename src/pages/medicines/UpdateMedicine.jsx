@@ -32,9 +32,9 @@ const UpdateMedicine = ({ router, onFinish }) => {
         const { day_type } = d;
         const medicine = d.medicine_arr.map((m) => {
           const list = m.list.find(
-            (l) => l.record_id === location.state.record_id,
+            (l) => l.record_id === location.state.record_id
           );
-          console.log(list);
+          // console.log(list);
           return list && { ...list, meal_type: m.meal_type };
         });
         // console.log(medicine);
@@ -48,63 +48,63 @@ const UpdateMedicine = ({ router, onFinish }) => {
     const obj = {};
     if (arr.length > 0) {
       obj.start_date = dayjs(
-        arr.find((a) => a.day_type_id && a.start_date).start_date,
+        arr.find((a) => a.day_type_id && a.start_date).start_date
       ).format("DD-MM-YYYY");
       obj.end_date = dayjs(
-        arr.find((a) => a.day_type_id && a.end_date).end_date,
+        arr.find((a) => a.day_type_id && a.end_date).end_date
       ).format("DD-MM-YYYY");
       obj.title = arr.find((a) => a.day_type_id && a.title).title;
       obj.medicine_name = arr.find(
-        (a) => a.day_type_id && a.medicine_name,
+        (a) => a.day_type_id && a.medicine_name
       ).medicine_name;
       obj.medicine_photo = arr.find(
-        (a) => a.day_type_id && a.medicine_photo,
+        (a) => a.day_type_id && a.medicine_photo
       ).medicine_photo;
       obj.morning = arr.some((a) => a.day_type_id && a.day_type === "Morning");
 
       obj.afternoon = arr.some(
-        (a) => a.day_type_id && a.day_type === "Afternoon",
+        (a) => a.day_type_id && a.day_type === "Afternoon"
       );
 
       obj.night = arr.some((a) => a.day_type_id && a.day_type === "Night");
       obj.morning_meal_type = arr.find(
-        (a) => a.day_type_id && a.day_type === "Morning",
+        (a) => a.day_type_id && a.day_type === "Morning"
       )
         ? arr.find((a) => a.day_type_id && a.day_type === "Morning").meal_type
         : "";
       obj.afternoon_meal_type = arr.find(
-        (a) => a.day_type_id && a.day_type === "Afternoon",
+        (a) => a.day_type_id && a.day_type === "Afternoon"
       )
         ? arr.find((a) => a.day_type_id && a.day_type === "Afternoon").meal_type
         : "";
       obj.night_meal_type = arr.find(
-        (a) => a.day_type_id && a.day_type === "Night",
+        (a) => a.day_type_id && a.day_type === "Night"
       )
         ? arr.find((a) => a.day_type_id && a.day_type === "Night").meal_type
         : "";
       obj.night_reminder_time = arr.find(
-        (a) => a.day_type_id && a.day_type === "Night",
+        (a) => a.day_type_id && a.day_type === "Night"
       )
         ? arr.find((a) => a.day_type_id && a.day_type === "Night").reminder_time
         : undefined;
       obj.afternoon_reminder_time = arr.find(
-        (a) => a.day_type_id && a.day_type === "Afternoon",
+        (a) => a.day_type_id && a.day_type === "Afternoon"
       )
         ? arr.find((a) => a.day_type_id && a.day_type === "Afternoon")
             .reminder_time
         : undefined;
       obj.morning_reminder_time = arr.find(
-        (a) => a.day_type_id && a.day_type === "Morning",
+        (a) => a.day_type_id && a.day_type === "Morning"
       )
         ? arr.find((a) => a.day_type_id && a.day_type === "Morning")
             .reminder_time
         : undefined;
-      console.log(obj);
+      // console.log(obj);
       const filteredObj = Object.fromEntries(
         Object.entries(obj).filter(
           ([key, value]) =>
-            value !== null && value !== "" && value !== undefined,
-        ),
+            value !== null && value !== "" && value !== undefined
+        )
       );
 
       setInitialValues(filteredObj);
@@ -139,7 +139,7 @@ const UpdateMedicine = ({ router, onFinish }) => {
                   day_type: "Morning",
                   meal_type: values.morning_meal_type,
                   reminder_time: dayjs(values.morning_reminder_time).format(
-                    "HH:mm:ss",
+                    "HH:mm:ss"
                   ),
                 });
               }
@@ -148,7 +148,7 @@ const UpdateMedicine = ({ router, onFinish }) => {
                   day_type: "Afternoon",
                   meal_type: values.afternoon_meal_type,
                   reminder_time: dayjs(values.afternoon_reminder_time).format(
-                    "HH:mm:ss",
+                    "HH:mm:ss"
                   ),
                 });
               }
@@ -157,13 +157,13 @@ const UpdateMedicine = ({ router, onFinish }) => {
                   day_type: "Night",
                   meal_type: values.night_meal_type,
                   reminder_time: dayjs(values.night_reminder_time).format(
-                    "HH:mm:ss",
+                    "HH:mm:ss"
                   ),
                 });
               }
               finalValues.param = JSON.stringify(finalValues.param);
               finalValues.record_id = id;
-              console.log(finalValues);
+              // console.log(finalValues);
               onFinish(finalValues);
             }
           }}
@@ -189,6 +189,6 @@ const formProps = {
 
 const UpdateMedicineWithNotiAndLoader = withNotiAndLoader(
   UpdateMedicine,
-  formProps,
+  formProps
 );
 export default UpdateMedicineWithNotiAndLoader;

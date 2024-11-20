@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 
 const UserDetails = ({ router }) => {
   const { location } = router;
-  console.log(location);
+  // console.log(location);
 
   return (
     <InnerContainer>

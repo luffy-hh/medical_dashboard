@@ -7,7 +7,7 @@ import { Image } from "antd";
 
 const BannerDetails = ({ router }) => {
   const { location } = router;
-  console.log(location);
+  // console.log(location);
 
   return (
     <InnerContainer>

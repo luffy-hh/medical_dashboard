@@ -16,7 +16,7 @@ const DailyRecords = ({ router }) => {
   const patientList = useSelector(patients);
   const categoryList = useSelector(categories);
   const [patient, setPatient] = useState(patientList[0]?.id);
-  console.log(patient, categoryList);
+  // console.log(patient, categoryList);
   const selectedPatient = patientList.find((p) => p.id === patient);
   useEffect(() => {
     dispatch(setPageTitle("Create Checkup"));

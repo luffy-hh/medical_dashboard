@@ -2000,3 +2000,52 @@ export const medicalCheckupCreateInputs = () => {
     },
   ];
 };
+
+export const updatesInputs = () => {
+  return [
+    {
+      label: "Version No",
+      name: "version_no",
+      type: "text",
+      placeholder: "Enter Version No",
+      className: "w-full",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+      rules: [
+        {
+          required: true,
+          message: "Enter Version No",
+        },
+      ],
+    },
+    {
+      label: "App Download Link",
+      name: "app_url",
+      type: "text",
+      placeholder: "Enter App Download Link",
+      className: "w-full",
+      layout: {
+        layout: "vertical",
+        labelCol: {
+          span: 24,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      },
+      rules: [
+        {
+          required: true,
+          message: "Enter App Download Link",
+        },
+      ],
+    },
+  ];
+};

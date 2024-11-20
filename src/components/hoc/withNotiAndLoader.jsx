@@ -16,13 +16,13 @@ const withNotiAndLoader = (WrappedComponent, formProps) => {
     const dispatch = useDispatch();
     const status = useSelector(formProps?.status ? formProps.status : () => {});
     const message = useSelector(
-      formProps?.message ? formProps?.message : () => {},
+      formProps?.message ? formProps?.message : () => {}
     );
 
     // console.log(props.router?.location?.state?.id);
 
     const onFinish = (values, extra = {}) => {
-      console.log(values, formProps.extraData);
+      // console.log(values, formProps.extraData);
 
       // values.fill_date = dateFormatChange(values.fill_date);
       dispatch(
@@ -35,7 +35,7 @@ const withNotiAndLoader = (WrappedComponent, formProps) => {
               : ""),
           postData: { ...values },
           header: { ...formProps?.extraData, ...extra },
-        }),
+        })
       );
     };
     useEffect(() => {

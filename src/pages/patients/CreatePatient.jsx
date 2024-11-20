@@ -13,7 +13,7 @@ import {
 import dayjs from "dayjs";
 
 const CreatePatient = ({ form, onFinish }) => {
-  console.log(form, typeof form);
+  // console.log(form, typeof form);
 
   return (
     <>
@@ -49,6 +49,6 @@ const formProps = {
 };
 const CreatePatientWithNotiAndLoader = withNotiAndLoader(
   CreatePatient,
-  formProps,
+  formProps
 );
 export default CreatePatientWithNotiAndLoader;

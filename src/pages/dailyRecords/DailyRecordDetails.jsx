@@ -24,13 +24,13 @@ const DailyRecordDetails = ({ router }) => {
 
   const { location } = router;
   const { id } = useParams();
-  console.log(location, id, dailyCheckDetails);
+  // console.log(location, id, dailyCheckDetails);
   useEffect(() => {
     dispatch(
       getDailyCheckDetails({
         api: "/daily_record",
         postData: { record_id: id },
-      }),
+      })
     );
   }, []);
   useEffect(() => {
@@ -91,7 +91,7 @@ const DailyRecordDetails = ({ router }) => {
               <p className={"my-2 text-2xl"}>Record Date</p>
               <p className={"my-2 text-lg text-gray-400"}>
                 {dayjs(dailyCheckDetails.record_date).format(
-                  "DD-MM-YYYY  hh:mm A",
+                  "DD-MM-YYYY  hh:mm A"
                 )}
               </p>
               <p className={"my-2 text-2xl"}>Note</p>

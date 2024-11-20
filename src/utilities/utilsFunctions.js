@@ -18,13 +18,13 @@ const parseDate = (value) => {
   }
   // If the value is in YYYY-DD-MM format, convert it to DD-MM-YYYY
   if (dayjs(value, "YYYY-DD-MM", true).isValid()) {
-    console.log("yyyy-dd-mm");
+    // console.log("yyyy-dd-mm");
 
     return dayjs(value, "YYYY-DD-MM");
   }
   // If the value is in YYYY-MM-DD format, convert it to DD-MM-YYYY
   if (dayjs(value, "YYYY-MM-DD", true).isValid()) {
-    console.log("yyyy-mm-dd");
+    // console.log("yyyy-mm-dd");
 
     return dayjs(value, "YYYY-MM-DD");
   }
@@ -37,7 +37,7 @@ const today = new Date();
 const firstDayOfWeek = new Date(
   today.getFullYear(),
   today.getMonth(),
-  today.getDate() - ((today.getDay() + 7) % 7),
+  today.getDate() - ((today.getDay() + 7) % 7)
 );
 
 for (let i = 0; i < 7; i++) {

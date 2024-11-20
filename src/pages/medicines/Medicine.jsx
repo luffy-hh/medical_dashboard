@@ -40,14 +40,14 @@ const Medicine = ({ router }) => {
   const medicines = useSelector(getMedicinesList);
   const medicinesStatus = useSelector(getMedicinesStatus);
   // const medicinesMessage = useSelector(getMedicinesMessage);
-  console.log(medicines);
+  // console.log(medicines);
 
   const [patient, setPatient] = useState(null);
   const selectedPatient = patientList.find((p) => p.id === patient);
   const currentDate = new Date();
   const formattedCurrentDate = dayjs(currentDate).format("DD-MM-YYYY");
   const day1InCurrentMonth = dayjs(
-    new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
+    new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)
   ).format("DD-MM-YYYY");
   const [searchParams, setSearchParams] = useState({
     start_date: day1InCurrentMonth,
@@ -55,7 +55,7 @@ const Medicine = ({ router }) => {
   });
   const memoizedQueryString = useMemo(
     () => generateQueryString(searchParams),
-    [searchParams],
+    [searchParams]
   );
   useEffect(() => {
     if (patientList.length > 0) {
@@ -70,7 +70,7 @@ const Medicine = ({ router }) => {
       dispatch(
         getMedicines({
           api: `/medicine_record_list?family_member_id=${patient}&${memoizedQueryString}`,
-        }),
+        })
       );
     patient &&
       dispatch(
@@ -81,10 +81,10 @@ const Medicine = ({ router }) => {
             start_date: searchParams.start_date,
             end_date: searchParams.end_date,
           },
-        }),
+        })
       );
   }, [patient, memoizedQueryString, searchParams]);
-  console.log(selectedPatient);
+  // console.log(selectedPatient);
 
   useEffect(() => {
     if (
@@ -204,7 +204,7 @@ const MedicineWithTableAndTitle = withTableAndTitle(
   pageTitleProps,
   buttonProps,
   tableProps,
-  modalProps,
+  modalProps
 );
 const MedicineWithRouter = withRouter(Medicine);
 

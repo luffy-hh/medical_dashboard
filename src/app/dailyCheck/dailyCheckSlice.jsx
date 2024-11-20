@@ -39,7 +39,7 @@ export const getDailyChecksChart = createAsyncThunk(
       return thunkAPI.rejectWithValue(data);
     }
     return data;
-  },
+  }
 );
 
 export const getDailyChecksMonthly = createAsyncThunk(
@@ -51,23 +51,23 @@ export const getDailyChecksMonthly = createAsyncThunk(
       return thunkAPI.rejectWithValue(data);
     }
     return data;
-  },
+  }
 );
 
 export const getDailyCheckDetails = createAsyncThunk(
   "dailyChecks/getDailyCheckDetails",
   async ({ api, postData = {}, header = {} }, thunkAPI) => {
-    console.log("work");
+    // console.log("work");
 
     const response = await postDataWithToken(api, postData, header);
-    console.log(api, response);
+    // console.log(api, response);
 
     const data = await response.json();
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue(data);
     }
     return data;
-  },
+  }
 );
 
 export const createDailyCheck = createAsyncThunk(
@@ -79,7 +79,7 @@ export const createDailyCheck = createAsyncThunk(
       return thunkAPI.rejectWithValue(data);
     }
     return data;
-  },
+  }
 );
 export const updateDailyCheck = createAsyncThunk(
   "dailyChecks/updateDailyCheck",
@@ -90,7 +90,7 @@ export const updateDailyCheck = createAsyncThunk(
       return thunkAPI.rejectWithValue(data);
     }
     return data;
-  },
+  }
 );
 export const deleteDailyCheck = createAsyncThunk(
   "dailyChecks/deleteDailyCheck",
@@ -101,7 +101,7 @@ export const deleteDailyCheck = createAsyncThunk(
       return thunkAPI.rejectWithValue(data);
     }
     return data;
-  },
+  }
 );
 const dailyCheckSlice = createSlice({
   name: "dailyChecks",

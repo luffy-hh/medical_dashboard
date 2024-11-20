@@ -169,7 +169,7 @@ const CustomTable = ({
     // Add headers
     // Generate multi-row headers
     const headers = generateMultiRowHeaders(columns);
-    console.log(headers);
+    // console.log(headers);
     headers.forEach((headerRow, index) => {
       XLSX.utils.sheet_add_aoa(ws, [headerRow], { origin: `A${index + 1}` });
     });

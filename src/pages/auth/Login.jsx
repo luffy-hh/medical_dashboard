@@ -21,14 +21,14 @@ const Login = ({ router }) => {
   useEffect(() => {
     dispatch(setPageTitle("Login"));
   }, []);
-  console.log(isAuthenticated, user);
+  // console.log(isAuthenticated, user);
 
   const onFinish = async (values) => {
     dispatch(login({ api: "/login", reqData: values }));
   };
   useEffect(() => {
     if (isAuthenticated && Object.keys(user).length > 0) {
-      console.log("work");
+      // console.log("work");
 
       router.nav("/");
     }

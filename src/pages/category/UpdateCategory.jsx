@@ -12,12 +12,12 @@ import { categoryCreateInputs } from "../../constants/FormInputs.jsx";
 import { useParams } from "react-router-dom";
 
 const UpdateCategory = ({ router, onFinish }) => {
-  console.log(router.location.state);
+  // console.log(router.location.state);
   const { id } = useParams();
   const initialValues = {
     ...router.location.state,
   };
-  console.log(initialValues);
+  // console.log(initialValues);
 
   return (
     <>
@@ -48,6 +48,6 @@ const formProps = {
 };
 const UpdateCategoryWithNotiAndLoader = withNotiAndLoader(
   UpdateCategory,
-  formProps,
+  formProps
 );
 export default UpdateCategoryWithNotiAndLoader;

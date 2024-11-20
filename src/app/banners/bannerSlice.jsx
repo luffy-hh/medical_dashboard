@@ -26,13 +26,13 @@ export const getBanners = createAsyncThunk(
     const response = await getDataWithToken(api);
 
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
 
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue(data);
     }
     return data;
-  },
+  }
 );
 
 export const createBanner = createAsyncThunk(
@@ -44,7 +44,7 @@ export const createBanner = createAsyncThunk(
       return thunkAPI.rejectWithValue(data);
     }
     return data;
-  },
+  }
 );
 
 export const updateBanner = createAsyncThunk(
@@ -56,7 +56,7 @@ export const updateBanner = createAsyncThunk(
       return thunkAPI.rejectWithValue(data);
     }
     return data;
-  },
+  }
 );
 
 export const deleteBanner = createAsyncThunk(
@@ -68,7 +68,7 @@ export const deleteBanner = createAsyncThunk(
       return thunkAPI.rejectWithValue(data);
     }
     return data;
-  },
+  }
 );
 
 const bannerSlice = createSlice({

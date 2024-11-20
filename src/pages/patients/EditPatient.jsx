@@ -14,7 +14,7 @@ import { useParams } from "react-router-dom";
 
 const EditPatient = ({ router, onFinish }) => {
   const { id } = useParams();
-  console.log(router.location.state);
+  // console.log(router.location.state);
   const initialValues = {
     ...router.location.state,
     phone_no:

@@ -36,17 +36,17 @@ const DailyRecordByCategory = ({ router }) => {
   const { category } = useParams();
   const dailyChecksMonthly = useSelector(dailyChecksMonthlySelector);
   const dailyChecksMonthlyChartKeys = useSelector(
-    dailyChecksMonthlyChartKeysSelector,
+    dailyChecksMonthlyChartKeysSelector
   );
 
   const dailyChecksMonthlyChartValues = useSelector(
-    dailyChecksMonthlyChartValuesSelector,
+    dailyChecksMonthlyChartValuesSelector
   );
 
   const dailyChecksMonthlyStatus = useSelector(
-    dailyChecksMonthlyStatusSelector,
+    dailyChecksMonthlyStatusSelector
   );
-  console.log({ ...location.state });
+  // console.log({ ...location.state });
 
   const months = useSelector(monthsSelector);
   const [month, setMonth] = React.useState(null);
@@ -59,7 +59,7 @@ const DailyRecordByCategory = ({ router }) => {
   const [pulse, setPulse] = useState([]);
   // const []
   const [monthLabels, setMonthLabels] = useState([]);
-  console.log(dailyChecksMonthly);
+  // console.log(dailyChecksMonthly);
 
   useEffect(() => {
     if (dailyChecksMonthlyChartKeys.length > 0) {
@@ -68,10 +68,10 @@ const DailyRecordByCategory = ({ router }) => {
     if (category === "blood_pressure") {
       if (dailyChecksMonthlyChartValues.length > 0) {
         const sys = dailyChecksMonthlyChartValues.map((d) =>
-          d.value1 ? d.value1 : 0,
+          d.value1 ? d.value1 : 0
         );
         const dia = dailyChecksMonthlyChartValues.map((d) =>
-          d.value2 ? d.value2 : 0,
+          d.value2 ? d.value2 : 0
         );
         setSystolic(sys);
         setDiastolic(dia);
@@ -79,10 +79,10 @@ const DailyRecordByCategory = ({ router }) => {
     } else if (category === "blood_sugar") {
       if (dailyChecksMonthlyChartValues.length > 0) {
         const before = dailyChecksMonthlyChartValues.map((d) =>
-          d.value1 ? d.value1 : 0,
+          d.value1 ? d.value1 : 0
         );
         const after = dailyChecksMonthlyChartValues.map((d) =>
-          d.value2 ? d.value2 : 0,
+          d.value2 ? d.value2 : 0
         );
         setBeforeMeal(before);
         setAfterMeal(after);
@@ -90,20 +90,20 @@ const DailyRecordByCategory = ({ router }) => {
     } else if (category === "temperature") {
       if (dailyChecksMonthlyChartValues.length > 0) {
         const temp = dailyChecksMonthlyChartValues.map((d) =>
-          d.value1 ? d.value1 : 0,
+          d.value1 ? d.value1 : 0
         );
         setTemperature(temp);
       }
     } else if (category === "blood_oxygen") {
       if (dailyChecksMonthlyChartValues.length > 0) {
         const oxy = dailyChecksMonthlyChartValues.map((d) =>
-          d.value1 ? d.value1 : 0,
+          d.value1 ? d.value1 : 0
         );
         setOxygen(oxy);
       }
     } else if (category === "pulse_rate") {
       const rate = dailyChecksMonthlyChartValues.map((d) =>
-        d.value1 ? d.value1 : 0,
+        d.value1 ? d.value1 : 0
       );
       setPulse(rate);
     }
@@ -121,7 +121,7 @@ const DailyRecordByCategory = ({ router }) => {
           check_category_id: location?.state?.category?.id,
           month: month,
         },
-      }),
+      })
     );
   }, [dispatch, month]);
   useEffect(() => {

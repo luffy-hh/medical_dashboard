@@ -10,6 +10,7 @@ import appointmentSlice from "./appointment/appointmentSlice.jsx";
 import authSlice from "./auth/authSlice.jsx";
 import dailyCheckSlice from "./dailyCheck/dailyCheckSlice.jsx";
 import masterDataSlice from "./masterData/masterDataSlice.jsx";
+import softwareUpdateSlice from "./softwareUpdates/softwareUpdateSlice.jsx";
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     auth: authSlice,
     dailyChecks: dailyCheckSlice,
     masterData: masterDataSlice,
+    softwareUpdates: softwareUpdateSlice,
   },
 });
 

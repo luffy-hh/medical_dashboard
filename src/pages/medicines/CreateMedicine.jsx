@@ -53,7 +53,7 @@ const CreateMedicine = ({ onFinish }) => {
                 day_type: "Morning",
                 meal_type: values.morning_meal_type,
                 reminder_time: dayjs(values.morning_reminder_time).format(
-                  "HH:mm:ss",
+                  "HH:mm:ss"
                 ),
               });
             }
@@ -62,7 +62,7 @@ const CreateMedicine = ({ onFinish }) => {
                 day_type: "Afternoon",
                 meal_type: values.afternoon_meal_type,
                 reminder_time: dayjs(values.afternoon_reminder_time).format(
-                  "HH:mm:ss",
+                  "HH:mm:ss"
                 ),
               });
             }
@@ -71,12 +71,12 @@ const CreateMedicine = ({ onFinish }) => {
                 day_type: "Night",
                 meal_type: values.night_meal_type,
                 reminder_time: dayjs(values.night_reminder_time).format(
-                  "HH:mm:ss",
+                  "HH:mm:ss"
                 ),
               });
             }
             finalValues.param = JSON.stringify(finalValues.param);
-            console.log(finalValues);
+            // console.log(finalValues);
             onFinish(finalValues);
           }
         }}
@@ -102,6 +102,6 @@ const formProps = {
 
 const CreateMedicineWithNotiAndLoader = withNotiAndLoader(
   CreateMedicine,
-  formProps,
+  formProps
 );
 export default CreateMedicineWithNotiAndLoader;

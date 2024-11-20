@@ -17,7 +17,7 @@ import { patientMedicinesTableColumns } from "../../constants/TableColumns.jsx";
 const MedicinesDetails = ({ router, patient }) => {
   const medicinesDetails = useSelector(getMedicineDetails);
   const medicinesDetailsStatus = useSelector(getMedicineDetailsStatus);
-  console.log(medicinesDetails);
+  // console.log(medicinesDetails);
 
   return (
     <InnerContainer>
@@ -60,7 +60,7 @@ const MedicinesDetails = ({ router, patient }) => {
                           Remainder Time:
                           <span className={"ml-4 text-gary-400"}>
                             {dayjs(meal.reminder_time, "HH:mm:ss").format(
-                              "hh:mm A",
+                              "hh:mm A"
                             )}
                           </span>
                         </p>
@@ -68,7 +68,7 @@ const MedicinesDetails = ({ router, patient }) => {
                           <CustomTable
                             columns={patientMedicinesTableColumns(
                               router.nav,
-                              patient,
+                              patient
                             )}
                             data={meal.list}
                             loading={medicinesDetailsStatus === "loading"}

@@ -57,8 +57,6 @@ const withTableAndTitle = (
     const tableMessage = useSelector(
       tableProps?.message ? tableProps?.message : () => {},
     );
-    console.log(id);
-
     return (
       <Suspense fallback={<Loader />}>
         {(deleteStatus === "loading" || tableStatus === "loading") && (

@@ -68,11 +68,11 @@ const CreateDailyRecord = ({ router, onFinish }) => {
           const finalValues = transformObject(values);
           finalValues.check_cat_id = location.state.category;
           finalValues.record_date = dayjs(values.record_date).format(
-            "DD-MM-YYYY HH:mm:ss",
+            "DD-MM-YYYY HH:mm:ss"
           );
           finalValues.param = JSON.stringify(finalValues.param);
           finalValues.family_member_id = location.state.id;
-          console.log(finalValues);
+          // console.log(finalValues);
           onFinish(finalValues);
         }}
       />
@@ -98,7 +98,7 @@ const formProps = {
 
 const CreateDailyRecordWithNotiAndLoader = withNotiAndLoader(
   CreateDailyRecord,
-  formProps,
+  formProps
 );
 
 export default CreateDailyRecordWithNotiAndLoader;

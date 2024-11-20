@@ -16,7 +16,7 @@ const UpdateMonthlyRecord = ({ router, onFinish }) => {
     ...router.location.state,
     lab_date: dayjs(router.location.state.lab_date).format("DD-MM-YYYY"),
   };
-  console.log(initialValues);
+  // console.log(initialValues);
 
   return (
     <>
@@ -54,6 +54,6 @@ const formProps = {
 };
 const UpdateMonthlyRecordWithNotiAndLoader = withNotiAndLoader(
   UpdateMonthlyRecord,
-  formProps,
+  formProps
 );
 export default UpdateMonthlyRecordWithNotiAndLoader;

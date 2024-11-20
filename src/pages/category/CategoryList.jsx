@@ -30,7 +30,7 @@ const CategoryList = () => {
   const createStatus = useSelector(createCategoryStatus);
   const updateStatus = useSelector(updateCategoryStatus);
   const categoryList = useSelector(categories);
-  console.log(categoryList);
+  // console.log(categoryList);
 
   useEffect(() => {
     dispatch(setPageTitle("Categories"));

@@ -28,7 +28,7 @@ export const getUsers = createAsyncThunk(
       return thunkAPI.rejectWithValue(data);
     }
     return data;
-  },
+  }
 );
 export const createUser = createAsyncThunk(
   "users/createUser",
@@ -39,7 +39,7 @@ export const createUser = createAsyncThunk(
       return thunkAPI.rejectWithValue(data);
     }
     return data;
-  },
+  }
 );
 export const updateUser = createAsyncThunk(
   "users/updateUser",
@@ -50,23 +50,23 @@ export const updateUser = createAsyncThunk(
       return thunkAPI.rejectWithValue(data);
     }
     return data;
-  },
+  }
 );
 
 export const deleteUser = createAsyncThunk(
   "users/deleteUser",
   async ({ api, postData = {}, header }, thunkAPI) => {
-    console.log("work");
+    // console.log("work");
 
     const response = await postDataWithToken(api, postData, header);
     const data = await response.json();
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue(data);
     }
-    console.log(data);
+    // console.log(data);
 
     return data;
-  },
+  }
 );
 
 const userSlice = createSlice({

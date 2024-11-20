@@ -8,6 +8,7 @@ import {
   TbReportMedical,
 } from "react-icons/tb";
 import { GiMedicinePills } from "react-icons/gi";
+import { FaFileUpload } from "react-icons/fa";
 
 export const sideBarData = [
   {
@@ -59,6 +60,11 @@ export const sideBarData = [
     label: "Users",
     icon: <MdManageAccounts />,
     key: "/user",
+  },
+  {
+    label: "Software Update",
+    icon: <FaFileUpload />,
+    key: "/software-update",
   },
 
   //   {

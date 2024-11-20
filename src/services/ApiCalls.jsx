@@ -28,8 +28,8 @@ export const getDataWithToken = async (api) => {
     if (response.status === 500 || response.status === 401) {
       // expireToken();
     }
-    return response;
     // console.log(`${api}>> Get:`, response);
+    return response;
     // const data = await response.json();
   } catch (error) {
     console.log(error);
@@ -58,7 +58,7 @@ export const postData = async (api, postData) => {
 };
 
 export const postDataWithToken = async (api, postData, header = {}) => {
-  console.log(api, postData);
+  // console.log(api, postData);
   try {
     const response = await fetch(baseUrl + api, {
       method: "POST",
@@ -84,9 +84,9 @@ export const postDataWithToken = async (api, postData, header = {}) => {
 export const postMultipartDataWithToken = async (
   api,
   postData,
-  header = {},
+  header = {}
 ) => {
-  console.log(api, postData);
+  // console.log(api, postData);
   let formData = new FormData();
   for (const key in postData) {
     if (Object.prototype.hasOwnProperty.call(postData, key)) {
@@ -107,7 +107,7 @@ export const postMultipartDataWithToken = async (
     }
   }
   try {
-    console.log(formData);
+    // console.log(formData);
 
     const response = await fetch(baseUrl + api, {
       method: "POST",

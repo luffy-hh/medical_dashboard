@@ -18,7 +18,7 @@ import dayjs from "dayjs";
 const CreateMonthlyRecord = ({ onFinish }) => {
   const patientList = useSelector(patients);
   const [patient, setPatient] = useState(null);
-  console.log(patient);
+  // console.log(patient);
   useEffect(() => {
     if (patientList.length > 0) {
       setPatient(patientList[0]?.id);
@@ -61,6 +61,6 @@ const formProps = {
 
 const CreateMonthlyRecordWithNotiAndLoader = withNotiAndLoader(
   CreateMonthlyRecord,
-  formProps,
+  formProps
 );
 export default CreateMonthlyRecordWithNotiAndLoader;

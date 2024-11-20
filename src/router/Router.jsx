@@ -84,6 +84,10 @@ const PatientDetails = Loadable(
 const EditPatient = Loadable(
   lazy(() => import("../pages/patients/EditPatient")),
 );
+const Updates = Loadable(lazy(() => import("../pages/updates/Updates")));
+const EditUpdates = Loadable(
+  lazy(() => import("../pages/updates/EditUpdates")),
+);
 const CreateUser = Loadable(lazy(() => import("../pages/users/CreateUser")));
 const UpdateUser = Loadable(lazy(() => import("../pages/users/UpdateUser")));
 const NotFound = Loadable(lazy(() => import("../pages/errors/NotFound")));
@@ -239,6 +243,16 @@ const Routes = [
         path: "/appointment/:id/edit",
         name: "Edit Appointment",
         element: <UpdateAppointment />,
+      },
+      {
+        path: "/software-update",
+        name: "Software Updates",
+        element: <Updates />,
+      },
+      {
+        path: "/software-update/:id/edit",
+        name: "Edit Software Update",
+        element: <EditUpdates />,
       },
     ],
   },

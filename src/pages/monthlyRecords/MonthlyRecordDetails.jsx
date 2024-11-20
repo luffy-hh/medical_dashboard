@@ -20,11 +20,11 @@ const MonthlyRecordDetails = ({ router }) => {
   const labRecordDetails = useSelector(labRecordDetailsSelector);
   const labRecordDetailsStatus = useSelector(labRecordDetailsStatusSelector);
 
-  console.log(location, labRecordDetails, labRecordDetailsStatus);
+  // console.log(location, labRecordDetails, labRecordDetailsStatus);
 
   useEffect(() => {
     dispatch(
-      getLabRecordsData({ api: `/lab_record_data?id=${location.state.id}` }),
+      getLabRecordsData({ api: `/lab_record_data?id=${location.state.id}` })
     );
   }, [dispatch, location.state.id]);
 

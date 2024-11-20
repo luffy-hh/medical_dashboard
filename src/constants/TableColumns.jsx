@@ -452,7 +452,7 @@ export const bloodPressureTableColumns = () => {
         const systolic =
           record.value !== "" &&
           Number(record.value.split("/")[0].replace("Systolic", ""));
-        console.log(systolic);
+        // console.log(systolic);
 
         const diastolic =
           record.value !== "" &&
@@ -838,7 +838,7 @@ export const appointmentTableColumns = (nav, setId, setOpen) => {
               <div
                 className=" flex gap-2 items-center"
                 onClick={() => {
-                  console.log(record);
+                  // console.log(record);
 
                   setOpen(true);
                   setId(record.id);
@@ -920,6 +920,64 @@ export const patientMedicinesTableColumns = (nav, patient) => {
                   nav(`${record.record_id}/edit`, {
                     state: { ...record, patient: patient },
                   })
+                }
+              >
+                <FaEdit /> <span className=" inline-block">Edit</span>
+              </div>
+            ),
+          },
+        ];
+        // console.log(record);
+        return (
+          <Suspense fallback={<Loader />}>
+            <Dropdown menu={{ items: menuItems }} trigger={["click"]}>
+              <a
+                className="ant-dropdown-link flex items-center"
+                onClick={(e) => e.preventDefault()}
+              >
+                Actions
+                <span>
+                  <FaAngleDown />
+                </span>
+              </a>
+            </Dropdown>
+          </Suspense>
+        );
+      },
+    },
+  ];
+};
+
+export const updateTableColumns = (nav) => {
+  return [
+    {
+      title: "No",
+      dataIndex: "id",
+      key: "id",
+      render: (text, record, index) => index + 1,
+    },
+    {
+      title: "App Version",
+      dataIndex: "version_no",
+      key: "version_no",
+    },
+    {
+      title: "Url",
+      dataIndex: "app_url",
+      key: "app_url",
+    },
+    {
+      title: "Actions",
+      key: "action",
+      render: (text, record) => {
+        const menuItems = [
+          {
+            key: "edit",
+            label: (
+              <div
+                className=" flex gap-2 items-center"
+                onClick={() =>
+                  nav(`${record.id}/edit`, { state: { ...record } })
                 }
               >
                 <FaEdit /> <span className=" inline-block">Edit</span>

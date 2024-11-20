@@ -17,7 +17,7 @@ const UpdateAppointment = ({ router, onFinish }) => {
     ...router.location.state,
     appointment_date: dayjs(
       router.location.state.appointment_date,
-      "YYYY-MM-DD",
+      "YYYY-MM-DD"
     ).format("DD-MM-YYYY"),
   };
 
@@ -35,10 +35,10 @@ const UpdateAppointment = ({ router, onFinish }) => {
             appointment_time: dayjs(values.appointment_time).format("HH:mm:ss"),
             reminder_time: dayjs(values.reminder_time).format("HH:mm:ss"),
             appointment_date: dayjs(values.appointment_date).format(
-              "DD-MM-YYYY",
+              "DD-MM-YYYY"
             ),
           };
-          console.log(finalValues.appointment_date);
+          // console.log(finalValues.appointment_date);
 
           onFinish({
             ...finalValues,
@@ -68,6 +68,6 @@ const formProps = {
 };
 const UpdateAppointmentWithNotiAndLoader = withNotiAndLoader(
   UpdateAppointment,
-  formProps,
+  formProps
 );
 export default UpdateAppointmentWithNotiAndLoader;

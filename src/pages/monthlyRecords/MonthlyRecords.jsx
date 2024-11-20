@@ -20,7 +20,7 @@ import { setPageTitle } from "../../app/ThemeConfig/themeConfigSlice.jsx";
 
 const MonthlyRecords = ({ router }) => {
   const { location } = router;
-  console.log(location);
+  // console.log(location);
 
   const [patient, setPatient] = useState();
   const [month, setMonth] = useState(null);
@@ -28,7 +28,7 @@ const MonthlyRecords = ({ router }) => {
   const dispatch = useDispatch();
   const patientsList = useSelector(patients);
   const labRecordsList = useSelector(labRecordsSelector);
-  console.log(labRecordsList);
+  // console.log(labRecordsList);
 
   const monthsList = useSelector(monthsSelector);
   const selectedMonth = monthsList.find((m) => m.id === month);

@@ -44,7 +44,7 @@ const Home = ({ router }) => {
           // from_date: searchParams.from_date,
           // to_date: searchParams.to_date,
         },
-      }),
+      })
     );
   }, [dispatch]);
   useEffect(() => {
@@ -60,11 +60,11 @@ const Home = ({ router }) => {
       dispatch(
         getDailyChecksChart({
           api: `/web_daily_record_chart?family_member_id=${patient}`,
-        }),
+        })
       );
     }
   }, [dispatch, selectedPatient]);
-  console.log(appointmentList);
+  // console.log(appointmentList);
 
   return (
     <InnerContainer className={"flex gap-4"}>
